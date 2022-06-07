@@ -2,6 +2,7 @@ package com.ccsw.bidoffice.config.security;
 
 
 import com.ccsw.bidoffice.role.RoleService;
+import com.ccsw.bidoffice.role.model.RoleEntity;
 import com.ccsw.bidoffice.user.UserService;
 import com.ccsw.bidoffice.user.model.UserEntity;
 import io.jsonwebtoken.*;
@@ -53,9 +54,6 @@ public class JsonWebTokenUtility {
 
    @Autowired
    private UserService userService;
-   
-   @Autowired
-   private RoleService roleService;
 
    private Map<String, UserInfoAppDto> userCache = new HashMap<>();
 
@@ -130,10 +128,10 @@ public class JsonWebTokenUtility {
       userDetails.setJwt(jwtToken);
 
       UserEntity user = this.userService.getByUsername(username);
-      userDetails.setRole("USER");
+      userDetails.setRole("User");
 
       if (user != null) {
-         userDetails.setRole(roleService.getById(user.getRole().getId()).getName());
+         userDetails.setRole(user.getRole().getName());
       }
 
       return userDetails;

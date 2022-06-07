@@ -25,7 +25,7 @@ public class UserInfoAppDto extends UserInfoDto {
    }
 
    /**
-   * @param role new value of {@link #getrole}.
+   * @param role new value of {@link #getRole}.
    */
    public void setRole(String role) {
 
@@ -41,7 +41,7 @@ public class UserInfoAppDto extends UserInfoDto {
    }
 
    /**
-   * @param expiration new value of {@link #getexpiration}.
+   * @param expiration new value of {@link #getExpiration}.
    */
    public void setExpiration(Date expiration) {
 
@@ -57,7 +57,7 @@ public class UserInfoAppDto extends UserInfoDto {
    }
 
    /**
-   * @param jwt new value of {@link #getjwt}.
+   * @param jwt new value of {@link #getJwt}.
    */
    public void setJwt(String jwt) {
 
