@@ -32,7 +32,7 @@ public class OfferFullDto {
 
     private OpportunityTypeDto opportunityType;
 
-    private Integer opportunity_win;
+    private Integer opportunityWin;
 
     private String observations;
 
@@ -132,12 +132,12 @@ public class OfferFullDto {
         this.opportunityType = opportunityType;
     }
 
-    public Integer getOpportunity_win() {
-        return opportunity_win;
+    public Integer getOpportunityWin() {
+        return opportunityWin;
     }
 
-    public void setOpportunity_win(Integer opportunity_win) {
-        this.opportunity_win = opportunity_win;
+    public void setOpportunityWin(Integer opportunityWin) {
+        this.opportunityWin = opportunityWin;
     }
 
     public String getObservations() {

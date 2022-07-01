@@ -64,7 +64,7 @@ public class OfferEntity {
     private OpportunityTypeEntity opportunityType;
 
     @Column(name = "opportunity_win")
-    private Integer opportunity_win;
+    private Integer opportunityWin;
 
     @Column(name = "observations")
     private String observations;
@@ -93,6 +93,14 @@ public class OfferEntity {
         this.name = name;
     }
 
+    public PersonEntity getRequestedBy() {
+        return requestedBy;
+    }
+
+    public void setRequestedBy(PersonEntity requestedBy) {
+        this.requestedBy = requestedBy;
+    }
+
     public LocalDate getRequestedDate() {
         return requestedDate;
     }
@@ -101,12 +109,44 @@ public class OfferEntity {
         this.requestedDate = requestedDate;
     }
 
+    public PersonEntity getManagedBy() {
+        return managedBy;
+    }
+
+    public void setManagedBy(PersonEntity managedBy) {
+        this.managedBy = managedBy;
+    }
+
+    public String getBdcCode() {
+        return bdcCode;
+    }
+
+    public void setBdcCode(String bdcCode) {
+        this.bdcCode = bdcCode;
+    }
+
     public SectorEntity getSector() {
         return sector;
     }
 
     public void setSector(SectorEntity sector) {
         this.sector = sector;
+    }
+
+    public LocalDate getGoNogoDate() {
+        return goNogoDate;
+    }
+
+    public void setGoNogoDate(LocalDate goNogoDate) {
+        this.goNogoDate = goNogoDate;
+    }
+
+    public LocalDate getDeliveryDate() {
+        return deliveryDate;
+    }
+
+    public void setDeliveryDate(LocalDate deliveryDate) {
+        this.deliveryDate = deliveryDate;
     }
 
     public OpportunityStatusEntity getOpportunityStatus() {
@@ -123,5 +163,21 @@ public class OfferEntity {
 
     public void setOpportunityType(OpportunityTypeEntity opportunityType) {
         this.opportunityType = opportunityType;
+    }
+
+    public Integer getOpportunityWin() {
+        return opportunityWin;
+    }
+
+    public void setOpportunityWin(Integer opportunityWin) {
+        this.opportunityWin = opportunityWin;
+    }
+
+    public String getObservations() {
+        return observations;
+    }
+
+    public void setObservations(String observations) {
+        this.observations = observations;
     }
 }
