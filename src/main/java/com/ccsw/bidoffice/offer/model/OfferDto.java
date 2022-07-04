@@ -4,6 +4,7 @@ import java.time.LocalDate;
 
 import com.ccsw.bidoffice.opportunity_status.model.OpportunityStatusDto;
 import com.ccsw.bidoffice.opportunity_type.model.OpportunityTypeDto;
+import com.ccsw.bidoffice.person.model.PersonDto;
 import com.ccsw.bidoffice.sector.model.SectorDto;
 
 public class OfferDto {
@@ -14,13 +15,27 @@ public class OfferDto {
 
     private String name;
 
-    private SectorDto sector;
+    private PersonDto requestedBy;
 
     private LocalDate requestedDate;
 
-    private OpportunityTypeDto opportunityType;
+    private PersonDto managedBy;
+
+    private String bdcCode;
+
+    private SectorDto sector;
+
+    private LocalDate goNogoDate;
+
+    private LocalDate deliveryDate;
 
     private OpportunityStatusDto opportunityStatus;
+
+    private OpportunityTypeDto opportunityType;
+
+    private Boolean opportunityWin;
+
+    private String observations;
 
     public Long getId() {
         return id;
@@ -46,6 +61,38 @@ public class OfferDto {
         this.name = name;
     }
 
+    public PersonDto getRequestedBy() {
+        return requestedBy;
+    }
+
+    public void setRequestedBy(PersonDto requestedBy) {
+        this.requestedBy = requestedBy;
+    }
+
+    public LocalDate getRequestedDate() {
+        return requestedDate;
+    }
+
+    public void setRequestedDate(LocalDate requestedDate) {
+        this.requestedDate = requestedDate;
+    }
+
+    public PersonDto getManagedBy() {
+        return managedBy;
+    }
+
+    public void setManagedBy(PersonDto managedBy) {
+        this.managedBy = managedBy;
+    }
+
+    public String getBdcCode() {
+        return bdcCode;
+    }
+
+    public void setBdcCode(String bdcCode) {
+        this.bdcCode = bdcCode;
+    }
+
     public SectorDto getSector() {
         return sector;
     }
@@ -54,12 +101,28 @@ public class OfferDto {
         this.sector = sector;
     }
 
-    public LocalDate getRequestDate() {
-        return requestedDate;
+    public LocalDate getGoNogoDate() {
+        return goNogoDate;
     }
 
-    public void setRequestedDate(LocalDate requestedDate) {
-        this.requestedDate = requestedDate;
+    public void setGoNogoDate(LocalDate goNogoDate) {
+        this.goNogoDate = goNogoDate;
+    }
+
+    public LocalDate getDeliveryDate() {
+        return deliveryDate;
+    }
+
+    public void setDeliveryDate(LocalDate deliveryDate) {
+        this.deliveryDate = deliveryDate;
+    }
+
+    public OpportunityStatusDto getOpportunityStatus() {
+        return opportunityStatus;
+    }
+
+    public void setOpportunityStatus(OpportunityStatusDto opportunityStatus) {
+        this.opportunityStatus = opportunityStatus;
     }
 
     public OpportunityTypeDto getOpportunityType() {
@@ -70,11 +133,19 @@ public class OfferDto {
         this.opportunityType = opportunityType;
     }
 
-    public OpportunityStatusDto getOpportunityStatus() {
-        return opportunityStatus;
+    public Boolean getOpportunityWin() {
+        return opportunityWin;
     }
 
-    public void setOpportunityStatus(OpportunityStatusDto opportunityStatus) {
-        this.opportunityStatus = opportunityStatus;
+    public void setOpportunityWin(Boolean opportunityWin) {
+        this.opportunityWin = opportunityWin;
+    }
+
+    public String getObservations() {
+        return observations;
+    }
+
+    public void setObservations(String observations) {
+        this.observations = observations;
     }
 }

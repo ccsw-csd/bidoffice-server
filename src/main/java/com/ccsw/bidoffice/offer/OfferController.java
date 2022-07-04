@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ccsw.bidoffice.config.mapper.BeanMapper;
-import com.ccsw.bidoffice.offer.model.OfferDto;
+import com.ccsw.bidoffice.offer.model.OfferItemListDto;
 import com.ccsw.bidoffice.offer.model.OfferSearchDto;
 
 @RequestMapping(value = "/offer")
@@ -22,8 +22,8 @@ public class OfferController {
     private BeanMapper beanMapper;
 
     @RequestMapping(path = "/findPage", method = RequestMethod.POST)
-    public Page<OfferDto> findPage(@RequestBody OfferSearchDto dto) {
+    public Page<OfferItemListDto> findPage(@RequestBody OfferSearchDto dto) {
 
-        return this.beanMapper.mapPage(this.offerService.findPage(dto), OfferDto.class);
+        return this.beanMapper.mapPage(this.offerService.findPage(dto), OfferItemListDto.class);
     }
 }

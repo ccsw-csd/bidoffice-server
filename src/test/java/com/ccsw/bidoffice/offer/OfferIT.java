@@ -15,7 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.annotation.DirtiesContext;
 
 import com.ccsw.bidoffice.config.BaseITAbstract;
-import com.ccsw.bidoffice.offer.model.OfferDto;
+import com.ccsw.bidoffice.offer.model.OfferItemListDto;
 import com.ccsw.bidoffice.offer.model.OfferSearchDto;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -28,7 +28,7 @@ public class OfferIT extends BaseITAbstract {
 
     private OfferSearchDto offerSearchDto;
 
-    ParameterizedTypeReference<Page<OfferDto>> responseTypePage = new ParameterizedTypeReference<Page<OfferDto>>() {
+    ParameterizedTypeReference<Page<OfferItemListDto>> responseTypePage = new ParameterizedTypeReference<Page<OfferItemListDto>>() {
     };
 
     @BeforeEach
@@ -44,7 +44,7 @@ public class OfferIT extends BaseITAbstract {
 
         HttpEntity<?> httpEntity = new HttpEntity<>(offerSearchDto, getHeaders());
 
-        ResponseEntity<Page<OfferDto>> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH + "findPage",
+        ResponseEntity<Page<OfferItemListDto>> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH + "findPage",
                 HttpMethod.POST, httpEntity, responseTypePage);
 
         assertNotNull(response);

@@ -64,7 +64,7 @@ public class OfferEntity {
     private OpportunityTypeEntity opportunityType;
 
     @Column(name = "opportunity_win")
-    private Integer opportunityWin;
+    private Boolean opportunityWin;
 
     @Column(name = "observations")
     private String observations;
@@ -165,11 +165,11 @@ public class OfferEntity {
         this.opportunityType = opportunityType;
     }
 
-    public Integer getOpportunityWin() {
+    public Boolean getOpportunityWin() {
         return opportunityWin;
     }
 
-    public void setOpportunityWin(Integer opportunityWin) {
+    public void setOpportunityWin(Boolean opportunityWin) {
         this.opportunityWin = opportunityWin;
     }
 

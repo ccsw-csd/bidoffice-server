@@ -20,7 +20,7 @@ public class PersonDto {
 
     private String grade;
 
-    private Integer active;
+    private Boolean active;
 
     public Long getId() {
         return id;
@@ -94,11 +94,11 @@ public class PersonDto {
         this.grade = grade;
     }
 
-    public Integer getActive() {
+    public Boolean getActive() {
         return active;
     }
 
-    public void setActive(Integer active) {
+    public void setActive(Boolean active) {
         this.active = active;
     }
 }
