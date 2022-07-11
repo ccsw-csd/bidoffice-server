@@ -33,8 +33,10 @@ CREATE TABLE opportunity_status (
 );
 
 
-INSERT INTO opportunity_status (name,priority) VALUES ('En curso', 1);
-INSERT INTO opportunity_status (name,priority) VALUES ('Cerrada', 1);
+INSERT INTO opportunity_status (name,priority) VALUES ('Otros', 2);
+INSERT INTO opportunity_status (name,priority) VALUES ('Otros2', 1);
+INSERT INTO opportunity_status (name,priority) VALUES ('Otros3', 4);
+INSERT INTO opportunity_status (name,priority) VALUES ('Otros4', 3);
 
 CREATE TABLE opportunity_type (
   id int(11) NOT NULL AUTO_INCREMENT,
@@ -44,8 +46,10 @@ CREATE TABLE opportunity_type (
   UNIQUE KEY ty_name (name)
 );
 
-INSERT INTO opportunity_type (name,priority) VALUES ('Defensa', 1);
-INSERT INTO opportunity_type (name,priority) VALUES ('Otros', 3);
+INSERT INTO opportunity_type (name,priority) VALUES ('Otros', 1);
+INSERT INTO opportunity_type (name,priority) VALUES ('Otros2', 4);
+INSERT INTO opportunity_type (name,priority) VALUES ('Otros3', 2);
+INSERT INTO opportunity_type (name,priority) VALUES ('Otros4', 3);
 
 
 CREATE TABLE sector (
@@ -56,8 +60,10 @@ CREATE TABLE sector (
   UNIQUE KEY se_name (name)
 );
 
-INSERT INTO sector (name,priority) VALUES ('Public', 1);
-INSERT INTO sector (name,priority) VALUES ('Bank', 2);
+INSERT INTO sector (name,priority) VALUES ('Otros', 2);
+INSERT INTO sector (name,priority) VALUES ('Otros2', 4);
+INSERT INTO sector (name,priority) VALUES ('Otros3', 3);
+INSERT INTO sector (name,priority) VALUES ('Otros4', 1);
 
 CREATE TABLE person (
   id bigint(20) NOT NULL AUTO_INCREMENT,
@@ -72,6 +78,77 @@ CREATE TABLE person (
   active int(1) NOT NULL,
   PRIMARY KEY (id)
 );
+
+INSERT INTO person (saga,username,email,name,lastname,center,businesscode,grade,active) VALUES ('A1','aelmouss','aelmouss@bidoffice.com','Ayoub','El Moussaoui','VLC', 'XXX', 'A', true);
+INSERT INTO person (saga,username,email,name,lastname,center,businesscode,grade,active) VALUES ('A2','jopepe','jopepe@bidoffice.com','Jopepe','Jopepe','VLC', 'XXX', 'B', false);
+INSERT INTO person (saga,username,email,name,lastname,center,businesscode,grade,active) VALUES ('A3','amirzoya','amirzoya@bidoffice.com','Armen','Mirzoyan Denisov','VLC', 'XXX', 'C', true);
+INSERT INTO person (saga,username,email,name,lastname,center,businesscode,grade,active) VALUES ('A4','pajimene','amirzoya@bidoffice.com','Pablo','Jimenez Martinez','VLC', 'XXX', 'D', true);
+
+CREATE TABLE file_type (
+  id int(11) NOT NULL AUTO_INCREMENT,
+  name varchar(20) NOT NULL,
+  priority int(11) NOT NULL,
+  PRIMARY KEY (id),
+  UNIQUE KEY file_name (name)
+);
+
+INSERT INTO file_type (name,priority) VALUES ('Otros', 4);
+INSERT INTO file_type (name,priority) VALUES ('Otros2', 3);
+INSERT INTO file_type (name,priority) VALUES ('Otros3', 2);
+INSERT INTO file_type (name,priority) VALUES ('Otros4', 1);
+
+CREATE TABLE hyperscaler (
+  id int(11) NOT NULL AUTO_INCREMENT,
+  name varchar(20) NOT NULL,
+  priority int(11) NOT NULL,
+  PRIMARY KEY (id),
+  UNIQUE KEY hyper_name (name)
+);
+
+INSERT INTO hyperscaler (name,priority) VALUES ('Otros', 3);
+INSERT INTO hyperscaler (name,priority) VALUES ('Otros2', 2);
+INSERT INTO hyperscaler (name,priority) VALUES ('Otros3', 4);
+INSERT INTO hyperscaler (name,priority) VALUES ('Otros4', 1);
+
+CREATE TABLE methodology (
+  id int(11) NOT NULL AUTO_INCREMENT,
+  name varchar(20) NOT NULL,
+  priority int(11) NOT NULL,
+  PRIMARY KEY (id),
+  UNIQUE KEY metho_name (name)
+);
+
+INSERT INTO methodology (name,priority) VALUES ('Otros', 1);
+INSERT INTO methodology (name,priority) VALUES ('Otros2', 3);
+INSERT INTO methodology (name,priority) VALUES ('Otros3', 1);
+INSERT INTO methodology (name,priority) VALUES ('Otros4', 2);
+
+CREATE TABLE offering (
+  id int(11) NOT NULL AUTO_INCREMENT,
+  name varchar(20) NOT NULL,
+  priority int(11) NOT NULL,
+  PRIMARY KEY (id),
+  UNIQUE KEY offering_name (name)
+);
+
+INSERT INTO offering (name,priority) VALUES ('Otros', 2);
+INSERT INTO offering (name,priority) VALUES ('Otros2', 4);
+INSERT INTO offering (name,priority) VALUES ('Otros3', 3);
+INSERT INTO offering (name,priority) VALUES ('Otros4', 1);
+
+CREATE TABLE project_type (
+  id int(11) NOT NULL AUTO_INCREMENT,
+  name varchar(20) NOT NULL,
+  priority int(11) NOT NULL,
+  PRIMARY KEY (id),
+  UNIQUE KEY project_name (name)
+);
+
+INSERT INTO project_type (name,priority) VALUES ('Otros', 1);
+INSERT INTO project_type (name,priority) VALUES ('Otros2', 2);
+INSERT INTO project_type (name,priority) VALUES ('Otros3', 4);
+INSERT INTO project_type (name,priority) VALUES ('Otros4', 3);
+
 
 CREATE TABLE offer (
   id int(11) NOT NULL AUTO_INCREMENT,
@@ -98,6 +175,9 @@ CREATE TABLE offer (
 
 
 INSERT INTO offer (client,name,requested_date,sector_id,opportunity_status_id,opportunity_type_id) VALUES ('user', 'user', '2022-06-30',2,1,1);
-INSERT INTO offer (client,name,requested_date,sector_id,opportunity_status_id,opportunity_type_id) VALUES ('user', 'user', '2022-06-30',2,2,1);
+INSERT INTO offer (client,name,requested_date,sector_id,opportunity_status_id,opportunity_type_id) VALUES ('user', 'user', '2022-06-30',2,1,1);
+INSERT INTO offer (client,name,requested_date,sector_id,opportunity_status_id,opportunity_type_id) VALUES ('user2', 'user', '2022-06-30',2,2,1);
+INSERT INTO offer (client,name,requested_date,sector_id,opportunity_status_id,opportunity_type_id) VALUES ('user3', 'user', '2022-06-30',2,1,1);
+INSERT INTO offer (client,name,requested_date,sector_id,opportunity_status_id,opportunity_type_id) VALUES ('user4', 'user', '2022-06-30',2,2,1);
 
 

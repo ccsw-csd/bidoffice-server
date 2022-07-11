@@ -44,8 +44,8 @@ public class OfferIT extends BaseITAbstract {
 
         HttpEntity<?> httpEntity = new HttpEntity<>(offerSearchDto, getHeaders());
 
-        ResponseEntity<Page<OfferItemListDto>> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH + "findPage",
-                HttpMethod.POST, httpEntity, responseTypePage);
+        ResponseEntity<Page<OfferItemListDto>> response = restTemplate
+                .exchange(LOCALHOST + port + SERVICE_PATH + "findPage", HttpMethod.POST, httpEntity, responseTypePage);
 
         assertNotNull(response);
         assertEquals(TOTAL_OFFER, response.getBody().getContent().size());

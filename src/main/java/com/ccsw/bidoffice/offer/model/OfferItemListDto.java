@@ -2,9 +2,7 @@ package com.ccsw.bidoffice.offer.model;
 
 import java.time.LocalDate;
 
-import com.ccsw.bidoffice.opportunity_status.model.OpportunityStatusDto;
-import com.ccsw.bidoffice.opportunity_type.model.OpportunityTypeDto;
-import com.ccsw.bidoffice.sector.model.SectorDto;
+import com.ccsw.bidoffice.common.model.BaseClassDto;
 
 public class OfferItemListDto {
 
@@ -14,13 +12,13 @@ public class OfferItemListDto {
 
     private String name;
 
-    private SectorDto sector;
+    private BaseClassDto sector;
 
     private LocalDate requestedDate;
 
-    private OpportunityTypeDto opportunityType;
+    private BaseClassDto opportunityType;
 
-    private OpportunityStatusDto opportunityStatus;
+    private BaseClassDto opportunityStatus;
 
     public Long getId() {
         return id;
@@ -46,15 +44,15 @@ public class OfferItemListDto {
         this.name = name;
     }
 
-    public SectorDto getSector() {
+    public BaseClassDto getSector() {
         return sector;
     }
 
-    public void setSector(SectorDto sector) {
+    public void setSector(BaseClassDto sector) {
         this.sector = sector;
     }
 
-    public LocalDate getRequestDate() {
+    public LocalDate getRequestedDate() {
         return requestedDate;
     }
 
@@ -62,19 +60,19 @@ public class OfferItemListDto {
         this.requestedDate = requestedDate;
     }
 
-    public OpportunityTypeDto getOpportunityType() {
+    public BaseClassDto getOpportunityType() {
         return opportunityType;
     }
 
-    public void setOpportunityType(OpportunityTypeDto opportunityType) {
+    public void setOpportunityType(BaseClassDto opportunityType) {
         this.opportunityType = opportunityType;
     }
 
-    public OpportunityStatusDto getOpportunityStatus() {
+    public BaseClassDto getOpportunityStatus() {
         return opportunityStatus;
     }
 
-    public void setOpportunityStatus(OpportunityStatusDto opportunityStatus) {
+    public void setOpportunityStatus(BaseClassDto opportunityStatus) {
         this.opportunityStatus = opportunityStatus;
     }
 }

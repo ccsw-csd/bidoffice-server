@@ -1,6 +1,6 @@
-package com.ccsw.bidoffice.opportunity_status.model;
+package com.ccsw.bidoffice.common.model;
 
-public class OpportunityStatusDto {
+public class BaseClassDto {
 
     private Long id;
 
