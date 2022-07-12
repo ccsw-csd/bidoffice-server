@@ -4,19 +4,24 @@ package com.ccsw.bidoffice.user;
 import com.ccsw.bidoffice.config.security.UserInfoAppDto;
 import com.ccsw.bidoffice.role.RoleRepository;
 import com.ccsw.bidoffice.user.model.UserEntity;
+import com.ccsw.bidoffice.user.model.UserSearchDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Date;
 import java.util.List;
 
 /**
  * @author ccsw
  *
  */
+
+//@Transactional(readOnly = true)
 @Service
-@Transactional(readOnly = true)
+@Transactional
 public class UserServiceImpl implements UserService {
 
     @Autowired
@@ -32,6 +37,14 @@ public class UserServiceImpl implements UserService {
     public UserEntity getByUsername(String username) {
 
         return this.userRepository.getByUsername(username);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Page<UserEntity> findPage(UserSearchDto dto, String username, String name) {
+        return this.userRepository.findPage(dto.getPageable(), username, name);
     }
 
     /**
