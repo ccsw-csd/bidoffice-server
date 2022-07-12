@@ -31,7 +31,7 @@ public class UserController {
         return this.beanMapper.map(this.userService.getByUsername(username), UserDto.class);
     }
 
-    @RequestMapping(path="/get", method = RequestMethod.POST)
+    @RequestMapping(path="/findPage", method = RequestMethod.POST)
     public Page<UserDto> findPage(@RequestBody UserSearchDto dto,
                                   @RequestParam(value="username", required = false) String username,
                                   @RequestParam(value="name", required = false) String name){

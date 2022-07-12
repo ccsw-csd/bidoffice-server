@@ -48,7 +48,7 @@ public class UserIT extends BaseITAbstract {
     }
 
     private String getUrlWithParams(){
-        return UriComponentsBuilder.fromHttpUrl(LOCALHOST + port + SERVICE_PATH + "get")
+        return UriComponentsBuilder.fromHttpUrl(LOCALHOST + port + SERVICE_PATH + "findPage")
                 .queryParam(USERNAME, "{" + USERNAME +"}")
                 .queryParam(FULLNAME, "{" + FULLNAME +"}")
                 .encode()
@@ -62,7 +62,7 @@ public class UserIT extends BaseITAbstract {
 
         HttpEntity<?> httpEntity = new HttpEntity<>(userSearchDto, getHeaders());
 
-        ResponseEntity<Page<UserDto>> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH + "get",
+        ResponseEntity<Page<UserDto>> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH + "findPage",
                 HttpMethod.POST, httpEntity, responseTypePage);
 
         assertNotNull(response);
@@ -79,7 +79,7 @@ public class UserIT extends BaseITAbstract {
 
         HttpEntity<?> httpEntity = new HttpEntity<>(userSearchDto, getHeaders());
 
-        ResponseEntity<Page<UserDto>> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH + "get",
+        ResponseEntity<Page<UserDto>> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH + "findPage",
                 HttpMethod.POST, httpEntity, responseTypePage);
 
         assertNotNull(response);
