@@ -100,4 +100,13 @@ CREATE TABLE offer (
 INSERT INTO offer (client,name,requested_date,sector_id,opportunity_status_id,opportunity_type_id) VALUES ('user', 'user', '2022-06-30',2,1,1);
 INSERT INTO offer (client,name,requested_date,sector_id,opportunity_status_id,opportunity_type_id) VALUES ('user', 'user', '2022-06-30',2,2,1);
 
+CREATE TABLE hyperscaler(
+	id bigint NOT NULL AUTO_INCREMENT,
+	name varchar(50) NOT NULL,
+	priority int NOT NULL,
+	PRIMARY KEY (id)
+);
 
+INSERT INTO hyperscaler (name,priority) VALUES ('Name 1',1);
+INSERT INTO hyperscaler (name,priority) VALUES ('Name 2',2);
+INSERT INTO hyperscaler (name,priority) VALUES ('Name 3',3);
