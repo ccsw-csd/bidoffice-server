@@ -1,25 +1,11 @@
 package com.ccsw.bidoffice.opportunitytype.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+public class OpportunityTypeDto {
 
-@Entity
-@Table(name = "opportunity_type")
-public class OpportunityTypeEntity {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "priority", nullable = false)
     private Integer priority;
 
     public Long getId() {

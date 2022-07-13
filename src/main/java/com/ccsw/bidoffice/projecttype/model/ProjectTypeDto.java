@@ -1,6 +1,6 @@
-package com.ccsw.bidoffice.common.model;
+package com.ccsw.bidoffice.projecttype.model;
 
-public class BaseClassDto {
+public class ProjectTypeDto {
 
     private Long id;
 

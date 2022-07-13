@@ -1,4 +1,4 @@
-package com.ccsw.bidoffice.project_type.model;
+package com.ccsw.bidoffice.projecttype.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

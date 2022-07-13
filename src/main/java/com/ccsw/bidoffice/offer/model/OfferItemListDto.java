@@ -2,7 +2,9 @@ package com.ccsw.bidoffice.offer.model;
 
 import java.time.LocalDate;
 
-import com.ccsw.bidoffice.common.model.BaseClassDto;
+import com.ccsw.bidoffice.opportunitystatus.model.OpportunityStatusDto;
+import com.ccsw.bidoffice.opportunitytype.model.OpportunityTypeDto;
+import com.ccsw.bidoffice.sector.model.SectorDto;
 
 public class OfferItemListDto {
 
@@ -12,13 +14,13 @@ public class OfferItemListDto {
 
     private String name;
 
-    private BaseClassDto sector;
+    private SectorDto sector;
 
     private LocalDate requestedDate;
 
-    private BaseClassDto opportunityType;
+    private OpportunityTypeDto opportunityType;
 
-    private BaseClassDto opportunityStatus;
+    private OpportunityStatusDto opportunityStatus;
 
     public Long getId() {
         return id;
@@ -44,11 +46,11 @@ public class OfferItemListDto {
         this.name = name;
     }
 
-    public BaseClassDto getSector() {
+    public SectorDto getSector() {
         return sector;
     }
 
-    public void setSector(BaseClassDto sector) {
+    public void setSector(SectorDto sector) {
         this.sector = sector;
     }
 
@@ -60,19 +62,19 @@ public class OfferItemListDto {
         this.requestedDate = requestedDate;
     }
 
-    public BaseClassDto getOpportunityType() {
+    public OpportunityTypeDto getOpportunityType() {
         return opportunityType;
     }
 
-    public void setOpportunityType(BaseClassDto opportunityType) {
+    public void setOpportunityType(OpportunityTypeDto opportunityType) {
         this.opportunityType = opportunityType;
     }
 
-    public BaseClassDto getOpportunityStatus() {
+    public OpportunityStatusDto getOpportunityStatus() {
         return opportunityStatus;
     }
 
-    public void setOpportunityStatus(BaseClassDto opportunityStatus) {
+    public void setOpportunityStatus(OpportunityStatusDto opportunityStatus) {
         this.opportunityStatus = opportunityStatus;
     }
 }

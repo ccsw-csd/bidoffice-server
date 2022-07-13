@@ -1,13 +1,14 @@
-package com.ccsw.bidoffice.opportunity_status;
+package com.ccsw.bidoffice.opportunitystatus;
 
 import java.util.List;
 
+import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.CrudRepository;
 
-import com.ccsw.bidoffice.opportunity_status.model.OpportunityStatusEntity;
+import com.ccsw.bidoffice.opportunitystatus.model.OpportunityStatusEntity;
 
 public interface OpportunityStatusRepository extends CrudRepository<OpportunityStatusEntity, Long> {
 
-    List<OpportunityStatusEntity> findAllByOrderByPriorityAsc();
+    List<OpportunityStatusEntity> findAll(Sort sort);
 
 }
