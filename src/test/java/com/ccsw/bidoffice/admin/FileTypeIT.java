@@ -22,7 +22,7 @@ import com.ccsw.bidoffice.config.BaseITAbstract;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
-public class AdminIT extends BaseITAbstract {
+public class FileTypeIT extends BaseITAbstract {
 
     public static final String LOCALHOST = "http://localhost:";
     public static final String SERVICE_PATH = "/admin/";

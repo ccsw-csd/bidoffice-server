@@ -17,13 +17,13 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import com.ccsw.bidoffice.admin.model.FileTypeEntity;
 
 @ExtendWith(MockitoExtension.class)
-public class AdminTest {
+public class FileTypeTest {
 
     @Mock
-    private AdminRepository adminRepository;
+    private FileTypeRepository fileTypeRepository;
 
     @InjectMocks
-    private AdminServiceImpl adminService;
+    private FileTypeServiceImpl fileTypeService;
 
     @Test
     public void findAllFileTypes() {
@@ -34,9 +34,9 @@ public class AdminTest {
         files.add(mock(FileTypeEntity.class));
         files.add(mock(FileTypeEntity.class));
 
-        when(adminRepository.findAllFileTypes()).thenReturn(files);
+        when(fileTypeRepository.findByOrderByPriorityAsc()).thenReturn(files);
 
-        List<FileTypeEntity> filetypes = adminService.getAllFromFileType();
+        List<FileTypeEntity> filetypes = fileTypeService.getAllFromFileType();
 
         assertNotNull(filetypes);
         assertEquals(4, filetypes.size());

@@ -1,0 +1,13 @@
+package com.ccsw.bidoffice.admin;
+
+import java.util.List;
+
+import org.springframework.data.repository.CrudRepository;
+
+import com.ccsw.bidoffice.admin.model.FileTypeEntity;
+
+public interface FileTypeRepository extends CrudRepository<FileTypeEntity, Long> {
+
+    List<FileTypeEntity> findByOrderByPriorityAsc();
+
+}

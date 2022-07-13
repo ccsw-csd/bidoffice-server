@@ -4,8 +4,7 @@ import java.util.List;
 
 import com.ccsw.bidoffice.admin.model.FileTypeEntity;
 
-public interface AdminService {
+public interface FileTypeService {
 
     List<FileTypeEntity> getAllFromFileType();
-
 }

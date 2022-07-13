@@ -8,14 +8,14 @@ import org.springframework.stereotype.Service;
 import com.ccsw.bidoffice.admin.model.FileTypeEntity;
 
 @Service
-public class AdminServiceImpl implements AdminService {
+public class FileTypeServiceImpl implements FileTypeService {
 
     @Autowired
-    private AdminRepository adminRepository;
+    private FileTypeRepository fileTypeRepository;
 
     @Override
     public List<FileTypeEntity> getAllFromFileType() {
 
-        return (List<FileTypeEntity>) this.adminRepository.findAllFileTypes();
+        return (List<FileTypeEntity>) this.fileTypeRepository.findByOrderByPriorityAsc();
     }
 }

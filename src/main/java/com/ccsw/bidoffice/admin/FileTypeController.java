@@ -15,10 +15,10 @@ import com.ccsw.bidoffice.config.mapper.BeanMapper;
 @RequestMapping(value = "/admin")
 @RestController
 @CrossOrigin(origins = "*")
-public class AdminController {
+public class FileTypeController {
 
     @Autowired
-    private AdminService adminService;
+    private FileTypeService fileTypeService;
 
     @Autowired
     private BeanMapper beanMapper;
@@ -26,7 +26,7 @@ public class AdminController {
     @RequestMapping(path = "/filetype", method = RequestMethod.GET)
     public List<FileTypeDto> getAllFromFileType() {
 
-        List<FileTypeEntity> filetype = this.adminService.getAllFromFileType();
+        List<FileTypeEntity> filetype = this.fileTypeService.getAllFromFileType();
 
         return beanMapper.mapList(filetype, FileTypeDto.class);
     }
