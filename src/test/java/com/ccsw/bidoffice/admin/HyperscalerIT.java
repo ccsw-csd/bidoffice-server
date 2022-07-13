@@ -17,12 +17,12 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.annotation.DirtiesContext;
 
-import com.ccsw.bidoffice.admin.model.HyperscaleDto;
+import com.ccsw.bidoffice.admin.model.HyperscalerDto;
 import com.ccsw.bidoffice.config.BaseITAbstract;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
-public class AdminIT extends BaseITAbstract {
+public class HyperscalerIT extends BaseITAbstract {
 
     @Autowired
     private TestRestTemplate restTemplate;
@@ -34,14 +34,14 @@ public class AdminIT extends BaseITAbstract {
 
     public static final String SERVICE_PATH = "/admin/hyperscaler";
 
-    ParameterizedTypeReference<List<HyperscaleDto>> responseTypeList = new ParameterizedTypeReference<List<HyperscaleDto>>() {
+    ParameterizedTypeReference<List<HyperscalerDto>> responseTypeList = new ParameterizedTypeReference<List<HyperscalerDto>>() {
     };
 
-    private HyperscaleDto hyperscaleDto;
+    private HyperscalerDto hyperscaleDto;
 
     @BeforeEach
     public void setUp() {
-        this.hyperscaleDto = new HyperscaleDto();
+        this.hyperscaleDto = new HyperscalerDto();
 
         /*
          * this.hyperscaleDto.setId(1L); this.hyperscaleDto.setName("name 1");
@@ -54,7 +54,7 @@ public class AdminIT extends BaseITAbstract {
 
         HttpEntity<?> httpEntity = new HttpEntity<>(this.hyperscaleDto, getHeaders());
 
-        ResponseEntity<List<HyperscaleDto>> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH,
+        ResponseEntity<List<HyperscalerDto>> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH,
                 HttpMethod.GET, httpEntity, responseTypeList);
 
         assertNotNull(response);

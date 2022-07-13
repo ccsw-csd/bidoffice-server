@@ -8,14 +8,14 @@ import org.springframework.stereotype.Service;
 import com.ccsw.bidoffice.admin.model.HyperscalerEntity;
 
 @Service
-public class AdminServiceImpl implements AdminService {
+public class HyperscalerServiceImpl implements HyperscalerService {
 
     @Autowired
-    AdminRepository adminRepository;
+    HyperscalerRepository hyperscalerRepository;
 
     @Override
-    public List<HyperscalerEntity> getAllDataFromHyperscale() {
-        return (List<HyperscalerEntity>) this.adminRepository.findDataFromHyperscaler();
+    public List<HyperscalerEntity> getAllDataFromHyperscaler() {
+        return (List<HyperscalerEntity>) this.hyperscalerRepository.findByOrderByPriority();
     }
 
 }

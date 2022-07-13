@@ -17,13 +17,13 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import com.ccsw.bidoffice.admin.model.HyperscalerEntity;
 
 @ExtendWith(MockitoExtension.class)
-public class AdminTest {
+public class HyperscalerTest {
 
     @Mock
-    private AdminRepository adminRepository;
+    private HyperscalerRepository adminRepository;
 
     @InjectMocks
-    private AdminServiceImpl adminServiceImpl;
+    private HyperscalerServiceImpl adminServiceImpl;
 
     @Test
     public void getAllFromHyperscaleShouldReturnAllDataFromHyperscaler() {
@@ -36,9 +36,9 @@ public class AdminTest {
         data.add(mock(HyperscalerEntity.class));
         data.add(mock(HyperscalerEntity.class));
 
-        when(adminRepository.findDataFromHyperscaler()).thenReturn(data);
+        when(adminRepository.findByOrderByPriority()).thenReturn(data);
 
-        List<HyperscalerEntity> list = adminServiceImpl.getAllDataFromHyperscale();
+        List<HyperscalerEntity> list = adminServiceImpl.getAllDataFromHyperscaler();
         assertNotNull(list);
         assertEquals(4, list.size());
 

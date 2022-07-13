@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.ccsw.bidoffice.admin.model.HyperscalerEntity;
 
-public interface AdminService {
+public interface HyperscalerService {
 
-    public List<HyperscalerEntity> getAllDataFromHyperscale();
+    public List<HyperscalerEntity> getAllDataFromHyperscaler();
 }

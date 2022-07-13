@@ -1,6 +1,6 @@
 package com.ccsw.bidoffice.admin.model;
 
-public class HyperscaleDto {
+public class HyperscalerDto {
     private Long id;
     private String name;
     private Long priority;
