@@ -1,4 +1,4 @@
-package com.ccsw.bidoffice.admin;
+package com.ccsw.bidoffice.hyperscaler;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -13,8 +13,11 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Sort;
 
-import com.ccsw.bidoffice.admin.model.HyperscalerEntity;
+import com.ccsw.bidoffice.hyperscaler.HyperscalerRepository;
+import com.ccsw.bidoffice.hyperscaler.HyperscalerServiceImpl;
+import com.ccsw.bidoffice.hyperscaler.model.HyperscalerEntity;
 
 @ExtendWith(MockitoExtension.class)
 public class HyperscalerTest {
@@ -36,7 +39,7 @@ public class HyperscalerTest {
         data.add(mock(HyperscalerEntity.class));
         data.add(mock(HyperscalerEntity.class));
 
-        when(adminRepository.findByOrderByPriority()).thenReturn(data);
+        when(adminRepository.findAll(Sort.by(Sort.Direction.ASC, "priority"))).thenReturn(data);
 
         List<HyperscalerEntity> list = adminServiceImpl.getAllDataFromHyperscaler();
         assertNotNull(list);

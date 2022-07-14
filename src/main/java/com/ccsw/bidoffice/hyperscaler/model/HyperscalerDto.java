@@ -1,4 +1,4 @@
-package com.ccsw.bidoffice.admin.model;
+package com.ccsw.bidoffice.hyperscaler.model;
 
 public class HyperscalerDto {
     private Long id;

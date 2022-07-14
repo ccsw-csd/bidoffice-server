@@ -1,4 +1,4 @@
-package com.ccsw.bidoffice.admin;
+package com.ccsw.bidoffice.hyperscaler;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -17,8 +17,8 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.annotation.DirtiesContext;
 
-import com.ccsw.bidoffice.admin.model.HyperscalerDto;
 import com.ccsw.bidoffice.config.BaseITAbstract;
+import com.ccsw.bidoffice.hyperscaler.model.HyperscalerDto;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
@@ -32,7 +32,7 @@ public class HyperscalerIT extends BaseITAbstract {
     @LocalServerPort
     private int port;
 
-    public static final String SERVICE_PATH = "/admin/hyperscaler";
+    public static final String SERVICE_PATH = "/hyperscaler";
 
     ParameterizedTypeReference<List<HyperscalerDto>> responseTypeList = new ParameterizedTypeReference<List<HyperscalerDto>>() {
     };
@@ -42,11 +42,6 @@ public class HyperscalerIT extends BaseITAbstract {
     @BeforeEach
     public void setUp() {
         this.hyperscaleDto = new HyperscalerDto();
-
-        /*
-         * this.hyperscaleDto.setId(1L); this.hyperscaleDto.setName("name 1");
-         * this.hyperscaleDto.setPriority(1L);
-         */
     }
 
     @Test

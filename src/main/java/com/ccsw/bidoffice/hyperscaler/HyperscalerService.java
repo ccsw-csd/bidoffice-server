@@ -1,8 +1,8 @@
-package com.ccsw.bidoffice.admin;
+package com.ccsw.bidoffice.hyperscaler;
 
 import java.util.List;
 
-import com.ccsw.bidoffice.admin.model.HyperscalerEntity;
+import com.ccsw.bidoffice.hyperscaler.model.HyperscalerEntity;
 
 public interface HyperscalerService {
 
