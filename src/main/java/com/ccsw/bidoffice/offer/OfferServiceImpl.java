@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
-import com.ccsw.bidoffice.offer.model.ClientsOnly;
+import com.ccsw.bidoffice.offer.model.Clients;
 import com.ccsw.bidoffice.offer.model.OfferEntity;
 import com.ccsw.bidoffice.offer.model.OfferSearchDto;
 
@@ -27,7 +27,7 @@ public class OfferServiceImpl implements OfferService {
     public List<String> findFirst15DistinctClientLikeFilter(String filter) {
 
         return this.offerRepository.findFirst15DistinctByClientIgnoreCaseContaining(filter).stream()
-                .map(ClientsOnly::getClient).collect(Collectors.toList());
+                .map(Clients::getClient).collect(Collectors.toList());
     }
 
 }

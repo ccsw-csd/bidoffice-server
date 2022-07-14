@@ -1,7 +1,8 @@
 package com.ccsw.bidoffice.person;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -17,7 +18,7 @@ public class PersonServiceImpl implements PersonService {
     PersonRepository personRepository;
 
     @Override
-    public Page<PersonEntity> persons(PersonSearchDto personSearchDto) {
+    public List<PersonEntity> findFirst15Filter(PersonSearchDto personSearchDto) {
 
         PersonSpecification username = new PersonSpecification(
                 new SearchCriteria("username", ":", personSearchDto.getUsername()));
@@ -31,7 +32,7 @@ public class PersonServiceImpl implements PersonService {
 
         Specification<PersonEntity> specification = Specification.where(username).and(name).and(lastname).and(active);
 
-        return this.personRepository.findAll(specification, PageRequest.of(0, 15));
+        return this.personRepository.findAll(specification, PageRequest.of(0, 15)).getContent();
     }
 
 }

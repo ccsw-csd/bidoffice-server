@@ -1,6 +1,6 @@
 package com.ccsw.bidoffice.offer.model;
 
-public interface ClientsOnly {
+public interface Clients {
 
     String getClient();
 }

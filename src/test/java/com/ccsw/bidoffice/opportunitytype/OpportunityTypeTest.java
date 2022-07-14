@@ -1,4 +1,4 @@
-package com.ccsw.bidoffice.opportunityType;
+package com.ccsw.bidoffice.opportunitytype;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
