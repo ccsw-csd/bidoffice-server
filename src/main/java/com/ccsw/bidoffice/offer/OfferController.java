@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ccsw.bidoffice.config.mapper.BeanMapper;
+import com.ccsw.bidoffice.offer.model.OfferDto;
 import com.ccsw.bidoffice.offer.model.OfferItemListDto;
 import com.ccsw.bidoffice.offer.model.OfferSearchDto;
 
@@ -34,5 +35,11 @@ public class OfferController {
     public List<String> findFirst15DistinctClientLikeFilter(@PathVariable String filter) {
 
         return this.offerService.findFirst15DistinctClientLikeFilter(filter);
+    }
+
+    @RequestMapping(path = "/{id}", method = RequestMethod.GET)
+    public OfferDto getOffer(@PathVariable Long id) {
+
+        return null;
     }
 }

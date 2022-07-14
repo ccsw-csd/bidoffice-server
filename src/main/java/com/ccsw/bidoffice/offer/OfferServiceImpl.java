@@ -30,4 +30,10 @@ public class OfferServiceImpl implements OfferService {
                 .map(ClientsOnly::getClient).collect(Collectors.toList());
     }
 
+    @Override
+    public OfferEntity getOffer(Long id) {
+
+        return this.offerRepository.findById(id).orElse(null);
+    }
+
 }
