@@ -17,8 +17,8 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.annotation.DirtiesContext;
 
-import com.ccsw.bidoffice.admin.model.FileTypeDto;
 import com.ccsw.bidoffice.config.BaseITAbstract;
+import com.ccsw.bidoffice.file_type.model.FileTypeDto;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)

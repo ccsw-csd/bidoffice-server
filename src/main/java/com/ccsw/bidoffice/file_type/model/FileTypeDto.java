@@ -1,4 +1,4 @@
-package com.ccsw.bidoffice.admin.model;
+package com.ccsw.bidoffice.file_type.model;
 
 public class FileTypeDto {
 

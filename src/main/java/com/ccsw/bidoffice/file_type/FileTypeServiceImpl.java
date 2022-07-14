@@ -1,11 +1,12 @@
-package com.ccsw.bidoffice.admin;
+package com.ccsw.bidoffice.file_type;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import com.ccsw.bidoffice.admin.model.FileTypeEntity;
+import com.ccsw.bidoffice.file_type.model.FileTypeEntity;
 
 @Service
 public class FileTypeServiceImpl implements FileTypeService {
@@ -16,6 +17,6 @@ public class FileTypeServiceImpl implements FileTypeService {
     @Override
     public List<FileTypeEntity> getAllFromFileType() {
 
-        return (List<FileTypeEntity>) this.fileTypeRepository.findByOrderByPriorityAsc();
+        return this.fileTypeRepository.findAll(Sort.by(Sort.Direction.ASC, "priority"));
     }
 }

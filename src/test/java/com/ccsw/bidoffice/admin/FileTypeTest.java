@@ -13,8 +13,11 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Sort;
 
-import com.ccsw.bidoffice.admin.model.FileTypeEntity;
+import com.ccsw.bidoffice.file_type.FileTypeRepository;
+import com.ccsw.bidoffice.file_type.FileTypeServiceImpl;
+import com.ccsw.bidoffice.file_type.model.FileTypeEntity;
 
 @ExtendWith(MockitoExtension.class)
 public class FileTypeTest {
@@ -34,7 +37,7 @@ public class FileTypeTest {
         files.add(mock(FileTypeEntity.class));
         files.add(mock(FileTypeEntity.class));
 
-        when(fileTypeRepository.findByOrderByPriorityAsc()).thenReturn(files);
+        when(fileTypeRepository.findAll(Sort.by(Sort.Direction.ASC, "priority"))).thenReturn(files);
 
         List<FileTypeEntity> filetypes = fileTypeService.getAllFromFileType();
 

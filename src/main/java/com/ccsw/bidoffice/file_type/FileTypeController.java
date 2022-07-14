@@ -1,4 +1,4 @@
-package com.ccsw.bidoffice.admin;
+package com.ccsw.bidoffice.file_type;
 
 import java.util.List;
 
@@ -8,11 +8,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ccsw.bidoffice.admin.model.FileTypeDto;
-import com.ccsw.bidoffice.admin.model.FileTypeEntity;
 import com.ccsw.bidoffice.config.mapper.BeanMapper;
+import com.ccsw.bidoffice.file_type.model.FileTypeDto;
+import com.ccsw.bidoffice.file_type.model.FileTypeEntity;
 
-@RequestMapping(value = "/admin")
+@RequestMapping(value = "/filetype")
 @RestController
 @CrossOrigin(origins = "*")
 public class FileTypeController {
@@ -23,7 +23,7 @@ public class FileTypeController {
     @Autowired
     private BeanMapper beanMapper;
 
-    @RequestMapping(path = "/filetype", method = RequestMethod.GET)
+    @RequestMapping(path = "", method = RequestMethod.GET)
     public List<FileTypeDto> getAllFromFileType() {
 
         List<FileTypeEntity> filetype = this.fileTypeService.getAllFromFileType();
