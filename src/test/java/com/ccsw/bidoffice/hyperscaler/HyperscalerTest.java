@@ -15,8 +15,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Sort;
 
-import com.ccsw.bidoffice.hyperscaler.HyperscalerRepository;
-import com.ccsw.bidoffice.hyperscaler.HyperscalerServiceImpl;
 import com.ccsw.bidoffice.hyperscaler.model.HyperscalerEntity;
 
 @ExtendWith(MockitoExtension.class)
@@ -26,7 +24,7 @@ public class HyperscalerTest {
     private HyperscalerRepository adminRepository;
 
     @InjectMocks
-    private HyperscalerServiceImpl adminServiceImpl;
+    private HyperscalerServiceImpl hyperscalerServiceImpl;
 
     @Test
     public void getAllFromHyperscaleShouldReturnAllDataFromHyperscaler() {
@@ -41,7 +39,7 @@ public class HyperscalerTest {
 
         when(adminRepository.findAll(Sort.by(Sort.Direction.ASC, "priority"))).thenReturn(data);
 
-        List<HyperscalerEntity> list = adminServiceImpl.getAllDataFromHyperscaler();
+        List<HyperscalerEntity> list = hyperscalerServiceImpl.getAllDataFromHyperscaler();
         assertNotNull(list);
         assertEquals(4, list.size());
 

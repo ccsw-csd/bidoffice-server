@@ -9,6 +9,6 @@ import com.ccsw.bidoffice.hyperscaler.model.HyperscalerEntity;
 
 public interface HyperscalerRepository extends CrudRepository<HyperscalerEntity, Long> {
 
-    List<HyperscalerEntity> findAll(Sort by);
+    List<HyperscalerEntity> findAll(Sort sort);
 
 }

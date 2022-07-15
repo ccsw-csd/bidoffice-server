@@ -22,7 +22,7 @@ public class HyperscalerController {
     @Autowired
     BeanMapper beanMapper;
 
-    @RequestMapping(path = "", method = RequestMethod.GET)
+    @RequestMapping(path = "/findAll", method = RequestMethod.GET)
     public List<HyperscalerDto> getAllFromHyperscale() {
         return this.beanMapper.mapList(this.hyperscalerService.getAllDataFromHyperscaler(), HyperscalerDto.class);
     }
