@@ -1,7 +1,8 @@
 package com.ccsw.bidoffice.person;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -21,9 +22,9 @@ public class PersonController {
     @Autowired
     private BeanMapper beanMapper;
 
-    @RequestMapping(path = "/findPage", method = RequestMethod.POST)
-    public Page<PersonDto> persons(@RequestBody PersonSearchDto personSearchDto) {
+    @RequestMapping(path = "/findFilter", method = RequestMethod.POST)
+    public List<PersonDto> findFirst15Filter(@RequestBody PersonSearchDto personSearchDto) {
 
-        return this.beanMapper.mapPage(this.personService.persons(personSearchDto), PersonDto.class);
+        return this.beanMapper.mapList(this.personService.findFirst15Filter(personSearchDto), PersonDto.class);
     }
 }

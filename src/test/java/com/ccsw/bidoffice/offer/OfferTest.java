@@ -18,7 +18,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 
-import com.ccsw.bidoffice.offer.model.ClientsOnly;
+import com.ccsw.bidoffice.offer.model.Clients;
 import com.ccsw.bidoffice.offer.model.OfferEntity;
 import com.ccsw.bidoffice.offer.model.OfferSearchDto;
 
@@ -68,8 +68,8 @@ public class OfferTest {
     @Test
     public void findClientShouldReturnAllListClients() {
 
-        List<ClientsOnly> list = new ArrayList<>();
-        list.add(mock(ClientsOnly.class));
+        List<Clients> list = new ArrayList<>();
+        list.add(mock(Clients.class));
 
         when(this.offerRepository.findFirst15DistinctByClientIgnoreCaseContaining(CLIENT_CONTAINING)).thenReturn(list);
 
@@ -82,7 +82,7 @@ public class OfferTest {
     @Test
     public void findClientShouldReturnEmptyClients() {
 
-        List<ClientsOnly> list = new ArrayList<>();
+        List<Clients> list = new ArrayList<>();
 
         when(this.offerRepository.findFirst15DistinctByClientIgnoreCaseContaining(CLIENT_NOT_CONTAINING))
                 .thenReturn(list);

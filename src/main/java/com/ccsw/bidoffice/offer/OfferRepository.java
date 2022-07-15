@@ -7,7 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
-import com.ccsw.bidoffice.offer.model.ClientsOnly;
+import com.ccsw.bidoffice.offer.model.Clients;
 import com.ccsw.bidoffice.offer.model.OfferEntity;
 
 public interface OfferRepository extends PagingAndSortingRepository<OfferEntity, Long> {
@@ -16,5 +16,6 @@ public interface OfferRepository extends PagingAndSortingRepository<OfferEntity,
     @EntityGraph(attributePaths = { "requestedBy", "managedBy", "sector", "opportunityStatus", "opportunityType" })
     Page<OfferEntity> findAll(Pageable pageable);
 
-    List<ClientsOnly> findFirst15DistinctByClientIgnoreCaseContaining(String client);
+    List<Clients> findFirst15DistinctByClientIgnoreCaseContaining(String client);
+
 }

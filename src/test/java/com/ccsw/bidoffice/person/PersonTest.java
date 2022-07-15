@@ -16,7 +16,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 
@@ -61,10 +60,10 @@ public class PersonTest {
         when(this.personRepository.findAll(any(), eq(PageRequest.of(0, 15))))
                 .thenReturn(new PageImpl<>(list, PageRequest.of(0, 15), list.size()));
 
-        Page<PersonEntity> persons = this.personServiceImpl.persons(personSearchDto);
+        List<PersonEntity> persons = this.personServiceImpl.findFirst15Filter(personSearchDto);
 
-        assertNotNull(persons.getContent());
-        assertEquals(TOTAL_PERSON, persons.getContent().size());
+        assertNotNull(persons);
+        assertEquals(TOTAL_PERSON, persons.size());
 
     }
 
@@ -78,9 +77,9 @@ public class PersonTest {
         when(this.personRepository.findAll(any(), eq(PageRequest.of(0, 15))))
                 .thenReturn(new PageImpl<>(list, PageRequest.of(0, 10), list.size()));
 
-        Page<PersonEntity> persons = this.personServiceImpl.persons(personSearchDto);
+        List<PersonEntity> persons = this.personServiceImpl.findFirst15Filter(personSearchDto);
 
-        assertNotNull(persons.getContent());
-        assertEquals(EMPTY_PERSON, persons.getContent().size());
+        assertNotNull(persons);
+        assertEquals(EMPTY_PERSON, persons.size());
     }
 }

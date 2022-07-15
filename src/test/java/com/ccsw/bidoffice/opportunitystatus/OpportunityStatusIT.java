@@ -1,4 +1,4 @@
-package com.ccsw.bidoffice.projectType;
+package com.ccsw.bidoffice.opportunitystatus;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -17,32 +17,30 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.annotation.DirtiesContext;
 
 import com.ccsw.bidoffice.config.BaseITAbstract;
-import com.ccsw.bidoffice.projecttype.model.ProjectTypeDto;
+import com.ccsw.bidoffice.opportunitystatus.model.OpportunityStatusDto;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
-public class ProjectTypeIT extends BaseITAbstract {
+public class OpportunityStatusIT extends BaseITAbstract {
 
-    public static final String SERVICE_PATH = "/projecttype/";
+    public static final String SERVICE_PATH = "/opportunitystatus/";
 
-    public static final Integer TOTAL_PROJECT_TYPE = 4;
+    public static final Integer TOTAL_OPPORTUNITY_STATUS = 4;
 
-    ParameterizedTypeReference<List<ProjectTypeDto>> responseTypeProjectType = new ParameterizedTypeReference<List<ProjectTypeDto>>() {
+    ParameterizedTypeReference<List<OpportunityStatusDto>> responseTypeOpportunityStatus = new ParameterizedTypeReference<List<OpportunityStatusDto>>() {
     };
 
     @Test
-    public void shouldReturnListProjectTypeOrderByPriority() {
+    public void shouldReturnListOpportunityStatusOrderByPriority() {
 
         HttpEntity<?> httpEntity = new HttpEntity<>(getHeaders());
 
-        ResponseEntity<List<ProjectTypeDto>> response = restTemplate.exchange(
-                LOCALHOST + port + SERVICE_PATH + "findAll", HttpMethod.GET, httpEntity, responseTypeProjectType);
+        ResponseEntity<List<OpportunityStatusDto>> response = restTemplate.exchange(
+                LOCALHOST + port + SERVICE_PATH + "findAll", HttpMethod.GET, httpEntity, responseTypeOpportunityStatus);
 
         assertNotNull(response.getBody());
-        assertEquals(TOTAL_PROJECT_TYPE, response.getBody().size());
-        assertTrue(response.getBody().stream().sorted(Comparator.comparing(ProjectTypeDto::getPriority))
+        assertEquals(TOTAL_OPPORTUNITY_STATUS, response.getBody().size());
+        assertTrue(response.getBody().stream().sorted(Comparator.comparing(OpportunityStatusDto::getPriority))
                 .collect(Collectors.toList()).equals(response.getBody()));
-
     }
-
 }

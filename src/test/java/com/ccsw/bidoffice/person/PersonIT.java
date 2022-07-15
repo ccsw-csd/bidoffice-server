@@ -4,11 +4,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.List;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.data.domain.Page;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -36,7 +37,7 @@ public class PersonIT extends BaseITAbstract {
 
     public static final String LASTNAME_PERSON_ACTIVE = "El Moussaoui";
 
-    ParameterizedTypeReference<Page<PersonDto>> responseTypePagePerson = new ParameterizedTypeReference<Page<PersonDto>>() {
+    ParameterizedTypeReference<List<PersonDto>> responseTypeListPerson = new ParameterizedTypeReference<List<PersonDto>>() {
     };
 
     private PersonSearchDto personSearchDto;
@@ -52,11 +53,11 @@ public class PersonIT extends BaseITAbstract {
 
         HttpEntity<?> httpEntity = new HttpEntity<>(personSearchDto, getHeaders());
 
-        ResponseEntity<Page<PersonDto>> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH + "findPage",
-                HttpMethod.POST, httpEntity, responseTypePagePerson);
+        ResponseEntity<List<PersonDto>> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH + "findFilter",
+                HttpMethod.POST, httpEntity, responseTypeListPerson);
 
-        assertEquals(3, response.getBody().getContent().size());
-        assertTrue(response.getBody().getContent().stream().allMatch(PersonDto::getActive));
+        assertEquals(3, response.getBody().size());
+        assertTrue(response.getBody().stream().allMatch(PersonDto::getActive));
     }
 
     @Test
@@ -68,11 +69,11 @@ public class PersonIT extends BaseITAbstract {
 
         HttpEntity<?> httpEntity = new HttpEntity<>(personSearchDto, getHeaders());
 
-        ResponseEntity<Page<PersonDto>> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH + "findPage",
-                HttpMethod.POST, httpEntity, responseTypePagePerson);
+        ResponseEntity<List<PersonDto>> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH + "findFilter",
+                HttpMethod.POST, httpEntity, responseTypeListPerson);
 
-        assertEquals(1, response.getBody().getContent().size());
-        assertEquals(USERNAME_PERSON_ACTIVE, response.getBody().getContent().get(0).getUsername());
+        assertEquals(1, response.getBody().size());
+        assertEquals(USERNAME_PERSON_ACTIVE, response.getBody().get(0).getUsername());
     }
 
     @Test
@@ -84,11 +85,11 @@ public class PersonIT extends BaseITAbstract {
 
         HttpEntity<?> httpEntity = new HttpEntity<>(personSearchDto, getHeaders());
 
-        ResponseEntity<Page<PersonDto>> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH + "findPage",
-                HttpMethod.POST, httpEntity, responseTypePagePerson);
+        ResponseEntity<List<PersonDto>> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH + "findFilter",
+                HttpMethod.POST, httpEntity, responseTypeListPerson);
 
-        assertNotNull(response.getBody().getContent());
-        assertEquals(EMPTY_PERSON, response.getBody().getContent().size());
+        assertNotNull(response.getBody());
+        assertEquals(EMPTY_PERSON, response.getBody().size());
     }
 
     @Test
@@ -100,10 +101,10 @@ public class PersonIT extends BaseITAbstract {
 
         HttpEntity<?> httpEntity = new HttpEntity<>(personSearchDto, getHeaders());
 
-        ResponseEntity<Page<PersonDto>> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH + "findPage",
-                HttpMethod.POST, httpEntity, responseTypePagePerson);
+        ResponseEntity<List<PersonDto>> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH + "findFilter",
+                HttpMethod.POST, httpEntity, responseTypeListPerson);
 
-        assertNotNull(response.getBody().getContent());
-        assertEquals(EMPTY_PERSON, response.getBody().getContent().size());
+        assertNotNull(response.getBody());
+        assertEquals(EMPTY_PERSON, response.getBody().size());
     }
 }
