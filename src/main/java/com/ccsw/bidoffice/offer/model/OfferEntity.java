@@ -11,8 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.ccsw.bidoffice.opportunity_status.model.OpportunityStatusEntity;
-import com.ccsw.bidoffice.opportunity_type.model.OpportunityTypeEntity;
+import com.ccsw.bidoffice.opportunitystatus.model.OpportunityStatusEntity;
+import com.ccsw.bidoffice.opportunitytype.model.OpportunityTypeEntity;
 import com.ccsw.bidoffice.person.model.PersonEntity;
 import com.ccsw.bidoffice.sector.model.SectorEntity;
 

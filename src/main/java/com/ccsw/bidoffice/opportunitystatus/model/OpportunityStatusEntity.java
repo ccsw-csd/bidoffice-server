@@ -1,4 +1,4 @@
-package com.ccsw.bidoffice.opportunity_status.model;
+package com.ccsw.bidoffice.opportunitystatus.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

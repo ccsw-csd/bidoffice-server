@@ -2,8 +2,8 @@ package com.ccsw.bidoffice.offer.model;
 
 import java.time.LocalDate;
 
-import com.ccsw.bidoffice.opportunity_status.model.OpportunityStatusDto;
-import com.ccsw.bidoffice.opportunity_type.model.OpportunityTypeDto;
+import com.ccsw.bidoffice.opportunitystatus.model.OpportunityStatusDto;
+import com.ccsw.bidoffice.opportunitytype.model.OpportunityTypeDto;
 import com.ccsw.bidoffice.person.model.PersonDto;
 import com.ccsw.bidoffice.sector.model.SectorDto;
 
