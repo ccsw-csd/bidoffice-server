@@ -15,9 +15,9 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Sort;
 
-import com.ccsw.bidoffice.file_type.FileTypeRepository;
-import com.ccsw.bidoffice.file_type.FileTypeServiceImpl;
-import com.ccsw.bidoffice.file_type.model.FileTypeEntity;
+import com.ccsw.bidoffice.filetype.FileTypeRepository;
+import com.ccsw.bidoffice.filetype.FileTypeServiceImpl;
+import com.ccsw.bidoffice.filetype.model.FileTypeEntity;
 
 @ExtendWith(MockitoExtension.class)
 public class FileTypeTest {

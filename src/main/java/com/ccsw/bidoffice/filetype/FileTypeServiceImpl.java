@@ -1,4 +1,4 @@
-package com.ccsw.bidoffice.file_type;
+package com.ccsw.bidoffice.filetype;
 
 import java.util.List;
 
@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import com.ccsw.bidoffice.file_type.model.FileTypeEntity;
+import com.ccsw.bidoffice.filetype.model.FileTypeEntity;
 
 @Service
 public class FileTypeServiceImpl implements FileTypeService {

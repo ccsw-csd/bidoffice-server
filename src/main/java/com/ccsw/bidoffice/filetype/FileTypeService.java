@@ -1,8 +1,8 @@
-package com.ccsw.bidoffice.file_type;
+package com.ccsw.bidoffice.filetype;
 
 import java.util.List;
 
-import com.ccsw.bidoffice.file_type.model.FileTypeEntity;
+import com.ccsw.bidoffice.filetype.model.FileTypeEntity;
 
 public interface FileTypeService {
 
