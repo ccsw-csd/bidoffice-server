@@ -26,11 +26,9 @@ public interface UserService {
     /**
      * Método para recuperar un listado paginado de {@link com.ccsw.bidoffice.user.model.UserEntity}
      * @param dto
-     * @param username
-     * @param name
      * @return
      */
-    Page<UserEntity> findPage(UserSearchDto dto, String username, String name);
+    Page<UserEntity> findPage(UserSearchDto dto);
 
     /**
      * Obtiene usuarios que coincidan con el filtro

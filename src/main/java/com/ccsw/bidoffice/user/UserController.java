@@ -16,7 +16,6 @@ import java.util.List;
  */
 @RequestMapping(value = "/user")
 @RestController
-@CrossOrigin(origins = "*")
 public class UserController {
 
     @Autowired
@@ -32,10 +31,8 @@ public class UserController {
     }
 
     @RequestMapping(path="/findPage", method = RequestMethod.POST)
-    public Page<UserDto> findPage(@RequestBody UserSearchDto dto,
-                                  @RequestParam(value="username", required = false) String username,
-                                  @RequestParam(value="name", required = false) String name){
-        return this.beanMapper.mapPage(this.userService.findPage(dto, username, name), UserDto.class);
+    public Page<UserDto> findPage(@RequestBody UserSearchDto dto){
+        return this.beanMapper.mapPage(this.userService.findPage(dto), UserDto.class);
     }
 
     @RequestMapping(path = "/filter", method = RequestMethod.POST)

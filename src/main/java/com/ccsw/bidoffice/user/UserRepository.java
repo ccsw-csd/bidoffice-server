@@ -3,6 +3,7 @@ package com.ccsw.bidoffice.user;
 import com.ccsw.bidoffice.user.model.UserEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
@@ -13,7 +14,7 @@ import java.util.List;
  * @author ccsw
  *
  */
-public interface UserRepository extends CrudRepository<UserEntity, Long> {
+public interface UserRepository extends CrudRepository<UserEntity, Long>, JpaSpecificationExecutor<UserEntity> {
 
     /**
      * Recupera un usuario con su username
@@ -33,7 +34,7 @@ public interface UserRepository extends CrudRepository<UserEntity, Long> {
      * @param pageable
      * @return
      */
-    @Query("select u from UserEntity u where (:username is null or u.username like '%'||:username||'%') and (:name is null or concat(first_name, ' ',last_name) like '%'||:name||'%' ) order by u.username asc" )
-    Page<UserEntity> findPage(Pageable pageable, String username, String name);
+    /*@Query("select u from UserEntity u where (:username is null or u.username like '%'||:username||'%') and (:name is null or concat(first_name, ' ',last_name) like '%'||:name||'%' ) order by u.username asc" )
+    Page<UserEntity> findAll(Pageable pageable);*/
 
 }
