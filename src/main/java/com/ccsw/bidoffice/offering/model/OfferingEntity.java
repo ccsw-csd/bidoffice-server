@@ -1,4 +1,4 @@
-package com.ccsw.bidoffice.opportunity_type.model;
+package com.ccsw.bidoffice.offering.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,8 +8,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "opportunity_type")
-public class OpportunityTypeEntity {
+@Table(name = "offering")
+public class OfferingEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -1,6 +1,6 @@
-package com.ccsw.bidoffice.opportunity_type.model;
+package com.ccsw.bidoffice.offering.model;
 
-public class OpportunityTypeDto {
+public class OfferingDto {
 
     private Long id;
 
