@@ -180,4 +180,15 @@ INSERT INTO offer (client,name,requested_date,sector_id,opportunity_status_id,op
 INSERT INTO offer (client,name,requested_date,sector_id,opportunity_status_id,opportunity_type_id) VALUES ('user3', 'user', '2022-06-30',2,1,1);
 INSERT INTO offer (client,name,requested_date,sector_id,opportunity_status_id,opportunity_type_id) VALUES ('user4', 'user', '2022-06-30',2,2,1);
 
+DROP TABLE IF EXISTS file_type;
 
+CREATE TABLE file_type (
+	id bigint NOT NULL AUTO_INCREMENT,
+  	name varchar(50) NOT NULL,
+  	priority bigint NOT NULL,
+  	PRIMARY KEY (id)
+);
+
+INSERT INTO file_type (name,priority) VALUES ( 'user1', 1);
+INSERT INTO file_type (name,priority) VALUES ( 'user2', 2);
+INSERT INTO file_type (name,priority) VALUES ( 'user3', 3);
