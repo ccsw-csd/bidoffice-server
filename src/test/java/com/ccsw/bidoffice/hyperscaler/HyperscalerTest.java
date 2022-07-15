@@ -21,7 +21,7 @@ import com.ccsw.bidoffice.hyperscaler.model.HyperscalerEntity;
 public class HyperscalerTest {
 
     @Mock
-    private HyperscalerRepository adminRepository;
+    private HyperscalerRepository hyperscalerRepository;
 
     @InjectMocks
     private HyperscalerServiceImpl hyperscalerServiceImpl;
@@ -31,13 +31,12 @@ public class HyperscalerTest {
 
         List<HyperscalerEntity> data = new ArrayList<>();
 
-        // Añadimos 4 datos en el Entity
         data.add(mock(HyperscalerEntity.class));
         data.add(mock(HyperscalerEntity.class));
         data.add(mock(HyperscalerEntity.class));
         data.add(mock(HyperscalerEntity.class));
 
-        when(adminRepository.findAll(Sort.by(Sort.Direction.ASC, "priority"))).thenReturn(data);
+        when(hyperscalerRepository.findAll(Sort.by(Sort.Direction.ASC, "priority"))).thenReturn(data);
 
         List<HyperscalerEntity> list = hyperscalerServiceImpl.getAllDataFromHyperscaler();
         assertNotNull(list);
