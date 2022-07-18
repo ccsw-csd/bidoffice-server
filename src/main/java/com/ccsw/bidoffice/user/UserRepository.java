@@ -29,12 +29,4 @@ public interface UserRepository extends CrudRepository<UserEntity, Long>, JpaSpe
     @Query("select u from UserEntity u where concat(first_name, ' ', last_name, ' ', username) LIKE %:filter% order by first_name, last_name asc")
     List<UserEntity> findUsersLikeFilter(String filter, Pageable pageable);
 
-    /**
-     * Método para recuperar un listado paginado de {@link com.ccsw.bidoffice.user.model.UserEntity}
-     * @param pageable
-     * @return
-     */
-    /*@Query("select u from UserEntity u where (:username is null or u.username like '%'||:username||'%') and (:name is null or concat(first_name, ' ',last_name) like '%'||:name||'%' ) order by u.username asc" )
-    Page<UserEntity> findAll(Pageable pageable);*/
-
 }

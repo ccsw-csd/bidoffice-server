@@ -6,18 +6,20 @@ public class UserSearchDto {
 
     String username;
 
-    String firstName;
-
-    String lastName;
-
     String name;
 
     private Pageable pageable;
 
+    /**
+     * @return name
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * @param name new value of {@link #getName}.
+     */
     public void setName(String name) {
         this.name = name;
     }
@@ -36,37 +38,6 @@ public class UserSearchDto {
         this.username = username;
     }
 
-    /**
-     * @return firstName
-     */
-    public String getFirstName() {
-        return firstName;
-    }
-
-    /**
-     * @param firstName new value of {@link #getFirstName}.
-     */
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    /**
-     * @return lastName
-     */
-    public String getLastName() {
-        return lastName;
-    }
-
-    /**
-     * @param lastName new value of {@link #getLastName}.
-     */
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    /**
-     * @return pageable
-     */
     public Pageable getPageable() {
         return pageable;
     }

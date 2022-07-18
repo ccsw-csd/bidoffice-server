@@ -1,7 +1,6 @@
 package com.ccsw.bidoffice.user;
 
-
-import com.ccsw.bidoffice.common.criteria.SearchCriteria;
+import com.ccsw.bidoffice.common.criteria.UserSearchCriteria;
 import com.ccsw.bidoffice.config.security.UserInfoAppDto;
 import com.ccsw.bidoffice.role.RoleRepository;
 import com.ccsw.bidoffice.user.model.UserEntity;
@@ -12,8 +11,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.sql.Date;
 import java.util.List;
 
 /**
@@ -47,18 +44,18 @@ public class UserServiceImpl implements UserService {
     public Page<UserEntity> findPage(UserSearchDto userSearchDto) {
 
         UserSpecification username = new UserSpecification(
-                new SearchCriteria("username", ":", userSearchDto.getUsername())
+                new UserSearchCriteria("username",null, ":", userSearchDto.getUsername())
         );
 
-        UserSpecification firstName = new UserSpecification(
-                new SearchCriteria("first_name", ":", userSearchDto.getFirstName())
+        UserSpecification firstname_lastname = new UserSpecification(
+                new UserSearchCriteria("firstName","lastName", "concat :", userSearchDto.getName())
         );
 
-        UserSpecification lastName = new UserSpecification(
-                new SearchCriteria("last_name", ":", userSearchDto.getLastName())
+        UserSpecification lastname_firstname = new UserSpecification(
+                new UserSearchCriteria("lastName","firstName", "concat :", userSearchDto.getName())
         );
 
-        Specification<UserEntity> specification = Specification.where(username).and(firstName).and(lastName);
+        Specification<UserEntity> specification = Specification.where(username).and(firstname_lastname.or(lastname_firstname));
 
         return this.userRepository.findAll(specification,userSearchDto.getPageable());
     }
