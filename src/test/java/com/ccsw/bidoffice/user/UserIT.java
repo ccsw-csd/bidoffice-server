@@ -1,6 +1,5 @@
 package com.ccsw.bidoffice.user;
 
-import com.ccsw.bidoffice.person.model.PersonDto;
 import com.ccsw.bidoffice.user.model.UserDto;
 import com.ccsw.bidoffice.user.model.UserSearchDto;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,11 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.annotation.DirtiesContext;
 
 import com.ccsw.bidoffice.config.BaseITAbstract;
-import org.springframework.web.util.UriComponentsBuilder;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 

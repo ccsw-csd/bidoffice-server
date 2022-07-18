@@ -2,7 +2,6 @@ package com.ccsw.bidoffice.user;
 
 import com.ccsw.bidoffice.config.mapper.BeanMapper;
 import com.ccsw.bidoffice.user.model.UserDto;
-import com.ccsw.bidoffice.user.model.UserEntity;
 import com.ccsw.bidoffice.user.model.UserSearchDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

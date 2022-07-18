@@ -5,7 +5,6 @@ import com.ccsw.bidoffice.user.model.UserEntity;
 import com.ccsw.bidoffice.user.model.UserSearchDto;
 import org.springframework.data.domain.Page;
 
-import java.sql.Date;
 import java.util.List;
 
 /**
