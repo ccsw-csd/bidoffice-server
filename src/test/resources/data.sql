@@ -97,18 +97,6 @@ INSERT INTO file_type (name,priority) VALUES ('Otros2', 3);
 INSERT INTO file_type (name,priority) VALUES ('Otros3', 2);
 INSERT INTO file_type (name,priority) VALUES ('Otros4', 1);
 
-CREATE TABLE hyperscaler (
-  id int(11) NOT NULL AUTO_INCREMENT,
-  name varchar(20) NOT NULL,
-  priority int(11) NOT NULL,
-  PRIMARY KEY (id),
-  UNIQUE KEY hyper_name (name)
-);
-
-INSERT INTO hyperscaler (name,priority) VALUES ('Otros', 3);
-INSERT INTO hyperscaler (name,priority) VALUES ('Otros2', 2);
-INSERT INTO hyperscaler (name,priority) VALUES ('Otros3', 4);
-INSERT INTO hyperscaler (name,priority) VALUES ('Otros4', 1);
 
 CREATE TABLE methodology (
   id int(11) NOT NULL AUTO_INCREMENT,
@@ -180,4 +168,29 @@ INSERT INTO offer (client,name,requested_date,sector_id,opportunity_status_id,op
 INSERT INTO offer (client,name,requested_date,sector_id,opportunity_status_id,opportunity_type_id) VALUES ('user3', 'user', '2022-06-30',2,1,1);
 INSERT INTO offer (client,name,requested_date,sector_id,opportunity_status_id,opportunity_type_id) VALUES ('user4', 'user', '2022-06-30',2,2,1);
 
+
+
+CREATE TABLE hyperscaler(
+	id bigint NOT NULL AUTO_INCREMENT,
+	name varchar(50) NOT NULL,
+	priority int NOT NULL,
+	PRIMARY KEY (id)
+);
+
+INSERT INTO hyperscaler (name,priority) VALUES ('Name 1',1);
+INSERT INTO hyperscaler (name,priority) VALUES ('Name 2',2);
+INSERT INTO hyperscaler (name,priority) VALUES ('Name 3',3);
+
+DROP TABLE IF EXISTS file_type;
+
+CREATE TABLE file_type (
+	id bigint NOT NULL AUTO_INCREMENT,
+  	name varchar(50) NOT NULL,
+  	priority bigint NOT NULL,
+  	PRIMARY KEY (id)
+);
+
+INSERT INTO file_type (name,priority) VALUES ( 'user1', 1);
+INSERT INTO file_type (name,priority) VALUES ( 'user2', 2);
+INSERT INTO file_type (name,priority) VALUES ( 'user3', 3);
 
