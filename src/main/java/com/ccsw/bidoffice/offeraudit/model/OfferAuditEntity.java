@@ -7,7 +7,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import com.ccsw.bidoffice.offer.model.OfferEntity;
 
 @Entity
 @Table(name = "offer_audit")
@@ -18,11 +22,9 @@ public class OfferAuditEntity {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "offer_id", nullable = false)
-    private Long offerID;
-
-    @Column(name = "username", nullable = false)
-    private String username;
+    @OneToOne
+    @JoinColumn(name = "offer_id", nullable = false)
+    private OfferEntity offer;
 
     @Column(name = "operation", nullable = false)
     private String operation;
@@ -41,20 +43,12 @@ public class OfferAuditEntity {
         this.id = id;
     }
 
-    public Long getOfferID() {
-        return offerID;
+    public OfferEntity getOffer() {
+        return offer;
     }
 
-    public void setOfferID(Long offerID) {
-        this.offerID = offerID;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
+    public void setOffer(OfferEntity offer) {
+        this.offer = offer;
     }
 
     public String getOperation() {

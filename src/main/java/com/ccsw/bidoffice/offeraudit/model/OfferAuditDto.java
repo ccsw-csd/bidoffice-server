@@ -2,11 +2,13 @@ package com.ccsw.bidoffice.offeraudit.model;
 
 import java.time.LocalDate;
 
+import com.ccsw.bidoffice.offer.model.OfferEntity;
+
 public class OfferAuditDto {
 
     private Long id;
 
-    private Long offerID;
+    private OfferEntity offer;
 
     private String username;
 
@@ -24,12 +26,12 @@ public class OfferAuditDto {
         this.id = id;
     }
 
-    public Long getOfferID() {
-        return offerID;
+    public OfferEntity getOffer() {
+        return offer;
     }
 
-    public void setOfferID(Long offerID) {
-        this.offerID = offerID;
+    public void setOffer(OfferEntity offer) {
+        this.offer = offer;
     }
 
     public String getUsername() {

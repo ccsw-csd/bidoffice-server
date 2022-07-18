@@ -5,7 +5,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import com.ccsw.bidoffice.offer.model.OfferEntity;
 
 @Entity
 @Table(name = "offer_data_team")
@@ -16,8 +20,9 @@ public class OfferDataTeamEntity {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "offer_id", nullable = false)
-    private Long offerId;
+    @OneToOne
+    @JoinColumn(name = "offer_id", nullable = false)
+    private OfferEntity offerEntity;
 
     @Column(name = "cca")
     private Boolean cca;
@@ -36,12 +41,12 @@ public class OfferDataTeamEntity {
         this.id = id;
     }
 
-    public Long getOfferId() {
-        return offerId;
+    public OfferEntity getOfferEntity() {
+        return offerEntity;
     }
 
-    public void setOfferId(Long offerId) {
-        this.offerId = offerId;
+    public void setOfferEntity(OfferEntity offerEntity) {
+        this.offerEntity = offerEntity;
     }
 
     public Boolean getCca() {
