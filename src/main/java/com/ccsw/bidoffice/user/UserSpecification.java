@@ -31,6 +31,14 @@ public class UserSpecification implements Specification<UserEntity> {
             exp = builder.concat(exp, root.<String>get(criteria.getKey2()));
             return builder.like(exp,"%" + criteria.getValue() + "%");
         }
+        else if(criteria.getOperation().equalsIgnoreCase("concat concat :")&& criteria.getValue() != null){
+            Expression<String> exp = builder.concat(root.<String>get(criteria.getKey()), " ");
+            exp = builder.concat(exp, root.<String>get(criteria.getKey2()));
+            exp = builder.concat(exp, " ");
+            exp = builder.concat(exp, root.<String>get(criteria.getKey3()));
+            query.orderBy(builder.desc(root.<String>get(criteria.getKey())), builder.desc(root.<String>get(criteria.getKey2())));
+            return builder.like(exp,"%" + criteria.getValue() + "%");
+        }
         return null;
     }
 }

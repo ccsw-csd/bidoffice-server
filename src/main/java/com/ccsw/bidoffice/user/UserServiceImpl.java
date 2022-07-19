@@ -44,18 +44,18 @@ public class UserServiceImpl implements UserService {
     public Page<UserEntity> findPage(UserSearchDto userSearchDto) {
 
         UserSpecification username = new UserSpecification(
-                new UserSearchCriteria("username",null, ":", userSearchDto.getUsername())
+                new UserSearchCriteria("username", null, null, ":", userSearchDto.getUsername())
         );
 
-        UserSpecification firstname_lastname = new UserSpecification(
-                new UserSearchCriteria("firstName","lastName", "concat :", userSearchDto.getName())
+        UserSpecification firstnameLastname = new UserSpecification(
+                new UserSearchCriteria("firstName", "lastName", null, "concat :", userSearchDto.getName())
         );
 
-        UserSpecification lastname_firstname = new UserSpecification(
-                new UserSearchCriteria("lastName","firstName", "concat :", userSearchDto.getName())
+        UserSpecification lastnameFirstname = new UserSpecification(
+                new UserSearchCriteria("lastName", "firstName", null, "concat :", userSearchDto.getName())
         );
 
-        Specification<UserEntity> specification = Specification.where(username).and(firstname_lastname.or(lastname_firstname));
+        Specification<UserEntity> specification = Specification.where(username).and(firstnameLastname.or(lastnameFirstname));
 
         return this.userRepository.findAll(specification,userSearchDto.getPageable());
     }
@@ -80,7 +80,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<UserEntity> findByFilter(String filter) {
 
-        return this.userRepository.findUsersLikeFilter(filter, PageRequest.of(0, 15));
+        UserSpecification firstnameLastnameUsername = new UserSpecification(
+                new UserSearchCriteria("firstName", "lastName", "username", "concat concat :", filter)
+        );
+
+        Specification<UserEntity> specification = Specification.where(firstnameLastnameUsername);
+
+        return this.userRepository.findUsersLikeFilter(specification, PageRequest.of(0, 15));
     }
 
 }

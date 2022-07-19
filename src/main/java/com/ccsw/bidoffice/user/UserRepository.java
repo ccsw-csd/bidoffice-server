@@ -2,6 +2,7 @@ package com.ccsw.bidoffice.user;
 
 import com.ccsw.bidoffice.user.model.UserEntity;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -23,8 +24,6 @@ public interface UserRepository extends CrudRepository<UserEntity, Long>, JpaSpe
      */
     UserEntity getByUsername(String username);
 
-    //TODO cambiar por spec
-    @Query("select u from UserEntity u where concat(first_name, ' ', last_name, ' ', username) LIKE %:filter% order by first_name, last_name asc")
-    List<UserEntity> findUsersLikeFilter(String filter, Pageable pageable);
+    List<UserEntity> findUsersLikeFilter(Specification spec, Pageable pageable);
 
 }
