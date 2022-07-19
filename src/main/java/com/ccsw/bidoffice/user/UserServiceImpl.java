@@ -86,7 +86,7 @@ public class UserServiceImpl implements UserService {
 
         Specification<UserEntity> specification = Specification.where(firstnameLastnameUsername);
 
-        return this.userRepository.findUsersLikeFilter(specification, PageRequest.of(0, 15));
+        return this.userRepository.findAll(specification, PageRequest.of(0, 15)).getContent();
     }
 
 }

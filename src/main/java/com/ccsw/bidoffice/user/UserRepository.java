@@ -24,6 +24,4 @@ public interface UserRepository extends CrudRepository<UserEntity, Long>, JpaSpe
      */
     UserEntity getByUsername(String username);
 
-    List<UserEntity> findUsersLikeFilter(Specification spec, Pageable pageable);
-
 }
