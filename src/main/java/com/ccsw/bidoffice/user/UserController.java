@@ -2,7 +2,9 @@ package com.ccsw.bidoffice.user;
 
 import com.ccsw.bidoffice.config.mapper.BeanMapper;
 import com.ccsw.bidoffice.user.model.UserDto;
+import com.ccsw.bidoffice.user.model.UserSearchDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,6 +27,11 @@ public class UserController {
     public UserDto getEstimation(@PathVariable String username) {
 
         return this.beanMapper.map(this.userService.getByUsername(username), UserDto.class);
+    }
+
+    @RequestMapping(path="/findPage", method = RequestMethod.POST)
+    public Page<UserDto> findPage(@RequestBody UserSearchDto dto){
+        return this.beanMapper.mapPage(this.userService.findPage(dto), UserDto.class);
     }
 
     @RequestMapping(path = "/filter", method = RequestMethod.POST)
