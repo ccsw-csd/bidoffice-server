@@ -1,6 +1,6 @@
 package com.ccsw.bidoffice.common.criteria;
 
-public class UserSearchCriteria {
+public class TernarySearchCriteria {
 
     private String key;
     private String key2;
@@ -8,7 +8,7 @@ public class UserSearchCriteria {
     private String operation;
     private Object value;
 
-    public UserSearchCriteria(String key, String key2, String key3, String operation, Object value) {
+    public TernarySearchCriteria(String key, String key2, String key3, String operation, Object value) {
         this.key = key;
         this.key2 = key2;
         this.key3 = key3;

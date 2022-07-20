@@ -1,6 +1,6 @@
 package com.ccsw.bidoffice.user;
 
-import com.ccsw.bidoffice.common.criteria.UserSearchCriteria;
+import com.ccsw.bidoffice.common.criteria.TernarySearchCriteria;
 import com.ccsw.bidoffice.config.security.UserInfoAppDto;
 import com.ccsw.bidoffice.role.RoleRepository;
 import com.ccsw.bidoffice.user.model.UserEntity;
@@ -44,15 +44,15 @@ public class UserServiceImpl implements UserService {
     public Page<UserEntity> findPage(UserSearchDto userSearchDto) {
 
         UserSpecification username = new UserSpecification(
-                new UserSearchCriteria("username", null, null, ":", userSearchDto.getUsername())
+                new TernarySearchCriteria("username", null, null, ":", userSearchDto.getUsername())
         );
 
         UserSpecification firstnameLastname = new UserSpecification(
-                new UserSearchCriteria("firstName", "lastName", null, "concat :", userSearchDto.getName())
+                new TernarySearchCriteria("firstName", "lastName", null, "concat :", userSearchDto.getName())
         );
 
         UserSpecification lastnameFirstname = new UserSpecification(
-                new UserSearchCriteria("lastName", "firstName", null, "concat :", userSearchDto.getName())
+                new TernarySearchCriteria("lastName", "firstName", null, "concat :", userSearchDto.getName())
         );
 
         Specification<UserEntity> specification = Specification.where(username).and(firstnameLastname.or(lastnameFirstname));
@@ -81,7 +81,7 @@ public class UserServiceImpl implements UserService {
     public List<UserEntity> findByFilter(String filter) {
 
         UserSpecification firstnameLastnameUsername = new UserSpecification(
-                new UserSearchCriteria("firstName", "lastName", "username", "concat concat :", filter)
+                new TernarySearchCriteria("firstName", "lastName", "username", "concat concat :", filter)
         );
 
         Specification<UserEntity> specification = Specification.where(firstnameLastnameUsername);

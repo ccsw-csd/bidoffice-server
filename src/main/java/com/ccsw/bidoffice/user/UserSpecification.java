@@ -1,6 +1,6 @@
 package com.ccsw.bidoffice.user;
 
-import com.ccsw.bidoffice.common.criteria.UserSearchCriteria;
+import com.ccsw.bidoffice.common.criteria.TernarySearchCriteria;
 import com.ccsw.bidoffice.user.model.UserEntity;
 import org.springframework.data.jpa.domain.Specification;
 
@@ -10,9 +10,9 @@ public class UserSpecification implements Specification<UserEntity> {
 
     private static final long serialVersionUID = 1L;
 
-    private final UserSearchCriteria criteria;
+    private final TernarySearchCriteria criteria;
 
-    public UserSpecification(UserSearchCriteria criteria){
+    public UserSpecification(TernarySearchCriteria criteria){
         this.criteria = criteria;
     }
 
