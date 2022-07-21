@@ -23,6 +23,11 @@ CREATE TABLE user (
 );
 
 INSERT INTO user (id,username,email,first_name,last_name,role) VALUES (1,'USERNAME','USER@USER.COM','NAME','LASTNAME',1);
+INSERT INTO user (id,username,email,first_name,last_name,role) VALUES (2,'USERNAME2','USER2@USER.COM','NAME','LASTNAME',1);
+INSERT INTO user (id,username,email,first_name,last_name,role) VALUES (3,'USERNAME3','USER3@USER.COM','NAME','LASTNAME',1);
+INSERT INTO user (id,username,email,first_name,last_name,role) VALUES (4,'USERNAME4','USER4@USER.COM','NAME','LASTNAME',1);
+INSERT INTO user (id,username,email,first_name,last_name,role) VALUES (5,'USERNAME5','USER5@USER.COM','NAME','LASTNAME',1);
+INSERT INTO user (id,username,email,first_name,last_name,role) VALUES (6,'USERNAME6','USER6@USER.COM','NAME6','LASTNAME6',1);
 
 CREATE TABLE opportunity_status (
   id int(11) NOT NULL AUTO_INCREMENT,
