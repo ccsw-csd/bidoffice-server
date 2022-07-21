@@ -18,9 +18,9 @@ public class OfferServiceImpl implements OfferService {
     private OfferRepository offerRepository;
 
     @Override
-    public Page<OfferEntity> findPage(OfferSearchDto dto) {
+    public OfferEntity getOffer(Long id) {
 
-        return this.offerRepository.findAll(dto.getPageable());
+        return this.offerRepository.findById(id).orElse(null);
     }
 
     @Override
@@ -31,9 +31,9 @@ public class OfferServiceImpl implements OfferService {
     }
 
     @Override
-    public OfferEntity getOffer(Long id) {
+    public Page<OfferEntity> findPage(OfferSearchDto dto) {
 
-        return this.offerRepository.findById(id).orElse(null);
+        return this.offerRepository.findAll(dto.getPageable());
     }
 
 }

@@ -1,12 +1,12 @@
 package com.ccsw.bidoffice.offerdatateam.model;
 
-import com.ccsw.bidoffice.offer.model.OfferEntity;
+import com.ccsw.bidoffice.offer.model.OfferDto;
 
 public class OfferDataTeamDto {
 
     private Long id;
 
-    private OfferEntity offerEntity;
+    private OfferDto offer;
 
     private Boolean cca;
 
@@ -22,12 +22,12 @@ public class OfferDataTeamDto {
         this.id = id;
     }
 
-    public OfferEntity getOfferEntity() {
-        return offerEntity;
+    public OfferDto getOffer() {
+        return offer;
     }
 
-    public void setOfferEntity(OfferEntity offerEntity) {
-        this.offerEntity = offerEntity;
+    public void setOffer(OfferDto offer) {
+        this.offer = offer;
     }
 
     public Boolean getCca() {

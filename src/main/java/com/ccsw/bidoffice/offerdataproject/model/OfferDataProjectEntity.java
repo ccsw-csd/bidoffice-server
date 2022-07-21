@@ -6,10 +6,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.ccsw.bidoffice.offer.model.OfferEntity;
+import com.ccsw.bidoffice.projecttype.model.ProjectTypeEntity;
 
 @Entity
 @Table(name = "offer_data_project")
@@ -22,12 +24,13 @@ public class OfferDataProjectEntity {
 
     @OneToOne
     @JoinColumn(name = "offer_id", nullable = false)
-    private OfferEntity offerEntity;
+    private OfferEntity offer;
 
-    @Column(name = "project_type_id", nullable = false)
-    private Long projectTypeId;
+    @ManyToOne
+    @JoinColumn(name = "project_type_id", nullable = false)
+    private ProjectTypeEntity projectType;
 
-    @Column(name = "project_type_id")
+    @Column(name = "amount")
     private Double amount;
 
     @Column(name = "ftes")
@@ -44,20 +47,20 @@ public class OfferDataProjectEntity {
         this.id = id;
     }
 
-    public OfferEntity getOfferEntity() {
-        return offerEntity;
+    public OfferEntity getOffer() {
+        return offer;
     }
 
-    public void setOfferEntity(OfferEntity offerEntity) {
-        this.offerEntity = offerEntity;
+    public void setOffer(OfferEntity offer) {
+        this.offer = offer;
     }
 
-    public Long getProjectTypeId() {
-        return projectTypeId;
+    public ProjectTypeEntity getProjectType() {
+        return projectType;
     }
 
-    public void setProjectTypeId(Long projectTypeId) {
-        this.projectTypeId = projectTypeId;
+    public void setProjectType(ProjectTypeEntity projectType) {
+        this.projectType = projectType;
     }
 
     public Double getAmount() {

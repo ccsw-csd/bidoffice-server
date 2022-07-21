@@ -2,6 +2,7 @@ package com.ccsw.bidoffice.offer;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.util.List;
 
@@ -17,6 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.annotation.DirtiesContext;
 
 import com.ccsw.bidoffice.config.BaseITAbstract;
+import com.ccsw.bidoffice.offer.model.OfferDto;
 import com.ccsw.bidoffice.offer.model.OfferItemListDto;
 import com.ccsw.bidoffice.offer.model.OfferSearchDto;
 
@@ -35,6 +37,10 @@ public class OfferIT extends BaseITAbstract {
     public static final String CLIENT_CONTAINING = "user";
 
     public static final String CLIENT_NOT_CONTAINING = "admin";
+
+    public static final Long ID_OFFER_EXIST = 1L;
+
+    public static final Long ID_OFFER_NOT_EXIST = 0L;
 
     private OfferSearchDto offerSearchDto;
 
@@ -89,6 +95,33 @@ public class OfferIT extends BaseITAbstract {
 
         assertNotNull(response.getBody());
         assertEquals(EMPTY_DATA, response.getBody().size());
+
+    }
+
+    @Test
+    public void findOfferNotExistIdOfferShouldEmpty() {
+
+        HttpEntity<?> httpEntity = new HttpEntity<>(getHeaders());
+
+        ResponseEntity<OfferDto> response = restTemplate.exchange(
+                LOCALHOST + port + SERVICE_PATH + "findOffer/" + ID_OFFER_NOT_EXIST, HttpMethod.GET, httpEntity,
+                OfferDto.class);
+
+        assertNull(response.getBody());
+
+    }
+
+    @Test
+    public void findOfferExistIdOfferShouldOffer() {
+
+        HttpEntity<?> httpEntity = new HttpEntity<>(getHeaders());
+
+        ResponseEntity<OfferDto> response = restTemplate.exchange(
+                LOCALHOST + port + SERVICE_PATH + "findOffer/" + ID_OFFER_EXIST, HttpMethod.GET, httpEntity,
+                OfferDto.class);
+
+        assertNotNull(response.getBody());
+        assertEquals(ID_OFFER_EXIST, response.getBody().getId());
 
     }
 

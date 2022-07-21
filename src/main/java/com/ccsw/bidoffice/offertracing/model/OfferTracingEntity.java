@@ -1,4 +1,4 @@
-package com.ccsw.bidoffice.offeraudit.model;
+package com.ccsw.bidoffice.offertracing.model;
 
 import java.time.LocalDate;
 
@@ -8,32 +8,34 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.ccsw.bidoffice.offer.model.OfferEntity;
+import com.ccsw.bidoffice.person.model.PersonEntity;
 
 @Entity
-@Table(name = "offer_audit")
-public class OfferAuditEntity {
+@Table(name = "offer_tracing")
+public class OfferTracingEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "offer_id", nullable = false)
     private OfferEntity offer;
 
-    @Column(name = "operation", nullable = false)
-    private String operation;
+    @ManyToOne
+    @JoinColumn(name = "person_id", nullable = false)
+    private PersonEntity person;
+
+    @Column(name = "comment", nullable = false)
+    private String comment;
 
     @Column(name = "date", nullable = false)
     private LocalDate date;
-
-    @Column(name = "comment")
-    private String comment;
 
     public Long getId() {
         return id;
@@ -51,20 +53,12 @@ public class OfferAuditEntity {
         this.offer = offer;
     }
 
-    public String getOperation() {
-        return operation;
+    public PersonEntity getPerson() {
+        return person;
     }
 
-    public void setOperation(String operation) {
-        this.operation = operation;
-    }
-
-    public LocalDate getDate() {
-        return date;
-    }
-
-    public void setDate(LocalDate date) {
-        this.date = date;
+    public void setPerson(PersonEntity person) {
+        this.person = person;
     }
 
     public String getComment() {
@@ -73,5 +67,13 @@ public class OfferAuditEntity {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
     }
 }

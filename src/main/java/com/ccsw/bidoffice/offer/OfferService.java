@@ -9,9 +9,10 @@ import com.ccsw.bidoffice.offer.model.OfferSearchDto;
 
 public interface OfferService {
 
-    Page<OfferEntity> findPage(OfferSearchDto dto);
+    OfferEntity getOffer(Long id);
 
     List<String> findFirst15DistinctClientLikeFilter(String filter);
 
-    OfferEntity getOffer(Long id);
+    Page<OfferEntity> findPage(OfferSearchDto dto);
+
 }

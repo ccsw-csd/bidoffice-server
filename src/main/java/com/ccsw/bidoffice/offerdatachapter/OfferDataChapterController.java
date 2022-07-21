@@ -19,10 +19,10 @@ public class OfferDataChapterController {
     @Autowired
     private BeanMapper beanMapper;
 
-    @RequestMapping(path = "/{id}", method = RequestMethod.GET)
-    public OfferDataChapterDto getOfferDataChapter(@PathVariable Long id) {
+    @RequestMapping(path = "/findOfferDataChapter/{id}", method = RequestMethod.GET)
+    public OfferDataChapterDto findByOfferId(@PathVariable Long id) {
 
-        return this.beanMapper.map(this.offerDataChapterService.getOfferDataChapter(id), OfferDataChapterDto.class);
+        return this.beanMapper.map(this.offerDataChapterService.findByOfferId(id), OfferDataChapterDto.class);
     }
 
 }

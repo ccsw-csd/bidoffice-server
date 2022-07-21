@@ -1,12 +1,12 @@
 package com.ccsw.bidoffice.offerdatachapter.model;
 
-import com.ccsw.bidoffice.offer.model.OfferEntity;
+import com.ccsw.bidoffice.offer.model.OfferDto;
 
 public class OfferDataChapterDto {
 
     private Long id;
 
-    private OfferEntity offer;
+    private OfferDto offer;
 
     private Boolean presentation;
 
@@ -38,11 +38,11 @@ public class OfferDataChapterDto {
         this.id = id;
     }
 
-    public OfferEntity getOffer() {
+    public OfferDto getOffer() {
         return offer;
     }
 
-    public void setOffer(OfferEntity offer) {
+    public void setOffer(OfferDto offer) {
         this.offer = offer;
     }
 

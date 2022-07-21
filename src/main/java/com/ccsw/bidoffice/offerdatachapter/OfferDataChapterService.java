@@ -4,5 +4,5 @@ import com.ccsw.bidoffice.offerdatachapter.model.OfferDataChapterEntity;
 
 public interface OfferDataChapterService {
 
-    OfferDataChapterEntity getOfferDataChapter(Long id);
+    OfferDataChapterEntity findByOfferId(Long id);
 }

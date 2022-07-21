@@ -22,7 +22,7 @@ public class OfferDataTeamEntity {
 
     @OneToOne
     @JoinColumn(name = "offer_id", nullable = false)
-    private OfferEntity offerEntity;
+    private OfferEntity offer;
 
     @Column(name = "cca")
     private Boolean cca;
@@ -30,7 +30,7 @@ public class OfferDataTeamEntity {
     @Column(name = "multitower")
     private Boolean multitower;
 
-    @Column(name = "multitower")
+    @Column(name = "practices")
     private String practices;
 
     public Long getId() {
@@ -41,12 +41,12 @@ public class OfferDataTeamEntity {
         this.id = id;
     }
 
-    public OfferEntity getOfferEntity() {
-        return offerEntity;
+    public OfferEntity getOffer() {
+        return offer;
     }
 
-    public void setOfferEntity(OfferEntity offerEntity) {
-        this.offerEntity = offerEntity;
+    public void setOffer(OfferEntity offer) {
+        this.offer = offer;
     }
 
     public Boolean getCca() {

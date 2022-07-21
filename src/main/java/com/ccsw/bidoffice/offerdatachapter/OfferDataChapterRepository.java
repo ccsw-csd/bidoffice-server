@@ -6,4 +6,5 @@ import com.ccsw.bidoffice.offerdatachapter.model.OfferDataChapterEntity;
 
 public interface OfferDataChapterRepository extends CrudRepository<OfferDataChapterEntity, Long> {
 
+    OfferDataChapterEntity findByOfferId(Long offerId);
 }

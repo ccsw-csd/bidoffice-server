@@ -1,14 +1,15 @@
 package com.ccsw.bidoffice.offerdataproject.model;
 
-import com.ccsw.bidoffice.offer.model.OfferEntity;
+import com.ccsw.bidoffice.offer.model.OfferDto;
+import com.ccsw.bidoffice.projecttype.model.ProjectTypeDto;
 
 public class OfferDataProjectDto {
 
     private Long id;
 
-    private OfferEntity offerEntity;
+    private OfferDto offer;
 
-    private Long projectTypeId;
+    private ProjectTypeDto projectType;
 
     private Double amount;
 
@@ -24,20 +25,20 @@ public class OfferDataProjectDto {
         this.id = id;
     }
 
-    public OfferEntity getOfferEntity() {
-        return offerEntity;
+    public OfferDto getOffer() {
+        return offer;
     }
 
-    public void setOfferEntity(OfferEntity offerEntity) {
-        this.offerEntity = offerEntity;
+    public void setOffer(OfferDto offer) {
+        this.offer = offer;
     }
 
-    public Long getProjectTypeId() {
-        return projectTypeId;
+    public ProjectTypeDto getProjectType() {
+        return projectType;
     }
 
-    public void setProjectTypeId(Long projectTypeId) {
-        this.projectTypeId = projectTypeId;
+    public void setProjectType(ProjectTypeDto projectType) {
+        this.projectType = projectType;
     }
 
     public Double getAmount() {

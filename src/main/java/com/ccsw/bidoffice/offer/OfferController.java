@@ -25,10 +25,10 @@ public class OfferController {
     @Autowired
     private BeanMapper beanMapper;
 
-    @RequestMapping(path = "/findPage", method = RequestMethod.POST)
-    public Page<OfferItemListDto> findPage(@RequestBody OfferSearchDto dto) {
+    @RequestMapping(path = "/findOffer/{id}", method = RequestMethod.GET)
+    public OfferDto getOffer(@PathVariable Long id) {
 
-        return this.beanMapper.mapPage(this.offerService.findPage(dto), OfferItemListDto.class);
+        return this.beanMapper.map(this.offerService.getOffer(id), OfferDto.class);
     }
 
     @RequestMapping(path = "/client/{filter}", method = RequestMethod.GET)
@@ -37,9 +37,10 @@ public class OfferController {
         return this.offerService.findFirst15DistinctClientLikeFilter(filter);
     }
 
-    @RequestMapping(path = "/{id}", method = RequestMethod.GET)
-    public OfferDto getOffer(@PathVariable Long id) {
+    @RequestMapping(path = "/findPage", method = RequestMethod.POST)
+    public Page<OfferItemListDto> findPage(@RequestBody OfferSearchDto dto) {
 
-        return null;
+        return this.beanMapper.mapPage(this.offerService.findPage(dto), OfferItemListDto.class);
     }
+
 }
