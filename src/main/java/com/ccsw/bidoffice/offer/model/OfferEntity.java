@@ -1,16 +1,30 @@
 package com.ccsw.bidoffice.offer.model;
 
 import java.time.LocalDate;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.ccsw.bidoffice.offerdatachapter.model.OfferDataChapterEntity;
+import com.ccsw.bidoffice.offerdatafile.model.OfferDataFileEntity;
+import com.ccsw.bidoffice.offerdataproject.model.OfferDataProjectEntity;
+import com.ccsw.bidoffice.offerdatateam.model.OfferDataTeamEntity;
+import com.ccsw.bidoffice.offerdatatechnology.model.OfferDataTechnologyEntity;
+import com.ccsw.bidoffice.offeroffering.model.OfferOfferingEntity;
+import com.ccsw.bidoffice.offerteamperson.model.OfferTeamPersonEntity;
+import com.ccsw.bidoffice.offertechnology.model.OfferTechnologyEntity;
+import com.ccsw.bidoffice.offertracing.model.OfferTracingEntity;
 import com.ccsw.bidoffice.opportunitystatus.model.OpportunityStatusEntity;
 import com.ccsw.bidoffice.opportunitytype.model.OpportunityTypeEntity;
 import com.ccsw.bidoffice.person.model.PersonEntity;
@@ -31,14 +45,14 @@ public class OfferEntity {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "requested_by")
     private PersonEntity requestedBy;
 
     @Column(name = "requested_date", nullable = false)
     private LocalDate requestedDate;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "managed_by")
     private PersonEntity managedBy;
 
@@ -55,11 +69,11 @@ public class OfferEntity {
     @Column(name = "delivery_date")
     private LocalDate deliveryDate;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "opportunity_status_id", nullable = false)
     private OpportunityStatusEntity opportunityStatus;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "opportunity_type_id", nullable = false)
     private OpportunityTypeEntity opportunityType;
 
@@ -68,6 +82,33 @@ public class OfferEntity {
 
     @Column(name = "observations")
     private String observations;
+
+    @OneToOne(mappedBy = "offer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private OfferDataChapterEntity offerDataChapter;
+
+    @OneToMany(mappedBy = "offer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<OfferDataFileEntity> offerDataFiles;
+
+    @OneToOne(mappedBy = "offer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private OfferDataProjectEntity offerDataProject;
+
+    @OneToOne(mappedBy = "offer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private OfferDataTeamEntity offerDataTeam;
+
+    @OneToOne(mappedBy = "offer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private OfferDataTechnologyEntity offerDataTechnology;
+
+    @OneToMany(mappedBy = "offer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<OfferOfferingEntity> offerOfferings;
+
+    @OneToMany(mappedBy = "offer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<OfferTeamPersonEntity> offerTeamPersons;
+
+    @OneToMany(mappedBy = "offer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<OfferTechnologyEntity> offerTechnologys;
+
+    @OneToMany(mappedBy = "offer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<OfferTracingEntity> offerTracings;
 
     public Long getId() {
         return id;
@@ -179,5 +220,77 @@ public class OfferEntity {
 
     public void setObservations(String observations) {
         this.observations = observations;
+    }
+
+    public OfferDataChapterEntity getOfferDataChapter() {
+        return offerDataChapter;
+    }
+
+    public void setOfferDataChapter(OfferDataChapterEntity offerDataChapter) {
+        this.offerDataChapter = offerDataChapter;
+    }
+
+    public Set<OfferDataFileEntity> getOfferDataFiles() {
+        return offerDataFiles;
+    }
+
+    public void setOfferDataFiles(Set<OfferDataFileEntity> offerDataFiles) {
+        this.offerDataFiles = offerDataFiles;
+    }
+
+    public OfferDataProjectEntity getOfferDataProject() {
+        return offerDataProject;
+    }
+
+    public void setOfferDataProject(OfferDataProjectEntity offerDataProject) {
+        this.offerDataProject = offerDataProject;
+    }
+
+    public OfferDataTeamEntity getOfferDataTeam() {
+        return offerDataTeam;
+    }
+
+    public void setOfferDataTeam(OfferDataTeamEntity offerDataTeam) {
+        this.offerDataTeam = offerDataTeam;
+    }
+
+    public OfferDataTechnologyEntity getOfferDataTechnology() {
+        return offerDataTechnology;
+    }
+
+    public void setOfferDataTechnology(OfferDataTechnologyEntity offerDataTechnology) {
+        this.offerDataTechnology = offerDataTechnology;
+    }
+
+    public Set<OfferOfferingEntity> getOfferOfferings() {
+        return offerOfferings;
+    }
+
+    public void setOfferOfferings(Set<OfferOfferingEntity> offerOfferings) {
+        this.offerOfferings = offerOfferings;
+    }
+
+    public Set<OfferTeamPersonEntity> getOfferTeamPersons() {
+        return offerTeamPersons;
+    }
+
+    public void setOfferTeamPersons(Set<OfferTeamPersonEntity> offerTeamPersons) {
+        this.offerTeamPersons = offerTeamPersons;
+    }
+
+    public Set<OfferTechnologyEntity> getOfferTechnologys() {
+        return offerTechnologys;
+    }
+
+    public void setOfferTechnologys(Set<OfferTechnologyEntity> offerTechnologys) {
+        this.offerTechnologys = offerTechnologys;
+    }
+
+    public Set<OfferTracingEntity> getOfferTracings() {
+        return offerTracings;
+    }
+
+    public void setOfferTracings(Set<OfferTracingEntity> offerTracings) {
+        this.offerTracings = offerTracings;
     }
 }

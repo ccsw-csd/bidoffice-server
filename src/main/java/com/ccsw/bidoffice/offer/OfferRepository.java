@@ -13,7 +13,9 @@ import com.ccsw.bidoffice.offer.model.OfferEntity;
 public interface OfferRepository extends PagingAndSortingRepository<OfferEntity, Long> {
 
     @Override
-    @EntityGraph(attributePaths = { "requestedBy", "managedBy", "sector", "opportunityStatus", "opportunityType" })
+    @EntityGraph(attributePaths = { "requestedBy", "managedBy", "sector", "opportunityStatus", "opportunityType",
+            "offerDataChapter", "offerDataFiles", "offerDataProject", "offerDataTeam", "offerDataTechnology",
+            "offerOfferings", "offerTeamPersons", "offerTechnologys", "offerTracings" })
     Page<OfferEntity> findAll(Pageable pageable);
 
     List<Clients> findFirst15DistinctByClientIgnoreCaseContaining(String client);

@@ -2,14 +2,11 @@ package com.ccsw.bidoffice.offertracing.model;
 
 import java.time.LocalDate;
 
-import com.ccsw.bidoffice.offer.model.OfferDto;
 import com.ccsw.bidoffice.person.model.PersonDto;
 
 public class OfferTracingDto {
 
     private Long id;
-
-    private OfferDto offer;
 
     private PersonDto person;
 
@@ -23,14 +20,6 @@ public class OfferTracingDto {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public OfferDto getOffer() {
-        return offer;
-    }
-
-    public void setOffer(OfferDto offer) {
-        this.offer = offer;
     }
 
     public PersonDto getPerson() {

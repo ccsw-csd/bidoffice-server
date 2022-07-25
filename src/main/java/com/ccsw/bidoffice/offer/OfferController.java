@@ -25,7 +25,7 @@ public class OfferController {
     @Autowired
     private BeanMapper beanMapper;
 
-    @RequestMapping(path = "/findOffer/{id}", method = RequestMethod.GET)
+    @RequestMapping(path = "/{id}", method = RequestMethod.GET)
     public OfferDto getOffer(@PathVariable Long id) {
 
         return this.beanMapper.map(this.offerService.getOffer(id), OfferDto.class);

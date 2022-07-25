@@ -103,9 +103,8 @@ public class OfferIT extends BaseITAbstract {
 
         HttpEntity<?> httpEntity = new HttpEntity<>(getHeaders());
 
-        ResponseEntity<OfferDto> response = restTemplate.exchange(
-                LOCALHOST + port + SERVICE_PATH + "findOffer/" + ID_OFFER_NOT_EXIST, HttpMethod.GET, httpEntity,
-                OfferDto.class);
+        ResponseEntity<OfferDto> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH + ID_OFFER_NOT_EXIST,
+                HttpMethod.GET, httpEntity, OfferDto.class);
 
         assertNull(response.getBody());
 
@@ -116,9 +115,8 @@ public class OfferIT extends BaseITAbstract {
 
         HttpEntity<?> httpEntity = new HttpEntity<>(getHeaders());
 
-        ResponseEntity<OfferDto> response = restTemplate.exchange(
-                LOCALHOST + port + SERVICE_PATH + "findOffer/" + ID_OFFER_EXIST, HttpMethod.GET, httpEntity,
-                OfferDto.class);
+        ResponseEntity<OfferDto> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH + ID_OFFER_EXIST,
+                HttpMethod.GET, httpEntity, OfferDto.class);
 
         assertNotNull(response.getBody());
         assertEquals(ID_OFFER_EXIST, response.getBody().getId());

@@ -217,7 +217,7 @@ CREATE TABLE offer_data_chapter (
  	CONSTRAINT offer_offer_fk8 FOREIGN KEY (offer_id) REFERENCES offer (id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-INSERT INTO offer_data_chapter (offer_id) VALUES (1);
+INSERT INTO offer_data_chapter (offer_id, presentation, capabilities, approach) VALUES (1,0,0,1);
 
 CREATE TABLE offer_data_files (
  	id int(11) NOT NULL AUTO_INCREMENT,
@@ -231,8 +231,8 @@ CREATE TABLE offer_data_files (
 	CONSTRAINT offer_offer_fk5 FOREIGN KEY (offer_id) REFERENCES offer (id) ON DELETE CASCADE ON UPDATE CASCADE
 ); 
 
-INSERT INTO offer_data_files (offer_id,name,file_type_id,link) VALUES (1, 'admin', 1, 'admin.com');
-INSERT INTO offer_data_files (offer_id,name,file_type_id,link) VALUES (1, 'jopepe', 2, 'jopepe.com');
+INSERT INTO offer_data_files (offer_id,name,file_type_id,link) VALUES (1,'admin',1,'admin.com');
+INSERT INTO offer_data_files (offer_id,name,file_type_id,link) VALUES (1,'jopepe',2,'jopepe.com');
 
 CREATE TABLE offer_data_project (
 	id int(11) NOT NULL AUTO_INCREMENT,
@@ -258,7 +258,7 @@ CREATE TABLE offer_data_team (
 	CONSTRAINT offer_offer_fk7 FOREIGN KEY (offer_id) REFERENCES offer (id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-INSERT INTO offer_data_team (offer_id) VALUES (1);
+INSERT INTO offer_data_team (offer_id, cca, multitower) VALUES (1,0,1);
 
 CREATE TABLE offer_data_technology (
 	id int(11) NOT NULL AUTO_INCREMENT,
@@ -272,7 +272,7 @@ CREATE TABLE offer_data_technology (
 	CONSTRAINT offer_offer_fk3 FOREIGN KEY (offer_id) REFERENCES offer (id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-INSERT INTO offer_data_technology (offer_id,hyperscaler_id,methodology_id) VALUES (1,1,1);
+INSERT INTO offer_data_technology (offer_id,hyperscaler_id,methodology_id,observations) VALUES (1,1,1,'observations');
 
 CREATE TABLE offer_offering (
 	id int(11) NOT NULL AUTO_INCREMENT,

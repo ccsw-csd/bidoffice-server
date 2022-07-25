@@ -1,13 +1,10 @@
 package com.ccsw.bidoffice.offerdatafile.model;
 
 import com.ccsw.bidoffice.filetype.model.FileTypeDto;
-import com.ccsw.bidoffice.offer.model.OfferDto;
 
 public class OfferDataFileDto {
 
     private Long id;
-
-    private OfferDto offer;
 
     private String name;
 
@@ -21,14 +18,6 @@ public class OfferDataFileDto {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public OfferDto getOffer() {
-        return offer;
-    }
-
-    public void setOffer(OfferDto offer) {
-        this.offer = offer;
     }
 
     public String getName() {
