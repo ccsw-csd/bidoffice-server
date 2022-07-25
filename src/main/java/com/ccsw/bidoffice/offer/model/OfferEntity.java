@@ -84,31 +84,31 @@ public class OfferEntity {
     private String observations;
 
     @OneToOne(mappedBy = "offer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private OfferDataChapterEntity offerDataChapter;
+    private OfferDataChapterEntity dataChapter;
 
     @OneToMany(mappedBy = "offer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Set<OfferDataFileEntity> offerDataFiles;
+    private Set<OfferDataFileEntity> dataFiles;
 
     @OneToOne(mappedBy = "offer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private OfferDataProjectEntity offerDataProject;
+    private OfferDataProjectEntity dataProject;
 
     @OneToOne(mappedBy = "offer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private OfferDataTeamEntity offerDataTeam;
+    private OfferDataTeamEntity dataTeam;
 
     @OneToOne(mappedBy = "offer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private OfferDataTechnologyEntity offerDataTechnology;
+    private OfferDataTechnologyEntity dataTechnology;
 
     @OneToMany(mappedBy = "offer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Set<OfferOfferingEntity> offerOfferings;
+    private Set<OfferOfferingEntity> offerings;
 
     @OneToMany(mappedBy = "offer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Set<OfferTeamPersonEntity> offerTeamPersons;
+    private Set<OfferTeamPersonEntity> teamPerson;
 
     @OneToMany(mappedBy = "offer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Set<OfferTechnologyEntity> offerTechnologys;
+    private Set<OfferTechnologyEntity> technologies;
 
     @OneToMany(mappedBy = "offer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Set<OfferTracingEntity> offerTracings;
+    private Set<OfferTracingEntity> tracings;
 
     public Long getId() {
         return id;
@@ -222,75 +222,75 @@ public class OfferEntity {
         this.observations = observations;
     }
 
-    public OfferDataChapterEntity getOfferDataChapter() {
-        return offerDataChapter;
+    public OfferDataChapterEntity getDataChapter() {
+        return dataChapter;
     }
 
-    public void setOfferDataChapter(OfferDataChapterEntity offerDataChapter) {
-        this.offerDataChapter = offerDataChapter;
+    public void setDataChapter(OfferDataChapterEntity dataChapter) {
+        this.dataChapter = dataChapter;
     }
 
-    public Set<OfferDataFileEntity> getOfferDataFiles() {
-        return offerDataFiles;
+    public Set<OfferDataFileEntity> getDataFiles() {
+        return dataFiles;
     }
 
-    public void setOfferDataFiles(Set<OfferDataFileEntity> offerDataFiles) {
-        this.offerDataFiles = offerDataFiles;
+    public void setDataFiles(Set<OfferDataFileEntity> dataFiles) {
+        this.dataFiles = dataFiles;
     }
 
-    public OfferDataProjectEntity getOfferDataProject() {
-        return offerDataProject;
+    public OfferDataProjectEntity getDataProject() {
+        return dataProject;
     }
 
-    public void setOfferDataProject(OfferDataProjectEntity offerDataProject) {
-        this.offerDataProject = offerDataProject;
+    public void setDataProject(OfferDataProjectEntity dataProject) {
+        this.dataProject = dataProject;
     }
 
-    public OfferDataTeamEntity getOfferDataTeam() {
-        return offerDataTeam;
+    public OfferDataTeamEntity getDataTeam() {
+        return dataTeam;
     }
 
-    public void setOfferDataTeam(OfferDataTeamEntity offerDataTeam) {
-        this.offerDataTeam = offerDataTeam;
+    public void setDataTeam(OfferDataTeamEntity dataTeam) {
+        this.dataTeam = dataTeam;
     }
 
-    public OfferDataTechnologyEntity getOfferDataTechnology() {
-        return offerDataTechnology;
+    public OfferDataTechnologyEntity getDataTechnology() {
+        return dataTechnology;
     }
 
-    public void setOfferDataTechnology(OfferDataTechnologyEntity offerDataTechnology) {
-        this.offerDataTechnology = offerDataTechnology;
+    public void setDataTechnology(OfferDataTechnologyEntity dataTechnology) {
+        this.dataTechnology = dataTechnology;
     }
 
-    public Set<OfferOfferingEntity> getOfferOfferings() {
-        return offerOfferings;
+    public Set<OfferOfferingEntity> getOfferings() {
+        return offerings;
     }
 
-    public void setOfferOfferings(Set<OfferOfferingEntity> offerOfferings) {
-        this.offerOfferings = offerOfferings;
+    public void setOfferings(Set<OfferOfferingEntity> offerings) {
+        this.offerings = offerings;
     }
 
-    public Set<OfferTeamPersonEntity> getOfferTeamPersons() {
-        return offerTeamPersons;
+    public Set<OfferTeamPersonEntity> getTeamPerson() {
+        return teamPerson;
     }
 
-    public void setOfferTeamPersons(Set<OfferTeamPersonEntity> offerTeamPersons) {
-        this.offerTeamPersons = offerTeamPersons;
+    public void setTeamPerson(Set<OfferTeamPersonEntity> teamPerson) {
+        this.teamPerson = teamPerson;
     }
 
-    public Set<OfferTechnologyEntity> getOfferTechnologys() {
-        return offerTechnologys;
+    public Set<OfferTechnologyEntity> getTechnologies() {
+        return technologies;
     }
 
-    public void setOfferTechnologys(Set<OfferTechnologyEntity> offerTechnologys) {
-        this.offerTechnologys = offerTechnologys;
+    public void setTechnologies(Set<OfferTechnologyEntity> technologies) {
+        this.technologies = technologies;
     }
 
-    public Set<OfferTracingEntity> getOfferTracings() {
-        return offerTracings;
+    public Set<OfferTracingEntity> getTracings() {
+        return tracings;
     }
 
-    public void setOfferTracings(Set<OfferTracingEntity> offerTracings) {
-        this.offerTracings = offerTracings;
+    public void setTracings(Set<OfferTracingEntity> tracings) {
+        this.tracings = tracings;
     }
 }

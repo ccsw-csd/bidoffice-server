@@ -20,7 +20,7 @@ public class OfferTeamPersonDto {
         return person;
     }
 
-    public void setPersonEntity(PersonDto person) {
+    public void setPerson(PersonDto person) {
         this.person = person;
     }
 }

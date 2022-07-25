@@ -47,23 +47,23 @@ public class OfferDto {
 
     private String observations;
 
-    private OfferDataChapterDto offerDataChapter;
+    private OfferDataChapterDto dataChapter;
 
-    private Set<OfferDataFileDto> offerDataFiles;
+    private Set<OfferDataFileDto> dataFiles;
 
-    private OfferDataProjectDto offerDataProject;
+    private OfferDataProjectDto dataProject;
 
-    private OfferDataTeamDto offerDataTeam;
+    private OfferDataTeamDto dataTeam;
 
-    private OfferDataTechnologyDto offerDataTechnology;
+    private OfferDataTechnologyDto dataTechnology;
 
-    private Set<OfferOfferingDto> offerOfferings;
+    private Set<OfferOfferingDto> offerings;
 
-    private Set<OfferTeamPersonDto> offerTeamPersons;
+    private Set<OfferTeamPersonDto> teamPerson;
 
-    private Set<OfferTechnologyDto> offerTechnologys;
+    private Set<OfferTechnologyDto> technologies;
 
-    private Set<OfferTracingDto> offerTracings;
+    private Set<OfferTracingDto> tracings;
 
     public Long getId() {
         return id;
@@ -177,75 +177,75 @@ public class OfferDto {
         this.observations = observations;
     }
 
-    public OfferDataChapterDto getOfferDataChapter() {
-        return offerDataChapter;
+    public OfferDataChapterDto getDataChapter() {
+        return dataChapter;
     }
 
-    public void setOfferDataChapter(OfferDataChapterDto offerDataChapter) {
-        this.offerDataChapter = offerDataChapter;
+    public void setDataChapter(OfferDataChapterDto dataChapter) {
+        this.dataChapter = dataChapter;
     }
 
-    public Set<OfferDataFileDto> getOfferDataFiles() {
-        return offerDataFiles;
+    public Set<OfferDataFileDto> getDataFiles() {
+        return dataFiles;
     }
 
-    public void setOfferDataFiles(Set<OfferDataFileDto> offerDataFiles) {
-        this.offerDataFiles = offerDataFiles;
+    public void setDataFiles(Set<OfferDataFileDto> dataFiles) {
+        this.dataFiles = dataFiles;
     }
 
-    public OfferDataProjectDto getOfferDataProject() {
-        return offerDataProject;
+    public OfferDataProjectDto getDataProject() {
+        return dataProject;
     }
 
-    public void setOfferDataProject(OfferDataProjectDto offerDataProject) {
-        this.offerDataProject = offerDataProject;
+    public void setDataProject(OfferDataProjectDto dataProject) {
+        this.dataProject = dataProject;
     }
 
-    public OfferDataTeamDto getOfferDataTeam() {
-        return offerDataTeam;
+    public OfferDataTeamDto getDataTeam() {
+        return dataTeam;
     }
 
-    public void setOfferDataTeam(OfferDataTeamDto offerDataTeam) {
-        this.offerDataTeam = offerDataTeam;
+    public void setDataTeam(OfferDataTeamDto dataTeam) {
+        this.dataTeam = dataTeam;
     }
 
-    public OfferDataTechnologyDto getOfferDataTechnology() {
-        return offerDataTechnology;
+    public OfferDataTechnologyDto getDataTechnology() {
+        return dataTechnology;
     }
 
-    public void setOfferDataTechnology(OfferDataTechnologyDto offerDataTechnology) {
-        this.offerDataTechnology = offerDataTechnology;
+    public void setDataTechnology(OfferDataTechnologyDto dataTechnology) {
+        this.dataTechnology = dataTechnology;
     }
 
-    public Set<OfferOfferingDto> getOfferOfferings() {
-        return offerOfferings;
+    public Set<OfferOfferingDto> getOfferings() {
+        return offerings;
     }
 
-    public void setOfferOfferings(Set<OfferOfferingDto> offerOfferings) {
-        this.offerOfferings = offerOfferings;
+    public void setOfferings(Set<OfferOfferingDto> offerings) {
+        this.offerings = offerings;
     }
 
-    public Set<OfferTeamPersonDto> getOfferTeamPersons() {
-        return offerTeamPersons;
+    public Set<OfferTeamPersonDto> getTeamPerson() {
+        return teamPerson;
     }
 
-    public void setOfferTeamPersons(Set<OfferTeamPersonDto> offerTeamPersons) {
-        this.offerTeamPersons = offerTeamPersons;
+    public void setTeamPerson(Set<OfferTeamPersonDto> teamPerson) {
+        this.teamPerson = teamPerson;
     }
 
-    public Set<OfferTechnologyDto> getOfferTechnologys() {
-        return offerTechnologys;
+    public Set<OfferTechnologyDto> getTechnologies() {
+        return technologies;
     }
 
-    public void setOfferTechnologys(Set<OfferTechnologyDto> offerTechnologys) {
-        this.offerTechnologys = offerTechnologys;
+    public void setTechnologies(Set<OfferTechnologyDto> technologies) {
+        this.technologies = technologies;
     }
 
-    public Set<OfferTracingDto> getOfferTracings() {
-        return offerTracings;
+    public Set<OfferTracingDto> getTracings() {
+        return tracings;
     }
 
-    public void setOfferTracings(Set<OfferTracingDto> offerTracings) {
-        this.offerTracings = offerTracings;
+    public void setTracings(Set<OfferTracingDto> tracings) {
+        this.tracings = tracings;
     }
 }
