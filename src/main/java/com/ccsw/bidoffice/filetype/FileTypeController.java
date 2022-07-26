@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,6 +27,12 @@ public class FileTypeController {
     public List<FileTypeDto> getAllFromFileType() {
 
         return beanMapper.mapList(this.fileTypeService.getAllFromFileType(), FileTypeDto.class);
+    }
+
+    @RequestMapping(path = "/{id}", method = RequestMethod.DELETE)
+    public void delete(@PathVariable("id") Long id) {
+
+        this.fileTypeService.delete(id);
     }
 
 }

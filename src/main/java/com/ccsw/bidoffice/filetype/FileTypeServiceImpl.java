@@ -19,4 +19,11 @@ public class FileTypeServiceImpl implements FileTypeService {
 
         return this.fileTypeRepository.findAll(Sort.by(Sort.Direction.ASC, "priority"));
     }
+
+    @Override
+    public void delete(Long id) {
+
+        this.fileTypeRepository.deleteById(id);
+
+    }
 }

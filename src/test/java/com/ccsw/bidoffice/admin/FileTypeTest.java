@@ -3,6 +3,7 @@ package com.ccsw.bidoffice.admin;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
@@ -44,6 +45,16 @@ public class FileTypeTest {
         assertNotNull(filetypes);
         assertEquals(4, filetypes.size());
 
+    }
+
+    public static final Long EXISTS_CATEGORY_ID = 1L;
+
+    @Test
+    public void deleteExistsCategoryIdShouldDelete() {
+
+        fileTypeService.delete(EXISTS_CATEGORY_ID);
+
+        verify(fileTypeRepository).deleteById(EXISTS_CATEGORY_ID);
     }
 
 }
