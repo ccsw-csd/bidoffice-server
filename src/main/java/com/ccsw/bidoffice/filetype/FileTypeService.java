@@ -9,4 +9,7 @@ public interface FileTypeService {
     List<FileTypeEntity> getAllFromFileType();
 
     void delete(Long id);
+
+    boolean checkIfOffersWithSameId(Long id);
+
 }

@@ -29,6 +29,12 @@ public class FileTypeController {
         return beanMapper.mapList(this.fileTypeService.getAllFromFileType(), FileTypeDto.class);
     }
 
+    @RequestMapping(path = "/checkOffers/{id}", method = RequestMethod.GET)
+    public boolean getOffersWithSameId(@PathVariable("id") Long id) {
+
+        return this.fileTypeService.checkIfOffersWithSameId(id);
+    }
+
     @RequestMapping(path = "/{id}", method = RequestMethod.DELETE)
     public void delete(@PathVariable("id") Long id) {
 

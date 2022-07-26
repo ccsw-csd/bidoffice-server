@@ -52,9 +52,10 @@ public class FileTypeIT extends BaseITAbstract {
 
     public static final Long NEW_FILETYPE_ID = 10L;
     public static final Long DELETE_FILETYPE_ID = 2L;
+    public static final Long EXISTING_FILETYPE_ID = 1L;
 
     @Test
-    public void deleteWithExistsIdShouldDeleteCategory() {
+    public void deleteWithExistsIdShouldDeleteFileType() {
         HttpEntity<?> httpEntity = new HttpEntity<>(getHeaders());
 
         restTemplate.exchange(LOCALHOST + port + SERVICE_PATH + DELETE_FILETYPE_ID, HttpMethod.DELETE, httpEntity,
@@ -77,4 +78,33 @@ public class FileTypeIT extends BaseITAbstract {
 
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
     }
+
+    @Test
+    public void checkExistsIdShouldReturnTrue() {
+        HttpEntity<?> httpEntity = new HttpEntity<>(getHeaders());
+        ParameterizedTypeReference<Boolean> responseType = new ParameterizedTypeReference<Boolean>() {
+        };
+
+        ResponseEntity<Boolean> response = restTemplate.exchange(
+                LOCALHOST + port + SERVICE_PATH + "checkOffers/" + EXISTING_FILETYPE_ID, HttpMethod.GET, httpEntity,
+                responseType);
+
+        assertNotNull(response);
+        assertEquals(true, response.getBody());
+    }
+
+    @Test
+    public void checkNotExistIdShouldReturnFalse() {
+        HttpEntity<?> httpEntity = new HttpEntity<>(getHeaders());
+        ParameterizedTypeReference<Boolean> responseType = new ParameterizedTypeReference<Boolean>() {
+        };
+
+        ResponseEntity<Boolean> response = restTemplate.exchange(
+                LOCALHOST + port + SERVICE_PATH + "checkOffers/" + NEW_FILETYPE_ID, HttpMethod.GET, httpEntity,
+                responseType);
+
+        assertNotNull(response);
+        assertEquals(false, response.getBody());
+    }
+
 }
