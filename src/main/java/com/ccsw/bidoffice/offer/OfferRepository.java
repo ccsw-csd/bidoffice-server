@@ -14,8 +14,7 @@ public interface OfferRepository extends PagingAndSortingRepository<OfferEntity,
 
     @Override
     @EntityGraph(attributePaths = { "requestedBy", "managedBy", "sector", "opportunityStatus", "opportunityType",
-            "dataChapter", "dataFiles", "dataProject", "dataTeam", "dataTechnology", "offerOfferings", "teamPerson",
-            "technologies", "tracings" })
+            "dataChapter", "dataProject", "dataTeam", "dataTechnology", })
     Page<OfferEntity> findAll(Pageable pageable);
 
     List<Clients> findFirst15DistinctByClientIgnoreCaseContaining(String client);
