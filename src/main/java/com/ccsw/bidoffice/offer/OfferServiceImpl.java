@@ -18,9 +18,9 @@ public class OfferServiceImpl implements OfferService {
     private OfferRepository offerRepository;
 
     @Override
-    public Page<OfferEntity> findPage(OfferSearchDto dto) {
+    public OfferEntity getOffer(Long id) {
 
-        return this.offerRepository.findAll(dto.getPageable());
+        return this.offerRepository.findById(id).orElse(null);
     }
 
     @Override
@@ -28,6 +28,12 @@ public class OfferServiceImpl implements OfferService {
 
         return this.offerRepository.findFirst15DistinctByClientIgnoreCaseContaining(filter).stream()
                 .map(Clients::getClient).collect(Collectors.toList());
+    }
+
+    @Override
+    public Page<OfferEntity> findPage(OfferSearchDto dto) {
+
+        return this.offerRepository.findAll(dto.getPageable());
     }
 
 }
