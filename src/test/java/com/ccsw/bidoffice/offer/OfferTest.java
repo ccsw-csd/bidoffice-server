@@ -2,11 +2,14 @@ package com.ccsw.bidoffice.offer;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -32,6 +35,10 @@ public class OfferTest {
     public static final String CLIENT_CONTAINING = "user";
 
     public static final String CLIENT_NOT_CONTAINING = "admin";
+
+    public static final Long ID_OFFER_EXIST = 1L;
+
+    public static final Long ID_OFFER_NOT_EXIST = 0L;
 
     @Mock
     private OfferRepository offerRepository;
@@ -91,6 +98,31 @@ public class OfferTest {
 
         assertNotNull(clients);
         assertEquals(EMPTY_CLIENT, clients.size());
+    }
+
+    @Test
+    public void findOfferNotExistIdOfferShouldEmpty() {
+
+        when(this.offerRepository.findById(ID_OFFER_NOT_EXIST)).thenReturn(Optional.empty());
+
+        assertNull(this.offerServiceImpl.getOffer(ID_OFFER_NOT_EXIST));
+        verify(this.offerRepository).findById(ID_OFFER_NOT_EXIST);
+
+    }
+
+    @Test
+    public void findOfferExistIdOfferShouldOffer() {
+
+        OfferEntity offerEntity = mock(OfferEntity.class);
+
+        when(this.offerRepository.findById(ID_OFFER_EXIST)).thenReturn(Optional.of(offerEntity));
+
+        OfferEntity offerResponse = this.offerServiceImpl.getOffer(ID_OFFER_EXIST);
+
+        assertNotNull(offerResponse);
+        assertEquals(offerResponse, offerEntity);
+        verify(this.offerRepository).findById(ID_OFFER_EXIST);
+
     }
 
 }
