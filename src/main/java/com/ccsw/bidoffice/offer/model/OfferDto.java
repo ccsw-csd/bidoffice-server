@@ -1,7 +1,17 @@
 package com.ccsw.bidoffice.offer.model;
 
 import java.time.LocalDate;
+import java.util.Set;
 
+import com.ccsw.bidoffice.offerdatachapter.model.OfferDataChapterDto;
+import com.ccsw.bidoffice.offerdatafile.model.OfferDataFileDto;
+import com.ccsw.bidoffice.offerdataproject.model.OfferDataProjectDto;
+import com.ccsw.bidoffice.offerdatateam.model.OfferDataTeamDto;
+import com.ccsw.bidoffice.offerdatatechnology.model.OfferDataTechnologyDto;
+import com.ccsw.bidoffice.offeroffering.model.OfferOfferingDto;
+import com.ccsw.bidoffice.offerteamperson.model.OfferTeamPersonDto;
+import com.ccsw.bidoffice.offertechnology.model.OfferTechnologyDto;
+import com.ccsw.bidoffice.offertracing.model.OfferTracingDto;
 import com.ccsw.bidoffice.opportunitystatus.model.OpportunityStatusDto;
 import com.ccsw.bidoffice.opportunitytype.model.OpportunityTypeDto;
 import com.ccsw.bidoffice.person.model.PersonDto;
@@ -36,6 +46,24 @@ public class OfferDto {
     private Boolean opportunityWin;
 
     private String observations;
+
+    private OfferDataChapterDto dataChapter;
+
+    private Set<OfferDataFileDto> dataFiles;
+
+    private OfferDataProjectDto dataProject;
+
+    private OfferDataTeamDto dataTeam;
+
+    private OfferDataTechnologyDto dataTechnology;
+
+    private Set<OfferOfferingDto> offerings;
+
+    private Set<OfferTeamPersonDto> teamPerson;
+
+    private Set<OfferTechnologyDto> technologies;
+
+    private Set<OfferTracingDto> tracings;
 
     public Long getId() {
         return id;
@@ -147,5 +175,77 @@ public class OfferDto {
 
     public void setObservations(String observations) {
         this.observations = observations;
+    }
+
+    public OfferDataChapterDto getDataChapter() {
+        return dataChapter;
+    }
+
+    public void setDataChapter(OfferDataChapterDto dataChapter) {
+        this.dataChapter = dataChapter;
+    }
+
+    public Set<OfferDataFileDto> getDataFiles() {
+        return dataFiles;
+    }
+
+    public void setDataFiles(Set<OfferDataFileDto> dataFiles) {
+        this.dataFiles = dataFiles;
+    }
+
+    public OfferDataProjectDto getDataProject() {
+        return dataProject;
+    }
+
+    public void setDataProject(OfferDataProjectDto dataProject) {
+        this.dataProject = dataProject;
+    }
+
+    public OfferDataTeamDto getDataTeam() {
+        return dataTeam;
+    }
+
+    public void setDataTeam(OfferDataTeamDto dataTeam) {
+        this.dataTeam = dataTeam;
+    }
+
+    public OfferDataTechnologyDto getDataTechnology() {
+        return dataTechnology;
+    }
+
+    public void setDataTechnology(OfferDataTechnologyDto dataTechnology) {
+        this.dataTechnology = dataTechnology;
+    }
+
+    public Set<OfferOfferingDto> getOfferings() {
+        return offerings;
+    }
+
+    public void setOfferings(Set<OfferOfferingDto> offerings) {
+        this.offerings = offerings;
+    }
+
+    public Set<OfferTeamPersonDto> getTeamPerson() {
+        return teamPerson;
+    }
+
+    public void setTeamPerson(Set<OfferTeamPersonDto> teamPerson) {
+        this.teamPerson = teamPerson;
+    }
+
+    public Set<OfferTechnologyDto> getTechnologies() {
+        return technologies;
+    }
+
+    public void setTechnologies(Set<OfferTechnologyDto> technologies) {
+        this.technologies = technologies;
+    }
+
+    public Set<OfferTracingDto> getTracings() {
+        return tracings;
+    }
+
+    public void setTracings(Set<OfferTracingDto> tracings) {
+        this.tracings = tracings;
     }
 }

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ccsw.bidoffice.config.mapper.BeanMapper;
+import com.ccsw.bidoffice.offer.model.OfferDto;
 import com.ccsw.bidoffice.offer.model.OfferItemListDto;
 import com.ccsw.bidoffice.offer.model.OfferSearchDto;
 
@@ -24,10 +25,10 @@ public class OfferController {
     @Autowired
     private BeanMapper beanMapper;
 
-    @RequestMapping(path = "/findPage", method = RequestMethod.POST)
-    public Page<OfferItemListDto> findPage(@RequestBody OfferSearchDto dto) {
+    @RequestMapping(path = "/{id}", method = RequestMethod.GET)
+    public OfferDto getOffer(@PathVariable Long id) {
 
-        return this.beanMapper.mapPage(this.offerService.findPage(dto), OfferItemListDto.class);
+        return this.beanMapper.map(this.offerService.getOffer(id), OfferDto.class);
     }
 
     @RequestMapping(path = "/client/{filter}", method = RequestMethod.GET)
@@ -35,4 +36,11 @@ public class OfferController {
 
         return this.offerService.findFirst15DistinctClientLikeFilter(filter);
     }
+
+    @RequestMapping(path = "/findPage", method = RequestMethod.POST)
+    public Page<OfferItemListDto> findPage(@RequestBody OfferSearchDto dto) {
+
+        return this.beanMapper.mapPage(this.offerService.findPage(dto), OfferItemListDto.class);
+    }
+
 }
