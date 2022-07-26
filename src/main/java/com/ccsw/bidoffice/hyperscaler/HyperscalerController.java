@@ -33,10 +33,8 @@ public class HyperscalerController {
         this.hyperscalerService.deleteItemFromHyperscaler(id);
     }
 
-    @RequestMapping(path = "check/{id}", method = RequestMethod.DELETE)
-    public List<HyperscalerDto> getDataWithOffers(@PathVariable(name = "id") Long id) {
-
-        return this.beanMapper.mapList(this.hyperscalerService.getDataWithOffersFromHyperscaler(id),
-                HyperscalerDto.class);
+    @RequestMapping(path = "check/{id}", method = RequestMethod.GET)
+    public boolean getDataWithOffers(@PathVariable(name = "id") Long id) {
+        return this.hyperscalerService.getDataWithOffersFromHyperscaler(id);
     }
 }

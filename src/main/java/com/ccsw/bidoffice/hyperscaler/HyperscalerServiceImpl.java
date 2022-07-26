@@ -7,12 +7,17 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.ccsw.bidoffice.hyperscaler.model.HyperscalerEntity;
+import com.ccsw.bidoffice.offerdatatechnology.OfferDataTechnologyRepository;
+import com.ccsw.bidoffice.offerdatatechnology.model.OfferDataTechnologyEntity;
 
 @Service
 public class HyperscalerServiceImpl implements HyperscalerService {
 
     @Autowired
     HyperscalerRepository hyperscalerRepository;
+
+    @Autowired
+    OfferDataTechnologyRepository offerDataTechRepository;
 
     @Override
     public List<HyperscalerEntity> getAllDataFromHyperscaler() {
@@ -27,10 +32,15 @@ public class HyperscalerServiceImpl implements HyperscalerService {
     }
 
     @Override
-    public List<HyperscalerEntity> getDataWithOffersFromHyperscaler(Long id) {
-        // TODO Auto-generated method stub
-        // select * from offer_data_technology odt ; Seleccionamos esta tabla
-        return (List<HyperscalerEntity>) this.hyperscalerRepository.getDataFromOfferDataTechnology(id);
+    public boolean getDataWithOffersFromHyperscaler(Long id) {
+        boolean exists = false;
+
+        List<OfferDataTechnologyEntity> offerData = (List<OfferDataTechnologyEntity>) this.offerDataTechRepository
+                .findAllByHyperscalerId(id);
+        if (offerData.size() > 0)
+            exists = true;
+
+        return exists;
     }
 
 }

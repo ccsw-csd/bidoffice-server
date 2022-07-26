@@ -10,5 +10,5 @@ public interface HyperscalerService {
 
     public void deleteItemFromHyperscaler(Long id);
 
-    public List<HyperscalerEntity> getDataWithOffersFromHyperscaler(Long id);
+    public boolean getDataWithOffersFromHyperscaler(Long id);
 }

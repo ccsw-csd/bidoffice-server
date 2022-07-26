@@ -47,18 +47,6 @@ public class HyperscalerIT extends BaseITAbstract {
 
     }
 
-    /*
-     * @Test public void deleteWithExistsIdShouldDeleteCategory() {
-     * 
-     * restTemplate.exchange(LOCALHOST + port + SERVICE_PATH + DELETE_CATEGORY_ID,
-     * HttpMethod.DELETE, null, Void.class);
-     * 
-     * ResponseEntity<List<CategoryDto>> response = restTemplate.exchange(LOCALHOST
-     * + port + SERVICE_PATH, HttpMethod.GET, null, responseType);
-     * assertNotNull(response); assertEquals(2, response.getBody().size()); }
-     * 
-     */
-
     private final static long DELETE_ITEM_ID = 1L;
 
     @Test
@@ -76,16 +64,6 @@ public class HyperscalerIT extends BaseITAbstract {
 
     }
 
-    /*
-     * @Test public void deleteWithNotExistsIdShouldInternalError() {
-     * 
-     * ResponseEntity<?> response = restTemplate.exchange(LOCALHOST + port +
-     * SERVICE_PATH + NEW_CATEGORY_ID, HttpMethod.DELETE, null, Void.class);
-     * 
-     * assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode()); }
-     * 
-     */
-
     private final static long NEW_ITEM_ID = 10L;
 
     @Test
@@ -95,6 +73,38 @@ public class HyperscalerIT extends BaseITAbstract {
         ResponseEntity<?> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH + NEW_ITEM_ID,
                 HttpMethod.DELETE, httpEntity, Void.class);
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
+    }
+
+    private static final long EXISTING_HYPERSCALER_ID = 1L;
+
+    @Test
+    public void checkifExistsOffersShouldReturnTrue() {
+        HttpEntity<?> httpEntity = new HttpEntity<>(getHeaders());
+        ParameterizedTypeReference<Boolean> responseType = new ParameterizedTypeReference<Boolean>() {
+        };
+
+        ResponseEntity<Boolean> response = restTemplate.exchange(
+                LOCALHOST + port + SERVICE_PATH + "check/" + EXISTING_HYPERSCALER_ID, HttpMethod.GET, httpEntity,
+                responseType);
+
+        assertNotNull(response);
+        assertEquals(true, response.getBody());
+    }
+
+    private static final long NOT_EXISTING_HYPERSCALER_ID = 0L;
+
+    @Test
+    public void checkUnlessExistsOffersShouldReturnFalse() {
+        HttpEntity<?> httpEntity = new HttpEntity<>(getHeaders());
+        ParameterizedTypeReference<Boolean> responseType = new ParameterizedTypeReference<Boolean>() {
+        };
+
+        ResponseEntity<Boolean> response = restTemplate.exchange(
+                LOCALHOST + port + SERVICE_PATH + "check/" + NOT_EXISTING_HYPERSCALER_ID, HttpMethod.GET, httpEntity,
+                responseType);
+
+        assertNotNull(response);
+        assertEquals(false, response.getBody());
     }
 
 }

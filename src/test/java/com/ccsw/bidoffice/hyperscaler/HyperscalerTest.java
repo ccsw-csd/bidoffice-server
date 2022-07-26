@@ -17,12 +17,17 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Sort;
 
 import com.ccsw.bidoffice.hyperscaler.model.HyperscalerEntity;
+import com.ccsw.bidoffice.offerdatatechnology.OfferDataTechnologyRepository;
+import com.ccsw.bidoffice.offerdatatechnology.model.OfferDataTechnologyEntity;
 
 @ExtendWith(MockitoExtension.class)
 public class HyperscalerTest {
 
     @Mock
     private HyperscalerRepository hyperscalerRepository;
+
+    @Mock
+    private OfferDataTechnologyRepository offerDataRepository;
 
     @InjectMocks
     private HyperscalerServiceImpl hyperscalerServiceImpl;
@@ -52,6 +57,34 @@ public class HyperscalerTest {
         this.hyperscalerServiceImpl.deleteItemFromHyperscaler(EXISTS_ITEM_ID);
 
         verify(this.hyperscalerRepository).deleteById(EXISTS_ITEM_ID);
+    }
+
+    @Test
+    public void checkIfThereAreOffersShouldReturnTrue() {
+        List<OfferDataTechnologyEntity> offerData = new ArrayList<>();
+
+        offerData.add(mock(OfferDataTechnologyEntity.class));
+
+        when(this.offerDataRepository.findAllByHyperscalerId(EXISTS_ITEM_ID)).thenReturn(offerData);
+
+        boolean results = hyperscalerServiceImpl.getDataWithOffersFromHyperscaler(EXISTS_ITEM_ID);
+
+        assertNotNull(results);
+        assertEquals(true, results);
+    }
+
+    public static final long NOT_EXISTS_ITEM_ID = 0L;
+
+    @Test
+    public void checkIfThereAreNotOffersShouldReturnFalse() {
+        List<OfferDataTechnologyEntity> offerData = new ArrayList<>();
+
+        when(this.offerDataRepository.findAllByHyperscalerId(NOT_EXISTS_ITEM_ID)).thenReturn(offerData);
+        boolean results = hyperscalerServiceImpl.getDataWithOffersFromHyperscaler(NOT_EXISTS_ITEM_ID);
+
+        assertNotNull(results);
+        assertEquals(false, results);
+
     }
 
 }
