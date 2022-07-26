@@ -3,6 +3,7 @@ package com.ccsw.bidoffice.hyperscaler;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
@@ -43,4 +44,14 @@ public class HyperscalerTest {
         assertEquals(4, list.size());
 
     }
+
+    private static final long EXISTS_ITEM_ID = 1L;
+
+    @Test
+    public void deleteExistsItemIdShouldDelete() {
+        this.hyperscalerServiceImpl.deleteItemFromHyperscaler(EXISTS_ITEM_ID);
+
+        verify(this.hyperscalerRepository).deleteById(EXISTS_ITEM_ID);
+    }
+
 }

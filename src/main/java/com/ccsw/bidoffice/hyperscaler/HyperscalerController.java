@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,5 +26,17 @@ public class HyperscalerController {
     @RequestMapping(path = "/findAll", method = RequestMethod.GET)
     public List<HyperscalerDto> getAllFromHyperscale() {
         return this.beanMapper.mapList(this.hyperscalerService.getAllDataFromHyperscaler(), HyperscalerDto.class);
+    }
+
+    @RequestMapping(path = "/{id}", method = RequestMethod.DELETE)
+    public void deleteItemFromHyperscaler(@PathVariable(name = "id") Long id) {
+        this.hyperscalerService.deleteItemFromHyperscaler(id);
+    }
+
+    @RequestMapping(path = "check/{id}", method = RequestMethod.DELETE)
+    public List<HyperscalerDto> getDataWithOffers(@PathVariable(name = "id") Long id) {
+
+        return this.beanMapper.mapList(this.hyperscalerService.getDataWithOffersFromHyperscaler(id),
+                HyperscalerDto.class);
     }
 }

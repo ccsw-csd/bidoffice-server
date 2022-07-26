@@ -20,4 +20,17 @@ public class HyperscalerServiceImpl implements HyperscalerService {
         return (List<HyperscalerEntity>) this.hyperscalerRepository.findAll(Sort.by(Sort.Direction.ASC, "priority"));
     }
 
+    @Override
+    public void deleteItemFromHyperscaler(Long id) {
+
+        this.hyperscalerRepository.deleteById(id);
+    }
+
+    @Override
+    public List<HyperscalerEntity> getDataWithOffersFromHyperscaler(Long id) {
+        // TODO Auto-generated method stub
+        // select * from offer_data_technology odt ; Seleccionamos esta tabla
+        return (List<HyperscalerEntity>) this.hyperscalerRepository.getDataFromOfferDataTechnology(id);
+    }
+
 }
