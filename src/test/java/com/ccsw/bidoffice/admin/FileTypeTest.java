@@ -2,7 +2,9 @@ package com.ccsw.bidoffice.admin;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -16,11 +18,11 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Sort;
 
+import com.ccsw.bidoffice.common.exception.AlreadyExistsException;
 import com.ccsw.bidoffice.filetype.FileTypeRepository;
 import com.ccsw.bidoffice.filetype.FileTypeServiceImpl;
 import com.ccsw.bidoffice.filetype.model.FileTypeEntity;
-import com.ccsw.bidoffice.offerdatafile.OfferDataFileRepository;
-import com.ccsw.bidoffice.offerdatafile.model.OfferDataFileEntity;
+import com.ccsw.bidoffice.offerdatafile.OfferDataFileServiceImpl;
 
 @ExtendWith(MockitoExtension.class)
 public class FileTypeTest {
@@ -29,7 +31,7 @@ public class FileTypeTest {
     private FileTypeRepository fileTypeRepository;
 
     @Mock
-    private OfferDataFileRepository offerDataFileRepository;
+    private OfferDataFileServiceImpl offerDataFileServiceImpl;
 
     @InjectMocks
     private FileTypeServiceImpl fileTypeService;
@@ -53,45 +55,25 @@ public class FileTypeTest {
     }
 
     public static final Long EXISTS_FILETYPE_ID = 1L;
-
-    @Test
-    public void deleteExistsFileTypeIdShouldDelete() {
-
-        fileTypeService.delete(EXISTS_FILETYPE_ID);
-
-        verify(fileTypeRepository).deleteById(EXISTS_FILETYPE_ID);
-    }
-
-    @Test
-    public void checkIfOfferWithExistingIdShouldReturnTrue() {
-
-        List<OfferDataFileEntity> files = new ArrayList<>();
-        files.add(mock(OfferDataFileEntity.class));
-        files.add(mock(OfferDataFileEntity.class));
-        files.add(mock(OfferDataFileEntity.class));
-        files.add(mock(OfferDataFileEntity.class));
-
-        when(this.offerDataFileRepository.findAllByFileTypeId(EXISTS_FILETYPE_ID)).thenReturn(files);
-
-        boolean result = fileTypeService.checkIfOffersWithSameId(EXISTS_FILETYPE_ID);
-
-        assertNotNull(result);
-        assertEquals(true, result);
-    }
-
     public static final Long NEW_FILETYPE_ID = 10L;
 
     @Test
-    public void checkIfOfferWithNotExistingIdShouldReturnTrue() {
+    public void deleteExistsFileTypeIdShouldDelete() throws AlreadyExistsException {
+        when(this.offerDataFileServiceImpl.checkExistsById(NEW_FILETYPE_ID)).thenReturn(false);
 
-        List<OfferDataFileEntity> files = new ArrayList<>();
+        fileTypeService.delete(NEW_FILETYPE_ID);
 
-        when(this.offerDataFileRepository.findAllByFileTypeId(NEW_FILETYPE_ID)).thenReturn(files);
+        verify(fileTypeRepository).deleteById(NEW_FILETYPE_ID);
+    }
 
-        boolean result = fileTypeService.checkIfOffersWithSameId(NEW_FILETYPE_ID);
+    @Test
+    public void deleteFileTypeWithExistingShouldThrowException() {
 
-        assertNotNull(result);
-        assertEquals(false, result);
+        when(this.offerDataFileServiceImpl.checkExistsById(EXISTS_FILETYPE_ID)).thenReturn(true);
+
+        assertThrows(AlreadyExistsException.class, () -> this.fileTypeService.delete(EXISTS_FILETYPE_ID));
+        verify(this.fileTypeRepository, never()).deleteById(EXISTS_FILETYPE_ID);
+
     }
 
 }

@@ -6,9 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import com.ccsw.bidoffice.common.exception.AlreadyExistsException;
 import com.ccsw.bidoffice.filetype.model.FileTypeEntity;
-import com.ccsw.bidoffice.offerdatafile.OfferDataFileRepository;
-import com.ccsw.bidoffice.offerdatafile.model.OfferDataFileEntity;
+import com.ccsw.bidoffice.offerdatafile.OfferDataFileService;
 
 @Service
 public class FileTypeServiceImpl implements FileTypeService {
@@ -17,7 +17,7 @@ public class FileTypeServiceImpl implements FileTypeService {
     private FileTypeRepository fileTypeRepository;
 
     @Autowired
-    private OfferDataFileRepository offerDataFileRepository;
+    private OfferDataFileService offerDataFileService;
 
     @Override
     public List<FileTypeEntity> getAllFromFileType() {
@@ -26,23 +26,12 @@ public class FileTypeServiceImpl implements FileTypeService {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(Long id) throws AlreadyExistsException {
+
+        if (this.offerDataFileService.checkExistsById(id))
+            throw new AlreadyExistsException();
 
         this.fileTypeRepository.deleteById(id);
-
     }
 
-    @Override
-    public boolean checkIfOffersWithSameId(Long id) {
-        boolean res = false;
-
-        List<OfferDataFileEntity> offerList = null;
-
-        offerList = (List<OfferDataFileEntity>) this.offerDataFileRepository.findAllByFileTypeId(id);
-
-        if (offerList.size() > 0)
-            res = true;
-
-        return res;
-    }
 }

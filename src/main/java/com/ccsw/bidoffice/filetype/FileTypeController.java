@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ccsw.bidoffice.common.exception.AlreadyExistsException;
 import com.ccsw.bidoffice.config.mapper.BeanMapper;
 import com.ccsw.bidoffice.filetype.model.FileTypeDto;
 
@@ -29,14 +30,8 @@ public class FileTypeController {
         return beanMapper.mapList(this.fileTypeService.getAllFromFileType(), FileTypeDto.class);
     }
 
-    @RequestMapping(path = "/checkOffers/{id}", method = RequestMethod.GET)
-    public boolean getOffersWithSameId(@PathVariable("id") Long id) {
-
-        return this.fileTypeService.checkIfOffersWithSameId(id);
-    }
-
     @RequestMapping(path = "/{id}", method = RequestMethod.DELETE)
-    public void delete(@PathVariable("id") Long id) {
+    public void delete(@PathVariable("id") Long id) throws AlreadyExistsException {
 
         this.fileTypeService.delete(id);
     }
