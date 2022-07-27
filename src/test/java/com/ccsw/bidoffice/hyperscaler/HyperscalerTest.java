@@ -2,7 +2,9 @@ package com.ccsw.bidoffice.hyperscaler;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -16,9 +18,9 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Sort;
 
+import com.ccsw.bidoffice.common.exception.AlreadyExistsException;
 import com.ccsw.bidoffice.hyperscaler.model.HyperscalerEntity;
-import com.ccsw.bidoffice.offerdatatechnology.OfferDataTechnologyRepository;
-import com.ccsw.bidoffice.offerdatatechnology.model.OfferDataTechnologyEntity;
+import com.ccsw.bidoffice.offerdatatechnology.OfferDataTechnologyServiceImpl;
 
 @ExtendWith(MockitoExtension.class)
 public class HyperscalerTest {
@@ -27,7 +29,7 @@ public class HyperscalerTest {
     private HyperscalerRepository hyperscalerRepository;
 
     @Mock
-    private OfferDataTechnologyRepository offerDataRepository;
+    private OfferDataTechnologyServiceImpl offerDataServiceImpl;
 
     @InjectMocks
     private HyperscalerServiceImpl hyperscalerServiceImpl;
@@ -53,38 +55,26 @@ public class HyperscalerTest {
     private static final long EXISTS_ITEM_ID = 1L;
 
     @Test
-    public void deleteExistsItemIdShouldDelete() {
+    public void deleteExistsItemIdShouldDelete() throws AlreadyExistsException {
+
+        when(this.offerDataServiceImpl.checkExistsByHyperscalerId(EXISTS_ITEM_ID)).thenReturn(false);
+
         this.hyperscalerServiceImpl.deleteItemFromHyperscaler(EXISTS_ITEM_ID);
 
         verify(this.hyperscalerRepository).deleteById(EXISTS_ITEM_ID);
     }
 
-    @Test
-    public void checkIfThereAreOffersShouldReturnTrue() {
-        List<OfferDataTechnologyEntity> offerData = new ArrayList<>();
-
-        offerData.add(mock(OfferDataTechnologyEntity.class));
-
-        when(this.offerDataRepository.findAllByHyperscalerId(EXISTS_ITEM_ID)).thenReturn(offerData);
-
-        boolean results = hyperscalerServiceImpl.getDataWithOffersFromHyperscaler(EXISTS_ITEM_ID);
-
-        assertNotNull(results);
-        assertEquals(true, results);
-    }
-
-    public static final long NOT_EXISTS_ITEM_ID = 0L;
+    private static final long NOT_EXISTS_ITEM_ID = 0L;
 
     @Test
-    public void checkIfThereAreNotOffersShouldReturnFalse() {
-        List<OfferDataTechnologyEntity> offerData = new ArrayList<>();
+    public void deleteIfNotExistsItemIdShouldRiseException() throws AlreadyExistsException {
+        when(this.offerDataServiceImpl.checkExistsByHyperscalerId(NOT_EXISTS_ITEM_ID)).thenReturn(true);
 
-        when(this.offerDataRepository.findAllByHyperscalerId(NOT_EXISTS_ITEM_ID)).thenReturn(offerData);
-        boolean results = hyperscalerServiceImpl.getDataWithOffersFromHyperscaler(NOT_EXISTS_ITEM_ID);
+        assertThrows(AlreadyExistsException.class,
+                () -> hyperscalerServiceImpl.deleteItemFromHyperscaler(NOT_EXISTS_ITEM_ID));
 
-        assertNotNull(results);
-        assertEquals(false, results);
-
+        verify(this.hyperscalerRepository, never()).deleteById(NOT_EXISTS_ITEM_ID);
+        ;
     }
 
 }

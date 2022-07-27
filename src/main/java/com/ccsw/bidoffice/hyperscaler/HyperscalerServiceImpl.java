@@ -2,22 +2,25 @@ package com.ccsw.bidoffice.hyperscaler;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import com.ccsw.bidoffice.common.exception.AlreadyExistsException;
 import com.ccsw.bidoffice.hyperscaler.model.HyperscalerEntity;
-import com.ccsw.bidoffice.offerdatatechnology.OfferDataTechnologyRepository;
-import com.ccsw.bidoffice.offerdatatechnology.model.OfferDataTechnologyEntity;
+import com.ccsw.bidoffice.offerdatatechnology.OfferDataTechnologyService;
 
 @Service
+@Transactional
 public class HyperscalerServiceImpl implements HyperscalerService {
 
     @Autowired
     HyperscalerRepository hyperscalerRepository;
 
     @Autowired
-    OfferDataTechnologyRepository offerDataTechRepository;
+    OfferDataTechnologyService offerDataTechnologyService;
 
     @Override
     public List<HyperscalerEntity> getAllDataFromHyperscaler() {
@@ -26,21 +29,11 @@ public class HyperscalerServiceImpl implements HyperscalerService {
     }
 
     @Override
-    public void deleteItemFromHyperscaler(Long id) {
+    public void deleteItemFromHyperscaler(Long id) throws AlreadyExistsException {
+        if (this.offerDataTechnologyService.checkExistsByHyperscalerId(id))
+            throw new AlreadyExistsException();
 
         this.hyperscalerRepository.deleteById(id);
-    }
-
-    @Override
-    public boolean getDataWithOffersFromHyperscaler(Long id) {
-        boolean exists = false;
-
-        List<OfferDataTechnologyEntity> offerData = (List<OfferDataTechnologyEntity>) this.offerDataTechRepository
-                .findAllByHyperscalerId(id);
-        if (offerData.size() > 0)
-            exists = true;
-
-        return exists;
     }
 
 }

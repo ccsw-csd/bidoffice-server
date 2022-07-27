@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ccsw.bidoffice.common.exception.AlreadyExistsException;
 import com.ccsw.bidoffice.config.mapper.BeanMapper;
 import com.ccsw.bidoffice.hyperscaler.model.HyperscalerDto;
 
@@ -29,12 +30,7 @@ public class HyperscalerController {
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.DELETE)
-    public void deleteItemFromHyperscaler(@PathVariable(name = "id") Long id) {
+    public void deleteItemFromHyperscaler(@PathVariable(name = "id") Long id) throws AlreadyExistsException {
         this.hyperscalerService.deleteItemFromHyperscaler(id);
-    }
-
-    @RequestMapping(path = "check/{id}", method = RequestMethod.GET)
-    public boolean getDataWithOffers(@PathVariable(name = "id") Long id) {
-        return this.hyperscalerService.getDataWithOffersFromHyperscaler(id);
     }
 }
