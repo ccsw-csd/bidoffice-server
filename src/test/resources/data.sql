@@ -232,7 +232,7 @@ CREATE TABLE offer_data_files (
 ); 
 
 INSERT INTO offer_data_files (offer_id,name,file_type_id,link) VALUES (1,'admin',1,'admin.com');
-INSERT INTO offer_data_files (offer_id,name,file_type_id,link) VALUES (1,'jopepe',2,'jopepe.com');
+INSERT INTO offer_data_files (offer_id,name,file_type_id,link) VALUES (1,'jopepe',3,'jopepe.com');
 
 CREATE TABLE offer_data_project (
 	id int(11) NOT NULL AUTO_INCREMENT,

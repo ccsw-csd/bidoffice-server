@@ -28,7 +28,7 @@ public class FileTypeServiceImpl implements FileTypeService {
     @Override
     public void delete(Long id) throws AlreadyExistsException {
 
-        if (this.offerDataFileService.checkExistsById(id))
+        if (this.offerDataFileService.checkExistsByFileTypeId(id))
             throw new AlreadyExistsException();
 
         this.fileTypeRepository.deleteById(id);

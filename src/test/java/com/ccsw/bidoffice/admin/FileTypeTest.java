@@ -54,12 +54,12 @@ public class FileTypeTest {
 
     }
 
-    public static final Long EXISTS_FILETYPE_ID = 1L;
+    public static final Long EXISTS_FILETYPE_ID = 3L;
     public static final Long NEW_FILETYPE_ID = 10L;
 
     @Test
     public void deleteExistsFileTypeIdShouldDelete() throws AlreadyExistsException {
-        when(this.offerDataFileServiceImpl.checkExistsById(NEW_FILETYPE_ID)).thenReturn(false);
+        when(this.offerDataFileServiceImpl.checkExistsByFileTypeId(NEW_FILETYPE_ID)).thenReturn(false);
 
         fileTypeService.delete(NEW_FILETYPE_ID);
 
@@ -69,7 +69,7 @@ public class FileTypeTest {
     @Test
     public void deleteFileTypeWithExistingShouldThrowException() {
 
-        when(this.offerDataFileServiceImpl.checkExistsById(EXISTS_FILETYPE_ID)).thenReturn(true);
+        when(this.offerDataFileServiceImpl.checkExistsByFileTypeId(EXISTS_FILETYPE_ID)).thenReturn(true);
 
         assertThrows(AlreadyExistsException.class, () -> this.fileTypeService.delete(EXISTS_FILETYPE_ID));
         verify(this.fileTypeRepository, never()).deleteById(EXISTS_FILETYPE_ID);

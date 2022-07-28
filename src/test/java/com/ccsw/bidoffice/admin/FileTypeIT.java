@@ -51,8 +51,8 @@ public class FileTypeIT extends BaseITAbstract {
     }
 
     public static final Long NEW_FILETYPE_ID = 10L;
-    public static final Long DELETE_FILETYPE_ID = 3L;
-    public static final Long EXISTING_FILETYPE_ID = 1L;
+    public static final Long DELETE_FILETYPE_ID = 2L;
+    public static final Long EXISTING_FILETYPE_ID = 3L;
 
     @Test
     public void deleteWithExistsIdShouldDeleteFileType() {

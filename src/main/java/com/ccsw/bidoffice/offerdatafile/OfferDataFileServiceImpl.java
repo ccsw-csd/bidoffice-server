@@ -10,8 +10,8 @@ public class OfferDataFileServiceImpl implements OfferDataFileService {
     private OfferDataFileRepository offerDataFileRepository;
 
     @Override
-    public boolean checkExistsById(Long id) {
-        return this.offerDataFileRepository.existsById(id);
+    public boolean checkExistsByFileTypeId(Long id) {
+        return this.offerDataFileRepository.existsByFileTypeId(id);
     }
 
 }
