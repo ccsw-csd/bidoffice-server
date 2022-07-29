@@ -56,6 +56,7 @@ public class HyperscalerIT extends BaseITAbstract {
         ResponseEntity<?> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH + EXISTING_HYPERSCALER_ID,
                 HttpMethod.DELETE, httpEntity, Void.class);
 
+        assertNotNull(response);
         assertEquals(HttpStatus.CONFLICT, response.getStatusCode());
     }
 
@@ -72,6 +73,8 @@ public class HyperscalerIT extends BaseITAbstract {
         ResponseEntity<List<HyperscalerDto>> responseAfter = restTemplate.exchange(
                 LOCALHOST + port + SERVICE_PATH + "findAll", HttpMethod.GET, httpEntity, responseTypeHyperscaler);
 
+        assertNotNull(response);
+        assertNotNull(responseAfter);
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(HttpStatus.OK, responseAfter.getStatusCode());
         assertEquals(2, responseAfter.getBody().size());

@@ -14,7 +14,7 @@ public class OfferDataTechnologyServiceImpl implements OfferDataTechnologyServic
 
     @Override
     public boolean checkExistsByHyperscalerId(Long id) {
-        return this.offerDataTechnologyRepository.existsById(id);
+        return this.offerDataTechnologyRepository.existsByHyperscalerId(id);
     }
 
 }
