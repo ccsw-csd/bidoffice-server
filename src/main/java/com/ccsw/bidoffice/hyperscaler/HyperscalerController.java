@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -32,5 +33,11 @@ public class HyperscalerController {
     @RequestMapping(path = "/{id}", method = RequestMethod.DELETE)
     public void deleteItemFromHyperscaler(@PathVariable(name = "id") Long id) throws AlreadyExistsException {
         this.hyperscalerService.deleteItemFromHyperscaler(id);
+    }
+
+    @RequestMapping(path = { "", "/{id}" }, method = RequestMethod.PUT)
+    public void saveItemToHyperscaler(@PathVariable(name = "id", required = false) Long id,
+            @RequestBody HyperscalerDto hyperscalerDto) {
+        this.hyperscalerService.saveItem(id, hyperscalerDto);
     }
 }
