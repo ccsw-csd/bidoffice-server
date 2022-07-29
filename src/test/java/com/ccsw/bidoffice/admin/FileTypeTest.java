@@ -2,7 +2,10 @@ package com.ccsw.bidoffice.admin;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
@@ -15,15 +18,20 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Sort;
 
+import com.ccsw.bidoffice.common.exception.AlreadyExistsException;
 import com.ccsw.bidoffice.filetype.FileTypeRepository;
 import com.ccsw.bidoffice.filetype.FileTypeServiceImpl;
 import com.ccsw.bidoffice.filetype.model.FileTypeEntity;
+import com.ccsw.bidoffice.offerdatafile.OfferDataFileServiceImpl;
 
 @ExtendWith(MockitoExtension.class)
 public class FileTypeTest {
 
     @Mock
     private FileTypeRepository fileTypeRepository;
+
+    @Mock
+    private OfferDataFileServiceImpl offerDataFileServiceImpl;
 
     @InjectMocks
     private FileTypeServiceImpl fileTypeService;
@@ -43,6 +51,28 @@ public class FileTypeTest {
 
         assertNotNull(filetypes);
         assertEquals(4, filetypes.size());
+
+    }
+
+    public static final Long EXISTS_FILETYPE_ID = 3L;
+    public static final Long NEW_FILETYPE_ID = 10L;
+
+    @Test
+    public void deleteExistsFileTypeIdShouldDelete() throws AlreadyExistsException {
+        when(this.offerDataFileServiceImpl.checkExistsByFileTypeId(NEW_FILETYPE_ID)).thenReturn(false);
+
+        fileTypeService.delete(NEW_FILETYPE_ID);
+
+        verify(fileTypeRepository).deleteById(NEW_FILETYPE_ID);
+    }
+
+    @Test
+    public void deleteFileTypeWithExistingShouldThrowException() {
+
+        when(this.offerDataFileServiceImpl.checkExistsByFileTypeId(EXISTS_FILETYPE_ID)).thenReturn(true);
+
+        assertThrows(AlreadyExistsException.class, () -> this.fileTypeService.delete(EXISTS_FILETYPE_ID));
+        verify(this.fileTypeRepository, never()).deleteById(EXISTS_FILETYPE_ID);
 
     }
 
