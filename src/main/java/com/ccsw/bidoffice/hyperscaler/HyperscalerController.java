@@ -30,7 +30,7 @@ public class HyperscalerController {
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.DELETE)
-    public void deleteItemFromHyperscaler(@PathVariable(name = "id") Long id) throws AlreadyExistsException {
-        this.hyperscalerService.deleteItemFromHyperscaler(id);
+    public void delete(@PathVariable(name = "id") Long id) throws AlreadyExistsException {
+        this.hyperscalerService.delete(id);
     }
 }
