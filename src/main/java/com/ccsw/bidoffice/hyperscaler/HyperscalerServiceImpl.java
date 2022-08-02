@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -44,12 +43,13 @@ public class HyperscalerServiceImpl implements HyperscalerService {
         HyperscalerEntity hyperscalerEntity = null;
 
         if (id != null) {
-            this.hyperscalerRepository.findById(id).orElse(null);
+            hyperscalerEntity = this.hyperscalerRepository.findById(id).orElse(null);
         } else {
             hyperscalerEntity = new HyperscalerEntity();
         }
 
-        BeanUtils.copyProperties(hyperscalerDto, hyperscalerEntity, "id");
+        hyperscalerEntity.setName(hyperscalerDto.getName());
+        hyperscalerEntity.setPriority(hyperscalerDto.getPriority());
 
         this.hyperscalerRepository.save(hyperscalerEntity);
 
