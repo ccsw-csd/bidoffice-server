@@ -38,14 +38,29 @@ public class HyperscalerServiceImpl implements HyperscalerService {
     }
 
     @Override
-    public void saveItem(Long id, HyperscalerDto hyperscalerDto) {
+    public void saveItem(HyperscalerDto hyperscalerDto) throws AlreadyExistsException {
 
         HyperscalerEntity hyperscalerEntity = null;
 
-        if (id != null) {
-            hyperscalerEntity = this.hyperscalerRepository.findById(id).orElse(null);
+        if (hyperscalerDto.getId() != null) {
+            hyperscalerEntity = this.hyperscalerRepository.findById(hyperscalerDto.getId()).orElse(null);
+            if (hyperscalerEntity.getName() == hyperscalerDto.getName()) {
+                if (this.hyperscalerRepository.existsByPriority(hyperscalerDto.getPriority()))
+                    throw new AlreadyExistsException();
+
+            } else if (hyperscalerEntity.getPriority() == hyperscalerDto.getPriority()) {
+                if (this.hyperscalerRepository.existsByName(hyperscalerDto.getName()))
+                    throw new AlreadyExistsException();
+            } else {
+                if (this.hyperscalerRepository.existsByPriority(hyperscalerDto.getPriority())
+                        || this.hyperscalerRepository.existsByName(hyperscalerDto.getName()))
+                    throw new AlreadyExistsException();
+            }
         } else {
             hyperscalerEntity = new HyperscalerEntity();
+            if (this.hyperscalerRepository.existsByPriority(hyperscalerDto.getPriority())
+                    || this.hyperscalerRepository.existsByName(hyperscalerDto.getName()))
+                throw new AlreadyExistsException();
         }
 
         hyperscalerEntity.setName(hyperscalerDto.getName());

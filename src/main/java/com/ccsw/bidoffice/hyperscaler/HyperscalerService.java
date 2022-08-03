@@ -12,6 +12,6 @@ public interface HyperscalerService {
 
     public void deleteItemFromHyperscaler(Long id) throws AlreadyExistsException;
 
-    public void saveItem(Long id, HyperscalerDto hyperscalerDto);
+    public void saveItem(HyperscalerDto hyperscalerDto) throws AlreadyExistsException;
 
 }

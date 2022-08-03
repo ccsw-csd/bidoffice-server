@@ -35,9 +35,8 @@ public class HyperscalerController {
         this.hyperscalerService.deleteItemFromHyperscaler(id);
     }
 
-    @RequestMapping(path = { "", "/{id}" }, method = RequestMethod.PUT)
-    public void saveItemToHyperscaler(@PathVariable(name = "id", required = false) Long id,
-            @RequestBody HyperscalerDto hyperscalerDto) {
-        this.hyperscalerService.saveItem(id, hyperscalerDto);
+    @RequestMapping(path = { "" }, method = RequestMethod.PUT)
+    public void saveItemToHyperscaler(@RequestBody HyperscalerDto hyperscalerDto) throws AlreadyExistsException {
+        this.hyperscalerService.saveItem(hyperscalerDto);
     }
 }
