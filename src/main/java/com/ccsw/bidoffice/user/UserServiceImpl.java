@@ -3,8 +3,12 @@ package com.ccsw.bidoffice.user;
 import com.ccsw.bidoffice.common.criteria.TernarySearchCriteria;
 import com.ccsw.bidoffice.config.security.UserInfoAppDto;
 import com.ccsw.bidoffice.role.RoleRepository;
+import com.ccsw.bidoffice.role.RoleService;
+import com.ccsw.bidoffice.user.model.UserDto;
 import com.ccsw.bidoffice.user.model.UserEntity;
 import com.ccsw.bidoffice.user.model.UserSearchDto;
+import com.ccsw.bidoffice.common.exception.EntityNotFoundException;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -27,6 +31,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     RoleRepository roleRepository;
+
+    @Autowired
+    RoleService roleService;
 
     /**
      * {@inheritDoc}
@@ -87,6 +94,20 @@ public class UserServiceImpl implements UserService {
         Specification<UserEntity> specification = Specification.where(firstnameLastnameUsername);
 
         return this.userRepository.findAll(specification, PageRequest.of(0, 15)).getContent();
+    }
+
+    @Transactional
+    @Override
+    public UserEntity modifyUser(UserDto userDto) throws EntityNotFoundException{
+
+        if(userDto.getId()==null || !userRepository.existsById(userDto.getId())){
+            throw new EntityNotFoundException();
+        }
+
+        UserEntity updateUser = this.getByUsername(userDto.getUsername());
+        BeanUtils.copyProperties(userDto, updateUser, "id", "username");
+        updateUser.setRole(this.roleService.getById(userDto.getRole().getId()));
+        return this.userRepository.save(updateUser);
     }
 
 }
