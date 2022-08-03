@@ -1,5 +1,6 @@
 package com.ccsw.bidoffice.user;
 
+import com.ccsw.bidoffice.common.exception.EntityNotFoundException;
 import com.ccsw.bidoffice.config.mapper.BeanMapper;
 import com.ccsw.bidoffice.user.model.UserDto;
 import com.ccsw.bidoffice.user.model.UserSearchDto;
@@ -38,5 +39,10 @@ public class UserController {
     public List<UserDto> findByFilter(@RequestBody String filter) {
 
         return this.beanMapper.mapList(this.userService.findByFilter(filter), UserDto.class);
+    }
+
+    @RequestMapping(path="", method = RequestMethod.PUT)
+    public UserDto modifyUser(@RequestBody UserDto userDto) throws EntityNotFoundException {
+        return this.beanMapper.map(userService.modifyUser(userDto), UserDto.class);
     }
 }
