@@ -11,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.annotation.DirtiesContext;
 
@@ -45,4 +46,38 @@ public class HyperscalerIT extends BaseITAbstract {
         assertEquals(3, response.getBody().size());
 
     }
+
+    private static final long EXISTING_HYPERSCALER_ID = 1L;
+
+    @Test
+    public void IfExistsOffersShouldNotDelete() {
+        HttpEntity<?> httpEntity = new HttpEntity<>(getHeaders());
+
+        ResponseEntity<?> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH + EXISTING_HYPERSCALER_ID,
+                HttpMethod.DELETE, httpEntity, Void.class);
+
+        assertNotNull(response);
+        assertEquals(HttpStatus.CONFLICT, response.getStatusCode());
+    }
+
+    private static final long NOT_EXISTING_HYPERSCALER_ID = 2L;
+
+    @Test
+    public void UnlessExistsOffersShouldDelete() {
+        HttpEntity<?> httpEntity = new HttpEntity<>(getHeaders());
+
+        ResponseEntity<?> response = restTemplate.exchange(
+                LOCALHOST + port + SERVICE_PATH + NOT_EXISTING_HYPERSCALER_ID, HttpMethod.DELETE, httpEntity,
+                Void.class);
+
+        ResponseEntity<List<HyperscalerDto>> responseAfter = restTemplate.exchange(
+                LOCALHOST + port + SERVICE_PATH + "findAll", HttpMethod.GET, httpEntity, responseTypeHyperscaler);
+
+        assertNotNull(response);
+        assertNotNull(responseAfter);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(HttpStatus.OK, responseAfter.getStatusCode());
+        assertEquals(2, responseAfter.getBody().size());
+    }
+
 }
