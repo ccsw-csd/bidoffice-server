@@ -30,7 +30,7 @@ public class HyperscalerServiceImpl implements HyperscalerService {
     }
 
     @Override
-    public void deleteItemFromHyperscaler(Long id) throws AlreadyExistsException {
+    public void delete(Long id) throws AlreadyExistsException {
         if (this.offerDataTechnologyService.checkExistsByHyperscalerId(id))
             throw new AlreadyExistsException();
 
