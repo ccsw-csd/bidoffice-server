@@ -14,4 +14,14 @@ public interface HyperscalerService {
 
     public void saveItem(HyperscalerDto hyperscalerDto) throws AlreadyExistsException;
 
+    public boolean checkIfExistsPriority(Long priority);
+
+    public boolean checkIfExistsName(String name);
+
+    public void checkWhenNamesAreEquals(HyperscalerDto hyperscalerDto) throws AlreadyExistsException;
+
+    public void checkWhenPriorityIsEqual(HyperscalerDto hyperscalerDto) throws AlreadyExistsException;
+
+    public void checkWhenAttributesAreDifferent(HyperscalerDto hyperscalerDto) throws AlreadyExistsException;
+
 }

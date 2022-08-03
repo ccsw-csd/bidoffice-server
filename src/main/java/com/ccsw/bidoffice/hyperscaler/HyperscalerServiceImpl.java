@@ -38,36 +38,56 @@ public class HyperscalerServiceImpl implements HyperscalerService {
     }
 
     @Override
-    public void saveItem(HyperscalerDto hyperscalerDto) throws AlreadyExistsException {
+    public void checkWhenNamesAreEquals(HyperscalerDto hyperscalerDto) throws AlreadyExistsException {
+        if (checkIfExistsPriority(hyperscalerDto.getPriority()))
+            throw new AlreadyExistsException();
+    }
 
+    @Override
+    public void checkWhenPriorityIsEqual(HyperscalerDto hyperscalerDto) throws AlreadyExistsException {
+        if (checkIfExistsName(hyperscalerDto.getName()))
+            throw new AlreadyExistsException();
+    }
+
+    @Override
+    public void checkWhenAttributesAreDifferent(HyperscalerDto hyperscalerDto) throws AlreadyExistsException {
+        if (checkIfExistsPriority(hyperscalerDto.getPriority()) || checkIfExistsName(hyperscalerDto.getName()))
+            throw new AlreadyExistsException();
+    }
+
+    @Override
+    public boolean checkIfExistsPriority(Long priority) {
+        return this.hyperscalerRepository.existsByPriority(priority);
+    }
+
+    @Override
+    public boolean checkIfExistsName(String name) {
+        return this.hyperscalerRepository.existsByName(name);
+    }
+
+    @Override
+    public void saveItem(HyperscalerDto hyperscalerDto) throws AlreadyExistsException {
         HyperscalerEntity hyperscalerEntity = null;
 
         if (hyperscalerDto.getId() != null) {
             hyperscalerEntity = this.hyperscalerRepository.findById(hyperscalerDto.getId()).orElse(null);
-            if (hyperscalerEntity.getName() == hyperscalerDto.getName()) {
-                if (this.hyperscalerRepository.existsByPriority(hyperscalerDto.getPriority()))
-                    throw new AlreadyExistsException();
+            if (hyperscalerEntity.getName().compareTo(hyperscalerDto.getName()) == 0) {
+                checkWhenNamesAreEquals(hyperscalerDto);
 
-            } else if (hyperscalerEntity.getPriority() == hyperscalerDto.getPriority()) {
-                if (this.hyperscalerRepository.existsByName(hyperscalerDto.getName()))
-                    throw new AlreadyExistsException();
+            } else if (Long.compare(hyperscalerEntity.getPriority(), hyperscalerDto.getPriority()) == 0) {
+                checkWhenPriorityIsEqual(hyperscalerDto);
+
             } else {
-                if (this.hyperscalerRepository.existsByPriority(hyperscalerDto.getPriority())
-                        || this.hyperscalerRepository.existsByName(hyperscalerDto.getName()))
-                    throw new AlreadyExistsException();
+                checkWhenAttributesAreDifferent(hyperscalerDto);
             }
         } else {
             hyperscalerEntity = new HyperscalerEntity();
-            if (this.hyperscalerRepository.existsByPriority(hyperscalerDto.getPriority())
-                    || this.hyperscalerRepository.existsByName(hyperscalerDto.getName()))
-                throw new AlreadyExistsException();
+            checkWhenAttributesAreDifferent(hyperscalerDto);
         }
 
         hyperscalerEntity.setName(hyperscalerDto.getName());
         hyperscalerEntity.setPriority(hyperscalerDto.getPriority());
 
         this.hyperscalerRepository.save(hyperscalerEntity);
-
     }
-
 }
