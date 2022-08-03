@@ -25,6 +25,15 @@ public interface UserService {
     UserEntity getByUsername(String username);
 
     /**
+     * Recupera un usuario por su id
+     *
+     * @param id
+     * @return
+     * @throws Exception
+     */
+    UserEntity get(Long id) throws EntityNotFoundException;
+
+    /**
      * Método para recuperar un listado paginado de {@link com.ccsw.bidoffice.user.model.UserEntity}
      * @param dto
      * @return

@@ -12,6 +12,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import java.util.Optional;
 
 import static org.mockito.Mockito.*;
 
@@ -21,8 +22,6 @@ public class UserTest {
     public static final Long EXISTS_USER_ID = 6L;
     public static final Long NOT_EXISTS_USER_ID = 7L;
     public static final Long EXISTS_ROLE_ID = 2L;
-
-    public static final String EXISTS_USER_USERNAME = "USERNAME6";
 
 
     @InjectMocks
@@ -43,6 +42,7 @@ public class UserTest {
     @BeforeEach
     public void setUp() {
         this.userDto = new UserDto();
+        this.userDto.setUsername("USERNAME6");
         this.userDto.setFirstName("");
         this.userDto.setLastName("");
         this.userDto.setEmail("");
@@ -64,10 +64,8 @@ public class UserTest {
         RoleDto role = new RoleDto();
         role.setId(EXISTS_ROLE_ID);
         this.userDto.setId(EXISTS_USER_ID);
-        this.userDto.setUsername(EXISTS_USER_USERNAME);
         this.userDto.setRole(role);
-        when(this.userRepository.existsById(EXISTS_USER_ID)).thenReturn(true);
-        when(this.userRepository.getByUsername(EXISTS_USER_USERNAME)).thenReturn(userEntityData);
+        when(this.userRepository.findById(EXISTS_USER_ID)).thenReturn(Optional.of(userEntityData));
         when(this.roleService.getById(EXISTS_ROLE_ID)).thenReturn(roleEntityData);
 
         this.userServiceImpl.modifyUser(userDto);
@@ -79,9 +77,8 @@ public class UserTest {
     public void modifyWithNotExistIdShouldThrowException() throws EntityNotFoundException {
 
         this.userDto.setId(NOT_EXISTS_USER_ID);
-        this.userDto.setUsername(EXISTS_USER_USERNAME);
         UserEntity userEntity = mock(UserEntity.class);
-        doReturn(false).when(this.userRepository).existsById(NOT_EXISTS_USER_ID);
+        doReturn(Optional.empty()).when(this.userRepository).findById(NOT_EXISTS_USER_ID);
 
         try {
             this.userServiceImpl.modifyUser(userDto);

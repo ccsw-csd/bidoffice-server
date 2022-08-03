@@ -48,6 +48,15 @@ public class UserServiceImpl implements UserService {
      * {@inheritDoc}
      */
     @Override
+    public UserEntity get(Long id) throws EntityNotFoundException {
+
+        return userRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public Page<UserEntity> findPage(UserSearchDto userSearchDto) {
 
         UserSpecification username = new UserSpecification(
@@ -100,11 +109,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserEntity modifyUser(UserDto userDto) throws EntityNotFoundException{
 
-        if(userDto.getId()==null || !userRepository.existsById(userDto.getId())){
+        if(userDto.getId()==null){
             throw new EntityNotFoundException();
         }
 
-        UserEntity updateUser = this.getByUsername(userDto.getUsername());
+        UserEntity updateUser = this.get(userDto.getId());
         BeanUtils.copyProperties(userDto, updateUser, "id", "username");
         updateUser.setRole(this.roleService.getById(userDto.getRole().getId()));
         return this.userRepository.save(updateUser);
