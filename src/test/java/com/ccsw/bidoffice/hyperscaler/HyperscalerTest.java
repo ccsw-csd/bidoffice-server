@@ -59,7 +59,7 @@ public class HyperscalerTest {
 
         when(this.offerDataServiceImpl.checkExistsByHyperscalerId(EXISTS_ITEM_ID)).thenReturn(false);
 
-        this.hyperscalerServiceImpl.deleteItemFromHyperscaler(EXISTS_ITEM_ID);
+        this.hyperscalerServiceImpl.delete(EXISTS_ITEM_ID);
 
         verify(this.hyperscalerRepository).deleteById(EXISTS_ITEM_ID);
     }
@@ -71,7 +71,7 @@ public class HyperscalerTest {
         when(this.offerDataServiceImpl.checkExistsByHyperscalerId(NOT_EXISTS_ITEM_ID)).thenReturn(true);
 
         assertThrows(AlreadyExistsException.class,
-                () -> hyperscalerServiceImpl.deleteItemFromHyperscaler(NOT_EXISTS_ITEM_ID));
+                () -> hyperscalerServiceImpl.delete(NOT_EXISTS_ITEM_ID));
 
         verify(this.hyperscalerRepository, never()).deleteById(NOT_EXISTS_ITEM_ID);
         ;
