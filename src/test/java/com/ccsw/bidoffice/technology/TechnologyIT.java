@@ -8,6 +8,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.ParameterizedTypeReference;
@@ -25,20 +26,27 @@ public class TechnologyIT extends BaseITAbstract {
 
     public static final String SERVICE_PATH = "/technology/";
 
-    public static final Integer TOTAL_TECHNOLOGIES = 14;
+    public static final Integer TOTAL_TECHNOLOGIES = 1;
+
+    private TechnologyDto technologyDto;
 
     ParameterizedTypeReference<List<TechnologyDto>> responseTypeTechnology = new ParameterizedTypeReference<List<TechnologyDto>>() {
     };
 
+    @BeforeEach
+    public void setUp() {
+        this.technologyDto = new TechnologyDto();
+    }
+
     @Test
     public void findAllTechnologiesShouldReturnListOrderedByPriority() {
 
-        HttpEntity<?> httpEntity = new HttpEntity<>(this.tegetHeaders());
+        HttpEntity<?> httpEntity = new HttpEntity<>(this.technologyDto, getHeaders());
 
         ResponseEntity<List<TechnologyDto>> response = restTemplate.exchange(
                 LOCALHOST + port + SERVICE_PATH + "findAll", HttpMethod.GET, httpEntity, responseTypeTechnology);
 
-        assertNotNull(response.getBody());
+        assertNotNull(response);
         assertEquals(TOTAL_TECHNOLOGIES, response.getBody().size());
         assertTrue(response.getBody().stream().sorted(Comparator.comparing(TechnologyDto::getPriority))
                 .collect(Collectors.toList()).equals(response.getBody()));
