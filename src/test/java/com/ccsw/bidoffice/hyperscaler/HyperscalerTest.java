@@ -70,8 +70,12 @@ public class HyperscalerTest {
     public void deleteIfNotExistsItemIdShouldRiseException() throws AlreadyExistsException {
         when(this.offerDataServiceImpl.checkExistsByHyperscalerId(NOT_EXISTS_ITEM_ID)).thenReturn(true);
 
+<<<<<<< Updated upstream
         assertThrows(AlreadyExistsException.class,
                 () -> hyperscalerServiceImpl.delete(NOT_EXISTS_ITEM_ID));
+=======
+        assertThrows(AlreadyExistsException.class, () -> hyperscalerServiceImpl.delete(NOT_EXISTS_ITEM_ID));
+>>>>>>> Stashed changes
 
         verify(this.hyperscalerRepository, never()).deleteById(NOT_EXISTS_ITEM_ID);
         ;
