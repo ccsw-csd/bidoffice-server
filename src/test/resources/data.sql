@@ -195,9 +195,9 @@ CREATE TABLE file_type (
   	PRIMARY KEY (id)
 );
 
-INSERT INTO file_type (name,priority) VALUES ( 'user1', 1);
-INSERT INTO file_type (name,priority) VALUES ( 'user2', 2);
-INSERT INTO file_type (name,priority) VALUES ( 'user3', 3);
+INSERT INTO file_type (id,name,priority) VALUES (1, 'user1', 1);
+INSERT INTO file_type (id,name,priority) VALUES (2, 'user2', 2);
+INSERT INTO file_type (id,name,priority) VALUES (3, 'user3', 3);
 
 CREATE TABLE offer_data_chapter (
 	id bigint NOT NULL AUTO_INCREMENT,

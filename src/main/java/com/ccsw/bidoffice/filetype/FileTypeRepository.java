@@ -11,4 +11,8 @@ public interface FileTypeRepository extends CrudRepository<FileTypeEntity, Long>
 
     List<FileTypeEntity> findAll(Sort sort);
 
+    boolean existsByPriority(Long priority);
+
+    boolean existsByName(String name);
+
 }

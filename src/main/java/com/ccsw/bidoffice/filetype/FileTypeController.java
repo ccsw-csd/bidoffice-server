@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,14 +27,17 @@ public class FileTypeController {
 
     @RequestMapping(path = "/findAll", method = RequestMethod.GET)
     public List<FileTypeDto> getAllFromFileType() {
-
         return beanMapper.mapList(this.fileTypeService.getAllFromFileType(), FileTypeDto.class);
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.DELETE)
     public void delete(@PathVariable("id") Long id) throws AlreadyExistsException {
-
         this.fileTypeService.delete(id);
+    }
+
+    @RequestMapping(path = "", method = RequestMethod.PUT)
+    public void save(@RequestBody FileTypeDto data) throws AlreadyExistsException {
+        this.fileTypeService.save(data);
     }
 
 }
