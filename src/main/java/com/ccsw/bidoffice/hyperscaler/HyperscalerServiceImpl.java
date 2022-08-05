@@ -71,10 +71,10 @@ public class HyperscalerServiceImpl implements HyperscalerService {
 
         if (hyperscalerDto.getId() != null) {
             hyperscalerEntity = this.hyperscalerRepository.findById(hyperscalerDto.getId()).orElse(null);
-            if (hyperscalerEntity.getName().compareTo(hyperscalerDto.getName()) == 0) {
+            if (hyperscalerEntity.getName().equals(hyperscalerDto.getName())) {
                 checkWhenNamesAreEquals(hyperscalerDto);
 
-            } else if (Long.compare(hyperscalerEntity.getPriority(), hyperscalerDto.getPriority()) == 0) {
+            } else if (hyperscalerEntity.getPriority().equals(hyperscalerDto.getPriority())) {
                 checkWhenPriorityIsEqual(hyperscalerDto);
 
             } else {
