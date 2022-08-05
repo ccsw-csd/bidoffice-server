@@ -39,6 +39,14 @@ public class FileTypeTest {
     @InjectMocks
     private FileTypeServiceImpl fileTypeService;
 
+    public static final Long EXISTS_FILETYPE_ID = 3L;
+    public static final Long NEW_FILETYPE_ID = 10L;
+    public static final String EXISTS_FILETYPE_NAME = "user1";
+    public static final String ANOTHER_EXISTS_FILETYPE_NAME = "user2";
+    public static final String NOT_EXISTS_FILETYPE_NAME = "New User";
+    public static final Long EXISTS_FILETYPE_PRIORITY = 2L;
+    public static final Long NOT_EXISTS_FILETYPE_PRIORITY = 23L;
+
     @Test
     public void findAllFileTypes() {
 
@@ -57,9 +65,6 @@ public class FileTypeTest {
 
     }
 
-    public static final Long EXISTS_FILETYPE_ID = 3L;
-    public static final Long NEW_FILETYPE_ID = 10L;
-
     @Test
     public void deleteExistsFileTypeIdShouldDelete() throws AlreadyExistsException {
         when(this.offerDataFileServiceImpl.checkExistsByFileTypeId(NEW_FILETYPE_ID)).thenReturn(false);
@@ -76,14 +81,7 @@ public class FileTypeTest {
 
         assertThrows(AlreadyExistsException.class, () -> this.fileTypeService.delete(EXISTS_FILETYPE_ID));
         verify(this.fileTypeRepository, never()).deleteById(EXISTS_FILETYPE_ID);
-
     }
-
-    public static final String EXISTS_FILETYPE_NAME = "user1";
-    public static final String ANOTHER_EXISTS_FILETYPE_NAME = "user2";
-    public static final String NOT_EXISTS_FILETYPE_NAME = "New User";
-    public static final Long EXISTS_FILETYPE_PRIORITY = 2L;
-    public static final Long NOT_EXISTS_FILETYPE_PRIORITY = 23L;
 
     @Test
     public void saveNewFileTypeButWrongNameShouldThrowException() {
@@ -236,5 +234,4 @@ public class FileTypeTest {
 
         verify(this.fileTypeRepository).save(fileTypeEntity);
     }
-
 }

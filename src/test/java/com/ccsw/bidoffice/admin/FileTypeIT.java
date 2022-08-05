@@ -26,6 +26,16 @@ public class FileTypeIT extends BaseITAbstract {
 
     private FileTypeDto fileTypeDto;
 
+    public static final Long NEW_FILETYPE_ID = 10L;
+    public static final Long DELETE_FILETYPE_ID = 2L;
+    public static final Long EXISTING_FILETYPE_ID = 3L;
+    public static final String NEW_FILETYPE_NAME = "TEST NAME";
+    public static final String EXISTING_FILETYPE_NAME = "user1";
+    public static final String SAME_FILETYPE_NAME = "user3";
+    public static final Long NEW_FILETYPE_PRIORITY = 7L;
+    public static final Long EXISTING_FILETYPE_PRIORITY = 1L;
+    public static final Long SAME_FILETYPE_PRIORITY = 3L;
+
     ParameterizedTypeReference<List<FileTypeDto>> responseType = new ParameterizedTypeReference<List<FileTypeDto>>() {
     };
 
@@ -49,10 +59,6 @@ public class FileTypeIT extends BaseITAbstract {
         assertNotNull(response);
         assertEquals(3, response.getBody().size());
     }
-
-    public static final Long NEW_FILETYPE_ID = 10L;
-    public static final Long DELETE_FILETYPE_ID = 2L;
-    public static final Long EXISTING_FILETYPE_ID = 3L;
 
     @Test
     public void deleteWithExistsIdShouldDeleteFileType() {
@@ -78,11 +84,6 @@ public class FileTypeIT extends BaseITAbstract {
 
         assertEquals(HttpStatus.CONFLICT, response.getStatusCode());
     }
-
-    public static final String NEW_FILETYPE_NAME = "TEST NAME";
-    public static final String EXISTING_FILETYPE_NAME = "user1";
-    public static final Long NEW_FILETYPE_PRIORITY = 7L;
-    public static final Long EXISTING_FILETYPE_PRIORITY = 1L;
 
     @Test
     public void saveWithEverythingOk() {
@@ -179,9 +180,6 @@ public class FileTypeIT extends BaseITAbstract {
 
         assertEquals(HttpStatus.CONFLICT, response.getStatusCode());
     }
-
-    public static final Long SAME_FILETYPE_PRIORITY = 3L;
-    public static final String SAME_FILETYPE_NAME = "user3";
 
     @Test
     public void editSameNamePriorityOkShouldEdit() {
