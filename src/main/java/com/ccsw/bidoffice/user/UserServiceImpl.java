@@ -2,15 +2,17 @@ package com.ccsw.bidoffice.user;
 
 import com.ccsw.bidoffice.common.criteria.TernarySearchCriteria;
 import com.ccsw.bidoffice.config.security.UserInfoAppDto;
-import com.ccsw.bidoffice.role.RoleRepository;
+import com.ccsw.bidoffice.role.RoleService;
+import com.ccsw.bidoffice.user.model.UserDto;
 import com.ccsw.bidoffice.user.model.UserEntity;
 import com.ccsw.bidoffice.user.model.UserSearchDto;
+import com.ccsw.bidoffice.common.exception.EntityNotFoundException;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 /**
@@ -19,14 +21,13 @@ import java.util.List;
  */
 
 @Service
-@Transactional(readOnly = true)
 public class UserServiceImpl implements UserService {
 
     @Autowired
     UserRepository userRepository;
 
     @Autowired
-    RoleRepository roleRepository;
+    RoleService roleService;
 
     /**
      * {@inheritDoc}
@@ -35,6 +36,15 @@ public class UserServiceImpl implements UserService {
     public UserEntity getByUsername(String username) {
 
         return this.userRepository.getByUsername(username);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public UserEntity get(Long id) throws EntityNotFoundException {
+
+        return userRepository.findById(id).orElseThrow(EntityNotFoundException::new);
     }
 
     /**
@@ -68,13 +78,26 @@ public class UserServiceImpl implements UserService {
 
         UserEntity user = new UserEntity();
 
-        user.setRole(this.roleRepository.getByName(dto.getRole()));
+        user.setRole(this.roleService.getByName(dto.getRole()));
         user.setUsername(dto.getUsername());
         user.setEmail(dto.getMail());
         user.setFirstName(dto.getFirstName());
         user.setLastName(dto.getLastName());
 
         this.userRepository.save(user);
+    }
+
+    @Override
+    public UserEntity modifyUser(UserDto userDto) throws EntityNotFoundException{
+
+        if(userDto.getId()==null){
+            throw new EntityNotFoundException();
+        }
+
+        UserEntity updateUser = this.get(userDto.getId());
+        BeanUtils.copyProperties(userDto, updateUser, "id", "username");
+        updateUser.setRole(this.roleService.getById(userDto.getRole().getId()));
+        return this.userRepository.save(updateUser);
     }
 
     @Override

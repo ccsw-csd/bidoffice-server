@@ -2,7 +2,10 @@ package com.ccsw.bidoffice.hyperscaler;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
@@ -15,13 +18,18 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Sort;
 
+import com.ccsw.bidoffice.common.exception.AlreadyExistsException;
 import com.ccsw.bidoffice.hyperscaler.model.HyperscalerEntity;
+import com.ccsw.bidoffice.offerdatatechnology.OfferDataTechnologyServiceImpl;
 
 @ExtendWith(MockitoExtension.class)
 public class HyperscalerTest {
 
     @Mock
     private HyperscalerRepository hyperscalerRepository;
+
+    @Mock
+    private OfferDataTechnologyServiceImpl offerDataServiceImpl;
 
     @InjectMocks
     private HyperscalerServiceImpl hyperscalerServiceImpl;
@@ -43,4 +51,30 @@ public class HyperscalerTest {
         assertEquals(4, list.size());
 
     }
+
+    private static final long EXISTS_ITEM_ID = 1L;
+
+    @Test
+    public void deleteExistsItemIdShouldDelete() throws AlreadyExistsException {
+
+        when(this.offerDataServiceImpl.checkExistsByHyperscalerId(EXISTS_ITEM_ID)).thenReturn(false);
+
+        this.hyperscalerServiceImpl.delete(EXISTS_ITEM_ID);
+
+        verify(this.hyperscalerRepository).deleteById(EXISTS_ITEM_ID);
+    }
+
+    private static final long NOT_EXISTS_ITEM_ID = 0L;
+
+    @Test
+    public void deleteIfNotExistsItemIdShouldRiseException() throws AlreadyExistsException {
+        when(this.offerDataServiceImpl.checkExistsByHyperscalerId(NOT_EXISTS_ITEM_ID)).thenReturn(true);
+
+        assertThrows(AlreadyExistsException.class,
+                () -> hyperscalerServiceImpl.delete(NOT_EXISTS_ITEM_ID));
+
+        verify(this.hyperscalerRepository, never()).deleteById(NOT_EXISTS_ITEM_ID);
+        ;
+    }
+
 }
