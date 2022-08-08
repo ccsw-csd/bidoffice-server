@@ -25,6 +25,9 @@ public class TecnologyTest {
     @Mock
     private TechnologyRepository technologyRepository;
 
+    @Mock
+    private OfferDataTechnologyServiceImpl
+
     @InjectMocks
     private TechnologyServiceImpl technologyServiceImpl;
 
