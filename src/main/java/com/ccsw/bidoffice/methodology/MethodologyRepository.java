@@ -10,4 +10,8 @@ import com.ccsw.bidoffice.methodology.model.MethodologyEntity;
 public interface MethodologyRepository extends CrudRepository<MethodologyEntity, Long> {
 
     List<MethodologyEntity> findAll(Sort sort);
+
+    Boolean existsByNameAndIdIsNot(String name, Long id);
+
+    Boolean existsByPriorityAndIdIsNot(Integer priority, Long id);
 }
