@@ -11,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.annotation.DirtiesContext;
 
@@ -47,6 +48,35 @@ public class FileTypeIT extends BaseITAbstract {
 
         assertNotNull(response);
         assertEquals(3, response.getBody().size());
+    }
+
+    public static final Long NEW_FILETYPE_ID = 10L;
+    public static final Long DELETE_FILETYPE_ID = 2L;
+    public static final Long EXISTING_FILETYPE_ID = 3L;
+
+    @Test
+    public void deleteWithExistsIdShouldDeleteFileType() {
+        HttpEntity<?> httpEntity = new HttpEntity<>(getHeaders());
+
+        restTemplate.exchange(LOCALHOST + port + SERVICE_PATH + DELETE_FILETYPE_ID, HttpMethod.DELETE, httpEntity,
+                Void.class);
+
+        ResponseEntity<List<FileTypeDto>> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH + "findAll",
+                HttpMethod.GET, httpEntity, responseType);
+
+        assertNotNull(response);
+        assertEquals(2, response.getBody().size());
+    }
+
+    @Test
+    public void deleteWithNotExistsIdShouldThrowException() {
+
+        HttpEntity<?> httpEntity = new HttpEntity<>(getHeaders());
+
+        ResponseEntity<?> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH + EXISTING_FILETYPE_ID,
+                HttpMethod.DELETE, httpEntity, Void.class);
+
+        assertEquals(HttpStatus.CONFLICT, response.getStatusCode());
     }
 
 }
