@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ccsw.bidoffice.common.exception.AlreadyExistsException;
+import com.ccsw.bidoffice.common.exception.EntityNotFoundException;
 import com.ccsw.bidoffice.config.mapper.BeanMapper;
 import com.ccsw.bidoffice.methodology.model.MethodologyDto;
 
@@ -30,9 +31,8 @@ public class MethodologyController {
         return this.beanMapper.mapList(this.methodologyService.findAllMethodologyOrderPriority(), MethodologyDto.class);
     }
 
-    @RequestMapping(path = { "", "/{id}" }, method = RequestMethod.PUT)
-    public void save(@PathVariable(name = "id", required = false) Long id, @RequestBody MethodologyDto dto)
-            throws AlreadyExistsException {
-        this.methodologyService.save(id, dto);
+    @RequestMapping(path = "", method = RequestMethod.PUT)
+    public void save(@RequestBody MethodologyDto dto) throws AlreadyExistsException, EntityNotFoundException {
+        this.methodologyService.save(dto);
     }
 }

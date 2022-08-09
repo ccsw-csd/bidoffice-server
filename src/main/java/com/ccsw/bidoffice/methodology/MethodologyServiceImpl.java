@@ -8,6 +8,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.ccsw.bidoffice.common.exception.AlreadyExistsException;
+import com.ccsw.bidoffice.common.exception.EntityNotFoundException;
 import com.ccsw.bidoffice.methodology.model.MethodologyDto;
 import com.ccsw.bidoffice.methodology.model.MethodologyEntity;
 
@@ -18,8 +19,8 @@ public class MethodologyServiceImpl implements MethodologyService {
     MethodologyRepository methodologyRepository;
 
     @Override
-    public MethodologyEntity get(Long id) {
-        return this.methodologyRepository.findById(id).orElse(null);
+    public MethodologyEntity get(Long id) throws EntityNotFoundException {
+        return this.methodologyRepository.findById(id).orElseThrow(EntityNotFoundException::new);
     }
 
     @Override
@@ -29,14 +30,8 @@ public class MethodologyServiceImpl implements MethodologyService {
     }
 
     @Override
-    public void save(Long id, MethodologyDto dto) throws AlreadyExistsException {
+    public void save(MethodologyDto dto) throws AlreadyExistsException, EntityNotFoundException {
         MethodologyEntity methodology = null;
-
-        if (id == null) {
-            methodology = new MethodologyEntity();
-        } else {
-            methodology = this.get(id);
-        }
 
         Boolean dupeName = this.methodologyRepository.existsByNameAndIdIsNot(dto.getName(), dto.getId());
         Boolean dupePriority = this.methodologyRepository.existsByPriorityAndIdIsNot(dto.getPriority(), dto.getId());
@@ -44,6 +39,13 @@ public class MethodologyServiceImpl implements MethodologyService {
         if (dupeName || dupePriority) {
             throw new AlreadyExistsException();
         } else {
+
+            if (dto.getId() == null) {
+                methodology = new MethodologyEntity();
+            } else {
+                methodology = this.get(dto.getId());
+            }
+
             methodology.setName(dto.getName());
             methodology.setPriority(dto.getPriority());
             this.methodologyRepository.save(methodology);

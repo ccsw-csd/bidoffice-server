@@ -20,6 +20,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Sort;
 
 import com.ccsw.bidoffice.common.exception.AlreadyExistsException;
+import com.ccsw.bidoffice.common.exception.EntityNotFoundException;
 import com.ccsw.bidoffice.methodology.model.MethodologyDto;
 import com.ccsw.bidoffice.methodology.model.MethodologyEntity;
 
@@ -54,7 +55,7 @@ public class MethodologyTest {
     }
 
     @Test
-    public void saveExistsMethodologyShouldUpdate() throws AlreadyExistsException {
+    public void saveExistsMethodologyShouldUpdate() throws AlreadyExistsException, EntityNotFoundException {
         MethodologyDto methodologyDto = new MethodologyDto();
         methodologyDto.setId(EXISTS_ID);
         methodologyDto.setName(NEW_NAME);
@@ -62,7 +63,7 @@ public class MethodologyTest {
         MethodologyEntity methodology = mock(MethodologyEntity.class);
         when(methodologyRepository.findById(EXISTS_ID)).thenReturn(Optional.of(methodology));
 
-        this.methodologyServiceImpl.save(EXISTS_ID, methodologyDto);
+        this.methodologyServiceImpl.save(methodologyDto);
 
         verify(methodologyRepository).save(methodology);
     }
@@ -76,7 +77,7 @@ public class MethodologyTest {
         MethodologyEntity methodology = mock(MethodologyEntity.class);
         when(methodologyRepository.existsByNameAndIdIsNot(EXISTS_NAME, EXISTS_ID)).thenReturn(true);
 
-        assertThrows(AlreadyExistsException.class, () -> methodologyServiceImpl.save(EXISTS_ID, methodologyDto));
+        assertThrows(AlreadyExistsException.class, () -> methodologyServiceImpl.save(methodologyDto));
 
         verify(methodologyRepository, never()).save(methodology);
     }
@@ -90,7 +91,7 @@ public class MethodologyTest {
         MethodologyEntity methodology = mock(MethodologyEntity.class);
         when(methodologyRepository.existsByPriorityAndIdIsNot(EXISTS_PRIORITY, EXISTS_ID)).thenReturn(true);
 
-        assertThrows(AlreadyExistsException.class, () -> methodologyServiceImpl.save(EXISTS_ID, methodologyDto));
+        assertThrows(AlreadyExistsException.class, () -> methodologyServiceImpl.save(methodologyDto));
 
         verify(methodologyRepository, never()).save(methodology);
     }
@@ -106,7 +107,7 @@ public class MethodologyTest {
         when(methodologyRepository.existsByNameAndIdIsNot(EXISTS_NAME, EXISTS_ID)).thenReturn(true);
         when(methodologyRepository.existsByPriorityAndIdIsNot(EXISTS_PRIORITY, EXISTS_ID)).thenReturn(true);
 
-        assertThrows(AlreadyExistsException.class, () -> methodologyServiceImpl.save(EXISTS_ID, methodologyDto));
+        assertThrows(AlreadyExistsException.class, () -> methodologyServiceImpl.save(methodologyDto));
 
         verify(methodologyRepository, never()).save(methodology);
     }
