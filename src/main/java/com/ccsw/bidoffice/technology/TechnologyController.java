@@ -24,16 +24,31 @@ public class TechnologyController {
     @Autowired
     private BeanMapper beanMapper;
 
+    /**
+     * Obtiene un listado de las tecnologías existentes en la base de datos.
+     * 
+     * @return List conteniendo todas las tecnologías.
+     */
     @RequestMapping(path = "/findAll", method = RequestMethod.GET)
     public List<TechnologyDto> findAllTechnologyOrderPriority() {
 
         return this.beanMapper.mapList(this.technologyService.findAllOrderByPriority(), TechnologyDto.class);
+
     }
 
+    /**
+     * Borra una tecnología de la base de datos.
+     * 
+     * @param id Identificador tipo Long de la tecnología a borrar.
+     * 
+     * @throws AlreadyExistsException En caso de que la tecnología se utilice en al
+     *                                menos una oferta.
+     */
     @RequestMapping(path = "/{id}", method = RequestMethod.DELETE)
     public void delete(@PathVariable("id") Long id) throws AlreadyExistsException {
 
         this.technologyService.delete(id);
+
     }
 
 }
