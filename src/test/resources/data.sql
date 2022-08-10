@@ -307,6 +307,8 @@ CREATE TABLE technology (
 );
 
 INSERT INTO technology (name,priority) VALUES ('admin',1);
+INSERT INTO technology (name,priority) VALUES ('VisualBasic',2);
+INSERT INTO technology (name,priority) VALUES ('Quantum++',3);
 
 CREATE TABLE offer_technology (
 	id int(11) NOT NULL AUTO_INCREMENT,
@@ -318,7 +320,7 @@ CREATE TABLE offer_technology (
 );
 
 INSERT INTO offer_technology (offer_id,technology_id) VALUES (1,1);
-INSERT INTO offer_technology (offer_id,technology_id) VALUES (1,1);
+INSERT INTO offer_technology (offer_id,technology_id) VALUES (1,2);
 
 CREATE TABLE offer_tracing (
 	id int(11) NOT NULL AUTO_INCREMENT,
