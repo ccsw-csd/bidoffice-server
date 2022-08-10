@@ -17,4 +17,9 @@ public class OfferDataTechnologyServiceImpl implements OfferDataTechnologyServic
         return this.offerDataTechnologyRepository.existsByHyperscalerId(id);
     }
 
+    @Override
+    public boolean checkIfExistsByMethodologyId(Long id) {
+        return this.offerDataTechnologyRepository.existsByMethodologyId(id);
+    }
+
 }
