@@ -35,7 +35,7 @@ public class MethodologyController {
     public void save(@RequestBody MethodologyDto dto) throws AlreadyExistsException, EntityNotFoundException {
         this.methodologyService.save(dto);
     }
-}
+
     @RequestMapping(path = "/{id}", method = RequestMethod.DELETE)
     public void delete(@PathVariable(name = "id") Long id) throws AlreadyExistsException {
         this.methodologyService.delete(id);

@@ -33,29 +33,39 @@ public class MethodologyServiceImpl implements MethodologyService {
         return this.methodologyRepository.findAll(Sort.by(Sort.Direction.ASC, "priority"));
     }
 
+    private void checkIfValuesAreDuped(MethodologyDto dto) throws AlreadyExistsException {
+        Boolean dupeName, dupePriority;
+
+        if (dto.getId() != null) {
+            dupeName = this.methodologyRepository.existsByNameAndIdIsNot(dto.getId(), dto.getName());
+            dupePriority = this.methodologyRepository.existsByPriorityAndIdIsNot(dto.getId(), dto.getPriority());
+        } else {
+            dupeName = this.methodologyRepository.existsByName(dto.getName());
+            dupePriority = this.methodologyRepository.existsByPriority(dto.getPriority());
+        }
+
+        if (dupeName || dupePriority) {
+            throw new AlreadyExistsException();
+        }
+    }
+
     @Override
     public void save(MethodologyDto dto) throws AlreadyExistsException, EntityNotFoundException {
         MethodologyEntity methodology = null;
 
-        Boolean dupeName = this.methodologyRepository.existsByNameAndIdIsNot(dto.getName(), dto.getId());
-        Boolean dupePriority = this.methodologyRepository.existsByPriorityAndIdIsNot(dto.getPriority(), dto.getId());
+        checkIfValuesAreDuped(dto);
 
-        if (dupeName || dupePriority) {
-            throw new AlreadyExistsException();
+        if (dto.getId() == null) {
+            methodology = new MethodologyEntity();
         } else {
-
-            if (dto.getId() == null) {
-                methodology = new MethodologyEntity();
-            } else {
-                methodology = this.get(dto.getId());
-            }
-
-            methodology.setName(dto.getName());
-            methodology.setPriority(dto.getPriority());
-            this.methodologyRepository.save(methodology);
+            methodology = this.get(dto.getId());
         }
+
+        methodology.setName(dto.getName());
+        methodology.setPriority(dto.getPriority());
+        this.methodologyRepository.save(methodology);
     }
-    
+
     public void delete(Long id) throws AlreadyExistsException {
         if (this.offerDataService.checkIfExistsByMethodologyId(id))
             throw new AlreadyExistsException();
