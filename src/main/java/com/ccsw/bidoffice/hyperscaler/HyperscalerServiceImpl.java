@@ -37,27 +37,20 @@ public class HyperscalerServiceImpl implements HyperscalerService {
         this.hyperscalerRepository.deleteById(id);
     }
 
-    private void checkWhenNamesAreEquals(HyperscalerDto hyperscalerDto) throws AlreadyExistsException {
-        if (checkIfExistsPriority(hyperscalerDto.getPriority()))
-            throw new AlreadyExistsException();
+    private boolean checkIfExistsPriority(HyperscalerDto dto) {
+        return this.hyperscalerRepository.existsByPriorityAndIdIsNot(dto.getPriority(), dto.getId());
     }
 
-    private void checkWhenPriorityIsEqual(HyperscalerDto hyperscalerDto) throws AlreadyExistsException {
-        if (checkIfExistsName(hyperscalerDto.getName()))
-            throw new AlreadyExistsException();
+    private boolean checkIfExistsNewPriority(HyperscalerDto dto) {
+        return this.hyperscalerRepository.existsByPriority(dto.getPriority());
     }
 
-    private void checkWhenAttributesAreDifferent(HyperscalerDto hyperscalerDto) throws AlreadyExistsException {
-        if (checkIfExistsPriority(hyperscalerDto.getPriority()) || checkIfExistsName(hyperscalerDto.getName()))
-            throw new AlreadyExistsException();
+    private boolean checkIfExistsName(HyperscalerDto dto) {
+        return this.hyperscalerRepository.existsByNameAndIdIsNot(dto.getName(), dto.getId());
     }
 
-    private boolean checkIfExistsPriority(Long priority) {
-        return this.hyperscalerRepository.existsByPriority(priority);
-    }
-
-    private boolean checkIfExistsName(String name) {
-        return this.hyperscalerRepository.existsByName(name);
+    private boolean checkIfExistsNewName(HyperscalerDto dto) {
+        return this.hyperscalerRepository.existsByName(dto.getName());
     }
 
     @Override
@@ -65,24 +58,32 @@ public class HyperscalerServiceImpl implements HyperscalerService {
         return this.hyperscalerRepository.findById(id).orElse(null);
     }
 
+    private void checkWhenAttributesAreWrong(HyperscalerDto dto) throws AlreadyExistsException {
+        boolean nameExists = false, priorityExists = false;
+
+        if (dto.getId() == null) {
+            nameExists = checkIfExistsNewName(dto);
+            priorityExists = checkIfExistsNewPriority(dto);
+        } else {
+            nameExists = checkIfExistsName(dto);
+            priorityExists = checkIfExistsPriority(dto);
+        }
+
+        if (nameExists || priorityExists)
+            throw new AlreadyExistsException();
+
+    }
+
     @Override
     public void saveItem(HyperscalerDto hyperscalerDto) throws AlreadyExistsException {
         HyperscalerEntity hyperscalerEntity = null;
 
+        checkWhenAttributesAreWrong(hyperscalerDto);
+
         if (hyperscalerDto.getId() != null) {
             hyperscalerEntity = getById(hyperscalerDto.getId());
 
-            if (hyperscalerEntity.getName().equals(hyperscalerDto.getName())) {
-                checkWhenNamesAreEquals(hyperscalerDto);
-
-            } else if (hyperscalerEntity.getPriority().equals(hyperscalerDto.getPriority())) {
-                checkWhenPriorityIsEqual(hyperscalerDto);
-
-            } else {
-                checkWhenAttributesAreDifferent(hyperscalerDto);
-            }
         } else {
-            checkWhenAttributesAreDifferent(hyperscalerDto);
             hyperscalerEntity = new HyperscalerEntity();
         }
 
