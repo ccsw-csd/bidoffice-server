@@ -37,32 +37,31 @@ public class HyperscalerServiceImpl implements HyperscalerService {
         this.hyperscalerRepository.deleteById(id);
     }
 
-    @Override
-    public void checkWhenNamesAreEquals(HyperscalerDto hyperscalerDto) throws AlreadyExistsException {
+    private void checkWhenNamesAreEquals(HyperscalerDto hyperscalerDto) throws AlreadyExistsException {
         if (checkIfExistsPriority(hyperscalerDto.getPriority()))
             throw new AlreadyExistsException();
     }
 
-    @Override
-    public void checkWhenPriorityIsEqual(HyperscalerDto hyperscalerDto) throws AlreadyExistsException {
+    private void checkWhenPriorityIsEqual(HyperscalerDto hyperscalerDto) throws AlreadyExistsException {
         if (checkIfExistsName(hyperscalerDto.getName()))
             throw new AlreadyExistsException();
     }
 
-    @Override
-    public void checkWhenAttributesAreDifferent(HyperscalerDto hyperscalerDto) throws AlreadyExistsException {
+    private void checkWhenAttributesAreDifferent(HyperscalerDto hyperscalerDto) throws AlreadyExistsException {
         if (checkIfExistsPriority(hyperscalerDto.getPriority()) || checkIfExistsName(hyperscalerDto.getName()))
             throw new AlreadyExistsException();
     }
 
-    @Override
-    public boolean checkIfExistsPriority(Long priority) {
+    private boolean checkIfExistsPriority(Long priority) {
         return this.hyperscalerRepository.existsByPriority(priority);
     }
 
-    @Override
-    public boolean checkIfExistsName(String name) {
+    private boolean checkIfExistsName(String name) {
         return this.hyperscalerRepository.existsByName(name);
+    }
+
+    public HyperscalerEntity get(Long id) {
+        return this.hyperscalerRepository.findById(id).orElse(null);
     }
 
     @Override
@@ -70,7 +69,8 @@ public class HyperscalerServiceImpl implements HyperscalerService {
         HyperscalerEntity hyperscalerEntity = null;
 
         if (hyperscalerDto.getId() != null) {
-            hyperscalerEntity = this.hyperscalerRepository.findById(hyperscalerDto.getId()).orElse(null);
+            hyperscalerEntity = get(hyperscalerDto.getId());
+
             if (hyperscalerEntity.getName().equals(hyperscalerDto.getName())) {
                 checkWhenNamesAreEquals(hyperscalerDto);
 
@@ -81,8 +81,8 @@ public class HyperscalerServiceImpl implements HyperscalerService {
                 checkWhenAttributesAreDifferent(hyperscalerDto);
             }
         } else {
-            hyperscalerEntity = new HyperscalerEntity();
             checkWhenAttributesAreDifferent(hyperscalerDto);
+            hyperscalerEntity = new HyperscalerEntity();
         }
 
         hyperscalerEntity.setName(hyperscalerDto.getName());
