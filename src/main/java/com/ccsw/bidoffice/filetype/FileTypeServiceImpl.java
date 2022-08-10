@@ -53,12 +53,10 @@ public class FileTypeServiceImpl implements FileTypeService {
             }
             BeanUtils.copyProperties(data, file, "id");
         } else {
-            file = new FileTypeEntity();
-            BeanUtils.copyProperties(data, file, "id");
-
             this.checkIfPriorityExists(file.getPriority());
             this.checkIfNameExists(file.getName());
-
+            file = new FileTypeEntity();
+            BeanUtils.copyProperties(data, file, "id");
         }
 
         this.fileTypeRepository.save(file);
