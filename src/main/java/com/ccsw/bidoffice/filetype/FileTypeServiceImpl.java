@@ -23,8 +23,12 @@ public class FileTypeServiceImpl implements FileTypeService {
 
     @Override
     public List<FileTypeEntity> getAllFromFileType() {
-
         return this.fileTypeRepository.findAll(Sort.by(Sort.Direction.ASC, "priority"));
+    }
+
+    @Override
+    public FileTypeEntity getFileTypeById(Long id) {
+        return this.fileTypeRepository.findById(id).orElse(null);
     }
 
     @Override
@@ -41,34 +45,29 @@ public class FileTypeServiceImpl implements FileTypeService {
 
         FileTypeEntity file = null;
 
-        if (data.getId() != null) {
-            file = this.fileTypeRepository.findById(data.getId()).orElse(null);
-            if (file.getName().equals(data.getName())) {
-                this.checkIfPriorityExists(data.getPriority());
-            } else if (file.getPriority().equals(data.getPriority())) {
-                this.checkIfNameExists(data.getName());
-            } else {
-                this.checkIfPriorityExists(data.getPriority());
-                this.checkIfNameExists(data.getName());
-            }
-            BeanUtils.copyProperties(data, file, "id");
-        } else {
-            this.checkIfPriorityExists(file.getPriority());
-            this.checkIfNameExists(file.getName());
-            file = new FileTypeEntity();
-            BeanUtils.copyProperties(data, file, "id");
-        }
+        checkIfValuesAreDuped(data);
 
+        if (data.getId() == null)
+            file = new FileTypeEntity();
+        else
+            file = this.getFileTypeById(data.getId());
+
+        BeanUtils.copyProperties(data, file, "id");
         this.fileTypeRepository.save(file);
     }
 
-    public void checkIfNameExists(String name) throws AlreadyExistsException {
-        if (this.fileTypeRepository.existsByName(name))
-            throw new AlreadyExistsException();
-    }
+    private void checkIfValuesAreDuped(FileTypeDto dto) throws AlreadyExistsException {
+        Boolean dupeName, dupePriority;
 
-    public void checkIfPriorityExists(Long priority) throws AlreadyExistsException {
-        if (this.fileTypeRepository.existsByPriority(priority))
+        if (dto.getId() != null) {
+            dupeName = this.fileTypeRepository.existsByNameAndIdIsNot(dto.getName(), dto.getId());
+            dupePriority = this.fileTypeRepository.existsByPriorityAndIdIsNot(dto.getPriority(), dto.getId());
+        } else {
+            dupeName = this.fileTypeRepository.existsByName(dto.getName());
+            dupePriority = this.fileTypeRepository.existsByPriority(dto.getPriority());
+        }
+
+        if (dupeName || dupePriority)
             throw new AlreadyExistsException();
     }
 

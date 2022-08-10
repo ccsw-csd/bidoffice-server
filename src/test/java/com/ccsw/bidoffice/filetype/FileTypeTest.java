@@ -1,4 +1,4 @@
-package com.ccsw.bidoffice.admin;
+package com.ccsw.bidoffice.filetype;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -21,8 +21,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Sort;
 
 import com.ccsw.bidoffice.common.exception.AlreadyExistsException;
-import com.ccsw.bidoffice.filetype.FileTypeRepository;
-import com.ccsw.bidoffice.filetype.FileTypeServiceImpl;
 import com.ccsw.bidoffice.filetype.model.FileTypeDto;
 import com.ccsw.bidoffice.filetype.model.FileTypeEntity;
 import com.ccsw.bidoffice.offerdatafile.OfferDataFileServiceImpl;
@@ -141,10 +139,9 @@ public class FileTypeTest {
         fileTypeDto.setPriority(EXISTS_FILETYPE_PRIORITY);
 
         FileTypeEntity fileTypeEntity = mock(FileTypeEntity.class);
-        when(fileTypeEntity.getName()).thenReturn(EXISTS_FILETYPE_NAME);
 
-        when(this.fileTypeRepository.findById(EXISTS_FILETYPE_ID)).thenReturn(Optional.of(fileTypeEntity));
-        when(fileTypeRepository.existsByPriority(EXISTS_FILETYPE_PRIORITY)).thenReturn(true);
+        when(fileTypeRepository.existsByPriorityAndIdIsNot(EXISTS_FILETYPE_PRIORITY, EXISTS_FILETYPE_ID))
+                .thenReturn(true);
 
         assertThrows(AlreadyExistsException.class, () -> this.fileTypeService.save(fileTypeDto));
 
@@ -161,11 +158,8 @@ public class FileTypeTest {
         fileTypeDto.setPriority(EXISTS_FILETYPE_PRIORITY);
 
         FileTypeEntity fileTypeEntity = mock(FileTypeEntity.class);
-        when(fileTypeEntity.getName()).thenReturn(EXISTS_FILETYPE_NAME);
-        when(fileTypeEntity.getPriority()).thenReturn(EXISTS_FILETYPE_PRIORITY);
-
-        when(this.fileTypeRepository.findById(EXISTS_FILETYPE_ID)).thenReturn(Optional.of(fileTypeEntity));
-        when(this.fileTypeRepository.existsByName(ANOTHER_EXISTS_FILETYPE_NAME)).thenReturn(true);
+        when(fileTypeRepository.existsByNameAndIdIsNot(ANOTHER_EXISTS_FILETYPE_NAME, EXISTS_FILETYPE_ID))
+                .thenReturn(true);
 
         assertThrows(AlreadyExistsException.class, () -> this.fileTypeService.save(fileTypeDto));
 
@@ -182,12 +176,10 @@ public class FileTypeTest {
         fileTypeDto.setPriority(EXISTS_FILETYPE_PRIORITY);
 
         FileTypeEntity fileTypeEntity = mock(FileTypeEntity.class);
-        when(fileTypeEntity.getName()).thenReturn(EXISTS_FILETYPE_NAME);
-        when(fileTypeEntity.getPriority()).thenReturn(EXISTS_FILETYPE_PRIORITY);
 
         when(this.fileTypeRepository.findById(EXISTS_FILETYPE_ID)).thenReturn(Optional.of(fileTypeEntity));
-        when(fileTypeRepository.existsByName(NOT_EXISTS_FILETYPE_NAME)).thenReturn(false);
 
+        when(fileTypeRepository.existsByNameAndIdIsNot(NOT_EXISTS_FILETYPE_NAME, EXISTS_FILETYPE_ID)).thenReturn(false);
         this.fileTypeService.save(fileTypeDto);
 
         verify(this.fileTypeRepository).save(fileTypeEntity);
@@ -203,11 +195,10 @@ public class FileTypeTest {
         fileTypeDto.setPriority(NOT_EXISTS_FILETYPE_PRIORITY);
 
         FileTypeEntity fileTypeEntity = mock(FileTypeEntity.class);
-        when(fileTypeEntity.getName()).thenReturn(EXISTS_FILETYPE_NAME);
-
         when(this.fileTypeRepository.findById(EXISTS_FILETYPE_ID)).thenReturn(Optional.of(fileTypeEntity));
-        when(fileTypeRepository.existsByPriority(NOT_EXISTS_FILETYPE_PRIORITY)).thenReturn(false);
 
+        when(fileTypeRepository.existsByPriorityAndIdIsNot(NOT_EXISTS_FILETYPE_PRIORITY, EXISTS_FILETYPE_ID))
+                .thenReturn(false);
         this.fileTypeService.save(fileTypeDto);
 
         verify(this.fileTypeRepository).save(fileTypeEntity);
@@ -223,12 +214,8 @@ public class FileTypeTest {
         fileTypeDto.setPriority(NOT_EXISTS_FILETYPE_PRIORITY);
 
         FileTypeEntity fileTypeEntity = mock(FileTypeEntity.class);
-        when(fileTypeEntity.getName()).thenReturn(EXISTS_FILETYPE_NAME);
-        when(fileTypeEntity.getPriority()).thenReturn(EXISTS_FILETYPE_PRIORITY);
 
         when(this.fileTypeRepository.findById(EXISTS_FILETYPE_ID)).thenReturn(Optional.of(fileTypeEntity));
-        when(fileTypeRepository.existsByName(NOT_EXISTS_FILETYPE_NAME)).thenReturn(false);
-        when(fileTypeRepository.existsByPriority(NOT_EXISTS_FILETYPE_PRIORITY)).thenReturn(false);
 
         this.fileTypeService.save(fileTypeDto);
 

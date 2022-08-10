@@ -14,4 +14,6 @@ public interface FileTypeService {
 
     void save(FileTypeDto data) throws AlreadyExistsException;
 
+    FileTypeEntity getFileTypeById(Long id);
+
 }
