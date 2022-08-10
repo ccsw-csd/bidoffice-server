@@ -60,7 +60,8 @@ public class HyperscalerServiceImpl implements HyperscalerService {
         return this.hyperscalerRepository.existsByName(name);
     }
 
-    public HyperscalerEntity get(Long id) {
+    @Override
+    public HyperscalerEntity getById(Long id) {
         return this.hyperscalerRepository.findById(id).orElse(null);
     }
 
@@ -69,7 +70,7 @@ public class HyperscalerServiceImpl implements HyperscalerService {
         HyperscalerEntity hyperscalerEntity = null;
 
         if (hyperscalerDto.getId() != null) {
-            hyperscalerEntity = get(hyperscalerDto.getId());
+            hyperscalerEntity = getById(hyperscalerDto.getId());
 
             if (hyperscalerEntity.getName().equals(hyperscalerDto.getName())) {
                 checkWhenNamesAreEquals(hyperscalerDto);

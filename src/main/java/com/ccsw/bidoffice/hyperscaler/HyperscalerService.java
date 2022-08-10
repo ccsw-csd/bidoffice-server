@@ -10,6 +10,8 @@ public interface HyperscalerService {
 
     public List<HyperscalerEntity> getAllDataFromHyperscaler();
 
+    public HyperscalerEntity getById(Long id);
+
     public void delete(Long id) throws AlreadyExistsException;
 
     public void saveItem(HyperscalerDto hyperscalerDto) throws AlreadyExistsException;
