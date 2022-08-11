@@ -145,7 +145,7 @@ public class HyperscalerTest {
 
         HyperscalerEntity hyperscalerEntity = mock(HyperscalerEntity.class);
 
-        when(this.hyperscalerRepository.existsByPriorityAndIdIsNot(EXISTS_PRIORITY, EXISTS_ITEM_ID)).thenReturn(true);
+        when(this.hyperscalerRepository.existsByIdIsNotAndPriority(EXISTS_ITEM_ID, EXISTS_PRIORITY)).thenReturn(true);
 
         assertThrows(AlreadyExistsException.class, () -> hyperscalerServiceImpl.saveItem(hyperscalerDto));
 
@@ -162,7 +162,7 @@ public class HyperscalerTest {
 
         HyperscalerEntity hyperscalerEntity = mock(HyperscalerEntity.class);
 
-        when(this.hyperscalerRepository.existsByNameAndIdIsNot(EXISTS_NAME, EXISTS_ITEM_ID)).thenReturn(true);
+        when(this.hyperscalerRepository.existsByIdIsNotAndName(EXISTS_ITEM_ID, EXISTS_NAME)).thenReturn(true);
 
         assertThrows(AlreadyExistsException.class, () -> hyperscalerServiceImpl.saveItem(hyperscalerDto));
 
@@ -179,9 +179,9 @@ public class HyperscalerTest {
 
         HyperscalerEntity hyperscalerEntity = mock(HyperscalerEntity.class);
 
-        when(this.hyperscalerRepository.existsByNameAndIdIsNot(NOT_EXISTING_NAME, EXISTS_ITEM_ID)).thenReturn(false);
+        when(this.hyperscalerRepository.existsByIdIsNotAndName(EXISTS_ITEM_ID, NOT_EXISTING_NAME)).thenReturn(false);
 
-        when(this.hyperscalerRepository.existsByPriorityAndIdIsNot(NOT_EXISTING_PRIORITY, EXISTS_ITEM_ID))
+        when(this.hyperscalerRepository.existsByIdIsNotAndPriority(EXISTS_ITEM_ID, NOT_EXISTING_PRIORITY))
                 .thenReturn(false);
 
         when(this.hyperscalerRepository.findById(EXISTS_ITEM_ID)).thenReturn(Optional.of(hyperscalerEntity));

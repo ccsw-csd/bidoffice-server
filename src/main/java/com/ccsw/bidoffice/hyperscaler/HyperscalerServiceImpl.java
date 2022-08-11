@@ -37,22 +37,6 @@ public class HyperscalerServiceImpl implements HyperscalerService {
         this.hyperscalerRepository.deleteById(id);
     }
 
-    private boolean checkIfExistsPriority(HyperscalerDto dto) {
-        return this.hyperscalerRepository.existsByPriorityAndIdIsNot(dto.getPriority(), dto.getId());
-    }
-
-    private boolean checkIfExistsNewPriority(HyperscalerDto dto) {
-        return this.hyperscalerRepository.existsByPriority(dto.getPriority());
-    }
-
-    private boolean checkIfExistsName(HyperscalerDto dto) {
-        return this.hyperscalerRepository.existsByNameAndIdIsNot(dto.getName(), dto.getId());
-    }
-
-    private boolean checkIfExistsNewName(HyperscalerDto dto) {
-        return this.hyperscalerRepository.existsByName(dto.getName());
-    }
-
     @Override
     public HyperscalerEntity getById(Long id) {
         return this.hyperscalerRepository.findById(id).orElse(null);
@@ -62,11 +46,11 @@ public class HyperscalerServiceImpl implements HyperscalerService {
         boolean nameExists = false, priorityExists = false;
 
         if (dto.getId() == null) {
-            nameExists = checkIfExistsNewName(dto);
-            priorityExists = checkIfExistsNewPriority(dto);
+            nameExists = this.hyperscalerRepository.existsByName(dto.getName());
+            priorityExists = this.hyperscalerRepository.existsByPriority(dto.getPriority());
         } else {
-            nameExists = checkIfExistsName(dto);
-            priorityExists = checkIfExistsPriority(dto);
+            nameExists = this.hyperscalerRepository.existsByIdIsNotAndName(dto.getId(), dto.getName());
+            priorityExists = this.hyperscalerRepository.existsByIdIsNotAndPriority(dto.getId(), dto.getPriority());
         }
 
         if (nameExists || priorityExists)
@@ -76,9 +60,10 @@ public class HyperscalerServiceImpl implements HyperscalerService {
 
     @Override
     public void saveItem(HyperscalerDto hyperscalerDto) throws AlreadyExistsException {
-        HyperscalerEntity hyperscalerEntity = null;
 
         checkWhenAttributesAreWrong(hyperscalerDto);
+
+        HyperscalerEntity hyperscalerEntity = null;
 
         if (hyperscalerDto.getId() != null) {
             hyperscalerEntity = getById(hyperscalerDto.getId());

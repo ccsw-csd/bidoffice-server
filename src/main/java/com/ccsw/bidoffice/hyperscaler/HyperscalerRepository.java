@@ -15,8 +15,8 @@ public interface HyperscalerRepository extends CrudRepository<HyperscalerEntity,
 
     boolean existsByName(String name);
 
-    boolean existsByNameAndIdIsNot(String name, Long id);
+    boolean existsByIdIsNotAndName(Long id, String name);
 
-    boolean existsByPriorityAndIdIsNot(Long priority, Long id);
+    boolean existsByIdIsNotAndPriority(Long id, Long priority);
 
 }
