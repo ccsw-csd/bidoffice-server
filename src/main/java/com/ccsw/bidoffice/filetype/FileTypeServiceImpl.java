@@ -43,9 +43,9 @@ public class FileTypeServiceImpl implements FileTypeService {
     @Override
     public void save(FileTypeDto data) throws AlreadyExistsException {
 
-        FileTypeEntity file = null;
-
         checkIfValuesAreDuped(data);
+
+        FileTypeEntity file = null;
 
         if (data.getId() == null)
             file = new FileTypeEntity();
@@ -60,8 +60,8 @@ public class FileTypeServiceImpl implements FileTypeService {
         Boolean dupeName, dupePriority;
 
         if (dto.getId() != null) {
-            dupeName = this.fileTypeRepository.existsByNameAndIdIsNot(dto.getName(), dto.getId());
-            dupePriority = this.fileTypeRepository.existsByPriorityAndIdIsNot(dto.getPriority(), dto.getId());
+            dupeName = this.fileTypeRepository.existsByIdIsNotAndName(dto.getId(), dto.getName());
+            dupePriority = this.fileTypeRepository.existsByIdIsNotAndPriority(dto.getId(), dto.getPriority());
         } else {
             dupeName = this.fileTypeRepository.existsByName(dto.getName());
             dupePriority = this.fileTypeRepository.existsByPriority(dto.getPriority());

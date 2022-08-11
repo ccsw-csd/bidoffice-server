@@ -15,8 +15,8 @@ public interface FileTypeRepository extends CrudRepository<FileTypeEntity, Long>
 
     boolean existsByName(String name);
 
-    Boolean existsByNameAndIdIsNot(String name, Long id);
+    Boolean existsByIdIsNotAndPriority(Long id, Long priority);
 
-    Boolean existsByPriorityAndIdIsNot(Long priority, Long id);
+    Boolean existsByIdIsNotAndName(Long id, String name);
 
 }

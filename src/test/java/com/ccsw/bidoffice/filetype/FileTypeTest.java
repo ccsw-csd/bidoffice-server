@@ -140,7 +140,7 @@ public class FileTypeTest {
 
         FileTypeEntity fileTypeEntity = mock(FileTypeEntity.class);
 
-        when(fileTypeRepository.existsByPriorityAndIdIsNot(EXISTS_FILETYPE_PRIORITY, EXISTS_FILETYPE_ID))
+        when(fileTypeRepository.existsByIdIsNotAndPriority(EXISTS_FILETYPE_ID, EXISTS_FILETYPE_PRIORITY))
                 .thenReturn(true);
 
         assertThrows(AlreadyExistsException.class, () -> this.fileTypeService.save(fileTypeDto));
@@ -158,7 +158,7 @@ public class FileTypeTest {
         fileTypeDto.setPriority(EXISTS_FILETYPE_PRIORITY);
 
         FileTypeEntity fileTypeEntity = mock(FileTypeEntity.class);
-        when(fileTypeRepository.existsByNameAndIdIsNot(ANOTHER_EXISTS_FILETYPE_NAME, EXISTS_FILETYPE_ID))
+        when(fileTypeRepository.existsByIdIsNotAndName(EXISTS_FILETYPE_ID, ANOTHER_EXISTS_FILETYPE_NAME))
                 .thenReturn(true);
 
         assertThrows(AlreadyExistsException.class, () -> this.fileTypeService.save(fileTypeDto));
@@ -179,7 +179,8 @@ public class FileTypeTest {
 
         when(this.fileTypeRepository.findById(EXISTS_FILETYPE_ID)).thenReturn(Optional.of(fileTypeEntity));
 
-        when(fileTypeRepository.existsByNameAndIdIsNot(NOT_EXISTS_FILETYPE_NAME, EXISTS_FILETYPE_ID)).thenReturn(false);
+        when(this.fileTypeRepository.existsByIdIsNotAndName(EXISTS_FILETYPE_ID, NOT_EXISTS_FILETYPE_NAME))
+                .thenReturn(false);
         this.fileTypeService.save(fileTypeDto);
 
         verify(this.fileTypeRepository).save(fileTypeEntity);
@@ -197,7 +198,7 @@ public class FileTypeTest {
         FileTypeEntity fileTypeEntity = mock(FileTypeEntity.class);
         when(this.fileTypeRepository.findById(EXISTS_FILETYPE_ID)).thenReturn(Optional.of(fileTypeEntity));
 
-        when(fileTypeRepository.existsByPriorityAndIdIsNot(NOT_EXISTS_FILETYPE_PRIORITY, EXISTS_FILETYPE_ID))
+        when(fileTypeRepository.existsByIdIsNotAndPriority(EXISTS_FILETYPE_ID, NOT_EXISTS_FILETYPE_PRIORITY))
                 .thenReturn(false);
         this.fileTypeService.save(fileTypeDto);
 
