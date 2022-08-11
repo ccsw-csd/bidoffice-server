@@ -11,9 +11,9 @@ public interface MethodologyRepository extends CrudRepository<MethodologyEntity,
 
     List<MethodologyEntity> findAll(Sort sort);
 
-    Boolean existsByNameAndIdIsNot(Long id, String name);
+    Boolean existsByIdIsNotAndName(Long id, String name);
 
-    Boolean existsByPriorityAndIdIsNot(Long id, Integer priority);
+    Boolean existsByIdIsNotAndPriority(Long id, Integer priority);
 
     Boolean existsByName(String name);
 

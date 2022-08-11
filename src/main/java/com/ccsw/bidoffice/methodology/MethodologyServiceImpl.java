@@ -37,8 +37,8 @@ public class MethodologyServiceImpl implements MethodologyService {
         Boolean dupeName, dupePriority;
 
         if (dto.getId() != null) {
-            dupeName = this.methodologyRepository.existsByNameAndIdIsNot(dto.getId(), dto.getName());
-            dupePriority = this.methodologyRepository.existsByPriorityAndIdIsNot(dto.getId(), dto.getPriority());
+            dupeName = this.methodologyRepository.existsByIdIsNotAndName(dto.getId(), dto.getName());
+            dupePriority = this.methodologyRepository.existsByIdIsNotAndPriority(dto.getId(), dto.getPriority());
         } else {
             dupeName = this.methodologyRepository.existsByName(dto.getName());
             dupePriority = this.methodologyRepository.existsByPriority(dto.getPriority());

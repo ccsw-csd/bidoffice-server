@@ -85,7 +85,7 @@ public class MethodologyTest {
         methodologyDto.setName(EXISTS_NAME);
 
         MethodologyEntity methodology = mock(MethodologyEntity.class);
-        when(methodologyRepository.existsByNameAndIdIsNot(EXISTS_ID, EXISTS_NAME)).thenReturn(true);
+        when(methodologyRepository.existsByIdIsNotAndName(EXISTS_ID, EXISTS_NAME)).thenReturn(true);
 
         assertThrows(AlreadyExistsException.class, () -> methodologyServiceImpl.save(methodologyDto));
 
@@ -99,7 +99,7 @@ public class MethodologyTest {
         methodologyDto.setPriority(EXISTS_PRIORITY);
 
         MethodologyEntity methodology = mock(MethodologyEntity.class);
-        when(methodologyRepository.existsByPriorityAndIdIsNot(EXISTS_ID, EXISTS_PRIORITY)).thenReturn(true);
+        when(methodologyRepository.existsByIdIsNotAndPriority(EXISTS_ID, EXISTS_PRIORITY)).thenReturn(true);
 
         assertThrows(AlreadyExistsException.class, () -> methodologyServiceImpl.save(methodologyDto));
 
@@ -114,8 +114,8 @@ public class MethodologyTest {
         methodologyDto.setPriority(EXISTS_PRIORITY);
 
         MethodologyEntity methodology = mock(MethodologyEntity.class);
-        when(methodologyRepository.existsByNameAndIdIsNot(EXISTS_ID, EXISTS_NAME)).thenReturn(true);
-        when(methodologyRepository.existsByPriorityAndIdIsNot(EXISTS_ID, EXISTS_PRIORITY)).thenReturn(true);
+        when(methodologyRepository.existsByIdIsNotAndName(EXISTS_ID, EXISTS_NAME)).thenReturn(true);
+        when(methodologyRepository.existsByIdIsNotAndPriority(EXISTS_ID, EXISTS_PRIORITY)).thenReturn(true);
 
         assertThrows(AlreadyExistsException.class, () -> methodologyServiceImpl.save(methodologyDto));
 
