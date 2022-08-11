@@ -8,6 +8,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.ccsw.bidoffice.common.exception.AlreadyExistsException;
+import com.ccsw.bidoffice.common.exception.EntityNotFoundException;
 import com.ccsw.bidoffice.filetype.model.FileTypeDto;
 import com.ccsw.bidoffice.filetype.model.FileTypeEntity;
 import com.ccsw.bidoffice.offerdatafile.OfferDataFileService;
@@ -27,8 +28,8 @@ public class FileTypeServiceImpl implements FileTypeService {
     }
 
     @Override
-    public FileTypeEntity getFileTypeById(Long id) {
-        return this.fileTypeRepository.findById(id).orElse(null);
+    public FileTypeEntity getFileTypeById(Long id) throws EntityNotFoundException {
+        return this.fileTypeRepository.findById(id).orElseThrow(EntityNotFoundException::new);
     }
 
     @Override
@@ -41,16 +42,17 @@ public class FileTypeServiceImpl implements FileTypeService {
     }
 
     @Override
-    public void save(FileTypeDto data) throws AlreadyExistsException {
+    public void save(FileTypeDto data) throws AlreadyExistsException, EntityNotFoundException {
 
         checkIfValuesAreDuped(data);
 
         FileTypeEntity file = null;
 
-        if (data.getId() == null)
+        if (data.getId() == null) {
             file = new FileTypeEntity();
-        else
+        } else {
             file = this.getFileTypeById(data.getId());
+        }
 
         BeanUtils.copyProperties(data, file, "id");
         this.fileTypeRepository.save(file);

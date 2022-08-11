@@ -21,6 +21,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Sort;
 
 import com.ccsw.bidoffice.common.exception.AlreadyExistsException;
+import com.ccsw.bidoffice.common.exception.EntityNotFoundException;
 import com.ccsw.bidoffice.filetype.model.FileTypeDto;
 import com.ccsw.bidoffice.filetype.model.FileTypeEntity;
 import com.ccsw.bidoffice.offerdatafile.OfferDataFileServiceImpl;
@@ -112,7 +113,7 @@ public class FileTypeTest {
     }
 
     @Test
-    public void saveFileTypeShouldSave() throws AlreadyExistsException {
+    public void saveFileTypeShouldSave() throws AlreadyExistsException, EntityNotFoundException {
 
         FileTypeDto fileTypeDto = new FileTypeDto();
 
@@ -167,7 +168,7 @@ public class FileTypeTest {
     }
 
     @Test
-    public void modifyOnlyNameFileTypeShouldModify() throws AlreadyExistsException {
+    public void modifyOnlyNameFileTypeShouldModify() throws AlreadyExistsException, EntityNotFoundException {
 
         FileTypeDto fileTypeDto = new FileTypeDto();
 
@@ -187,7 +188,7 @@ public class FileTypeTest {
     }
 
     @Test
-    public void modifyOnlyPriorityFileTypeShouldModify() throws AlreadyExistsException {
+    public void modifyOnlyPriorityFileTypeShouldModify() throws AlreadyExistsException, EntityNotFoundException {
 
         FileTypeDto fileTypeDto = new FileTypeDto();
 
@@ -206,7 +207,7 @@ public class FileTypeTest {
     }
 
     @Test
-    public void modifyFileTypeShouldModify() throws AlreadyExistsException {
+    public void modifyFileTypeShouldModify() throws AlreadyExistsException, EntityNotFoundException {
 
         FileTypeDto fileTypeDto = new FileTypeDto();
 

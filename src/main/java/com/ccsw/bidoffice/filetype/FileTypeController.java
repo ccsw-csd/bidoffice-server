@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ccsw.bidoffice.common.exception.AlreadyExistsException;
+import com.ccsw.bidoffice.common.exception.EntityNotFoundException;
 import com.ccsw.bidoffice.config.mapper.BeanMapper;
 import com.ccsw.bidoffice.filetype.model.FileTypeDto;
 
@@ -36,7 +37,7 @@ public class FileTypeController {
     }
 
     @RequestMapping(path = "", method = RequestMethod.PUT)
-    public void save(@RequestBody FileTypeDto data) throws AlreadyExistsException {
+    public void save(@RequestBody FileTypeDto data) throws AlreadyExistsException, EntityNotFoundException {
         this.fileTypeService.save(data);
     }
 

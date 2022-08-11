@@ -3,6 +3,7 @@ package com.ccsw.bidoffice.filetype;
 import java.util.List;
 
 import com.ccsw.bidoffice.common.exception.AlreadyExistsException;
+import com.ccsw.bidoffice.common.exception.EntityNotFoundException;
 import com.ccsw.bidoffice.filetype.model.FileTypeDto;
 import com.ccsw.bidoffice.filetype.model.FileTypeEntity;
 
@@ -12,8 +13,8 @@ public interface FileTypeService {
 
     void delete(Long id) throws AlreadyExistsException;
 
-    void save(FileTypeDto data) throws AlreadyExistsException;
+    void save(FileTypeDto data) throws AlreadyExistsException, EntityNotFoundException;
 
-    FileTypeEntity getFileTypeById(Long id);
+    FileTypeEntity getFileTypeById(Long id) throws EntityNotFoundException;
 
 }
