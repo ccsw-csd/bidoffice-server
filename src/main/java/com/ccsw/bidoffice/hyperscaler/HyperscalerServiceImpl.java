@@ -9,6 +9,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.ccsw.bidoffice.common.exception.AlreadyExistsException;
+import com.ccsw.bidoffice.common.exception.EntityNotFoundException;
 import com.ccsw.bidoffice.hyperscaler.model.HyperscalerDto;
 import com.ccsw.bidoffice.hyperscaler.model.HyperscalerEntity;
 import com.ccsw.bidoffice.offerdatatechnology.OfferDataTechnologyService;
@@ -38,8 +39,8 @@ public class HyperscalerServiceImpl implements HyperscalerService {
     }
 
     @Override
-    public HyperscalerEntity getById(Long id) {
-        return this.hyperscalerRepository.findById(id).orElse(null);
+    public HyperscalerEntity getById(Long id) throws EntityNotFoundException {
+        return this.hyperscalerRepository.findById(id).orElseThrow(EntityNotFoundException::new);
     }
 
     private void checkWhenAttributesAreWrong(HyperscalerDto dto) throws AlreadyExistsException {
@@ -59,7 +60,7 @@ public class HyperscalerServiceImpl implements HyperscalerService {
     }
 
     @Override
-    public void saveItem(HyperscalerDto hyperscalerDto) throws AlreadyExistsException {
+    public void saveItem(HyperscalerDto hyperscalerDto) throws AlreadyExistsException, EntityNotFoundException {
 
         checkWhenAttributesAreWrong(hyperscalerDto);
 

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ccsw.bidoffice.common.exception.AlreadyExistsException;
+import com.ccsw.bidoffice.common.exception.EntityNotFoundException;
 import com.ccsw.bidoffice.config.mapper.BeanMapper;
 import com.ccsw.bidoffice.hyperscaler.model.HyperscalerDto;
 
@@ -36,7 +37,8 @@ public class HyperscalerController {
     }
 
     @RequestMapping(path = { "" }, method = RequestMethod.PUT)
-    public void saveItemToHyperscaler(@RequestBody HyperscalerDto hyperscalerDto) throws AlreadyExistsException {
+    public void saveItemToHyperscaler(@RequestBody HyperscalerDto hyperscalerDto)
+            throws AlreadyExistsException, EntityNotFoundException {
         this.hyperscalerService.saveItem(hyperscalerDto);
     }
 }

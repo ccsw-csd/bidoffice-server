@@ -21,6 +21,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Sort;
 
 import com.ccsw.bidoffice.common.exception.AlreadyExistsException;
+import com.ccsw.bidoffice.common.exception.EntityNotFoundException;
 import com.ccsw.bidoffice.hyperscaler.model.HyperscalerDto;
 import com.ccsw.bidoffice.hyperscaler.model.HyperscalerEntity;
 import com.ccsw.bidoffice.offerdatatechnology.OfferDataTechnologyServiceImpl;
@@ -85,7 +86,7 @@ public class HyperscalerTest {
     }
 
     @Test
-    public void saveNewItemWhenAttributesDontMatchShouldSave() throws AlreadyExistsException {
+    public void saveNewItemWhenAttributesDontMatchShouldSave() throws AlreadyExistsException, EntityNotFoundException {
         HyperscalerDto hyperscalerDto = new HyperscalerDto();
         hyperscalerDto.setName(NOT_EXISTING_NAME);
         hyperscalerDto.setPriority(NOT_EXISTING_PRIORITY);
@@ -101,7 +102,7 @@ public class HyperscalerTest {
     }
 
     @Test
-    public void saveNewItemWhenNameMatchesShouldNotSave() throws AlreadyExistsException {
+    public void saveNewItemWhenNameMatchesShouldNotSave() throws AlreadyExistsException, EntityNotFoundException {
         HyperscalerDto hyperscalerDto = new HyperscalerDto();
         hyperscalerDto.setName(EXISTS_NAME);
         hyperscalerDto.setPriority(NOT_EXISTING_PRIORITY);
@@ -119,7 +120,7 @@ public class HyperscalerTest {
     }
 
     @Test
-    public void saveNewItemWhenPriorityMatchesShouldNotSave() throws AlreadyExistsException {
+    public void saveNewItemWhenPriorityMatchesShouldNotSave() throws AlreadyExistsException, EntityNotFoundException {
         HyperscalerDto hyperscalerDto = new HyperscalerDto();
         hyperscalerDto.setName(NOT_EXISTING_NAME);
         hyperscalerDto.setPriority(EXISTS_PRIORITY);
@@ -171,7 +172,8 @@ public class HyperscalerTest {
     }
 
     @Test
-    public void editHyperscalersWhenAttributesDontExistShouldEdit() throws AlreadyExistsException {
+    public void editHyperscalersWhenAttributesDontExistShouldEdit()
+            throws AlreadyExistsException, EntityNotFoundException {
         HyperscalerDto hyperscalerDto = new HyperscalerDto();
         hyperscalerDto.setId(EXISTS_ITEM_ID);
         hyperscalerDto.setName(NOT_EXISTING_NAME);
