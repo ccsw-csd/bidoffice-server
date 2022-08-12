@@ -104,4 +104,225 @@ public class TechnologyIT extends BaseITAbstract {
         assertEquals(2, responseList.getBody().size());
     }
 
+    /**
+     * Edita una tecnología existente si existe su identificador, siempre y cuando
+     * el nombre y la prioridad no existan previamente.
+     * 
+     * Los asertos deben devolver que la inserción no es nula, que debe coincidir el
+     * nombre a comprobar con el que se utiliza para editar el registro, que la
+     * prioridad también debe coincidir con la utilizada para editar y el código
+     * HTTP debe ser OK (200).
+     */
+    @Test
+    public void ifNameAndPriorityAreOkShouldEdit() {
+
+        TechnologyDto technologyDto = new TechnologyDto();
+        HttpEntity<?> httpEntity = new HttpEntity<>(technologyDto, getHeaders());
+
+        technologyDto.setId(1L);
+        technologyDto.setName("Zen++");
+        technologyDto.setPriority(200L);
+
+        ResponseEntity<?> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH, HttpMethod.PUT, httpEntity,
+                Void.class);
+
+        ResponseEntity<List<TechnologyDto>> responseAfter = restTemplate.exchange(
+                LOCALHOST + port + SERVICE_PATH + "findAll", HttpMethod.GET, httpEntity, responseTypeTechnology);
+
+        TechnologyDto editDto = responseAfter.getBody().stream().filter(element -> element.getName().equals("Zen++"))
+                .findFirst().orElse(null);
+
+        assertNotNull(editDto);
+        assertEquals("Zen++", editDto.getName());
+        assertEquals(200L, editDto.getPriority());
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+    }
+
+    /**
+     * Intenta editar una tecnología existente, pero se utiliza un nombre que ya
+     * existe en la base de datos.
+     * 
+     * El test no debe modificar el registro y debe devolver un HttpStatus de
+     * conflicto (409).
+     */
+    @Test
+    public void ifNameExistsShouldNotEdit() {
+
+        TechnologyDto technologyDto = new TechnologyDto();
+        HttpEntity<?> httpEntity = new HttpEntity<>(technologyDto, getHeaders());
+
+        technologyDto.setId(1L);
+        technologyDto.setName("Quantum++");
+        technologyDto.setPriority(200L);
+
+        ResponseEntity<?> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH, HttpMethod.PUT, httpEntity,
+                Void.class);
+
+        assertEquals(HttpStatus.CONFLICT, response.getStatusCode());
+    }
+
+    /**
+     * Edita una tecnología existente, modificando su nombre, siempre y cuando el
+     * nombre no exista.
+     * 
+     * El test debe modificar el registro, debe comprobar que se ha modificado
+     * correctamente verificando que coinciden nombre y prioridad y debe devolver un
+     * estado HTTP OK (200).
+     */
+    @Test
+    public void ifNameIsNotUsingShouldEdit() {
+
+        TechnologyDto technologyDto = new TechnologyDto();
+        HttpEntity<?> httpEntity = new HttpEntity<>(technologyDto, getHeaders());
+
+        technologyDto.setId(1L);
+        technologyDto.setName("AnguriñaJS");
+        technologyDto.setPriority(1L);
+
+        ResponseEntity<?> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH, HttpMethod.PUT, httpEntity,
+                Void.class);
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+
+        ResponseEntity<List<TechnologyDto>> responseAfter = restTemplate.exchange(
+                LOCALHOST + port + SERVICE_PATH + "findAll", HttpMethod.GET, httpEntity, responseTypeTechnology);
+
+        TechnologyDto editDto = responseAfter.getBody().stream()
+                .filter(element -> element.getName().equals("AnguriñaJS")).findFirst().orElse(null);
+
+        assertEquals("AnguriñaJS", editDto.getName());
+        assertEquals(1L, editDto.getPriority());
+    }
+
+    /**
+     * Intenta editar una tecnología existente, pero se utiliza una prioridad ya
+     * aplicada a otra tecnología.
+     * 
+     * El test no debe modificar el registro y debe devolver un estado HTTP Conflict
+     * (409).
+     */
+    @Test
+    public void ifPriorityExistsShouldNotEdit() {
+
+        TechnologyDto technologyDto = new TechnologyDto();
+        HttpEntity<?> httpEntity = new HttpEntity<>(technologyDto, getHeaders());
+
+        technologyDto.setId(1L);
+        technologyDto.setName("Sushi++");
+        technologyDto.setPriority(3L);
+
+        ResponseEntity<?> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH, HttpMethod.PUT, httpEntity,
+                Void.class);
+
+        assertEquals(HttpStatus.CONFLICT, response.getStatusCode());
+    }
+
+    /**
+     * Modifica la prioridad de una tecnología, siempre y cuando dicha prioridad no
+     * exista en la base de datos.
+     * 
+     * El test debe modificar la tecnología y devolver un estado HTTP OK (200).
+     */
+    @Test
+    public void ifPriorityIsNotUsingShouldEdit() {
+
+        TechnologyDto technologyDto = new TechnologyDto();
+        HttpEntity<?> httpEntity = new HttpEntity<>(technologyDto, getHeaders());
+
+        technologyDto.setId(1L);
+        technologyDto.setName("admin");
+        technologyDto.setPriority(20L);
+
+        ResponseEntity<?> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH, HttpMethod.PUT, httpEntity,
+                Void.class);
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+
+        ResponseEntity<List<TechnologyDto>> responseAfter = restTemplate.exchange(
+                LOCALHOST + port + SERVICE_PATH + "findAll", HttpMethod.GET, httpEntity, responseTypeTechnology);
+
+        TechnologyDto editDto = responseAfter.getBody().stream().filter(element -> element.getName().equals("admin"))
+                .findFirst().orElse(null);
+
+        assertEquals("admin", editDto.getName());
+        assertEquals(20L, editDto.getPriority());
+
+    }
+
+    /**
+     * Guarda una nueva tecnología en la base de datos, siempre que no exista ni su
+     * nombre, ni la prioridad.
+     * 
+     * El test debe guardar el registro, debe comprobar que se ha guardado
+     * correctamente (coinciden nombre y prioridad con los utilizados en la
+     * comparación) y debe devolver un estado HTTP OK (200).
+     */
+    @Test
+    public void NewTechnologyWithNotExistingNameAndPriorityShouldCreate() {
+        TechnologyDto technologyDto = new TechnologyDto();
+        HttpEntity<?> httpEntity = new HttpEntity<>(technologyDto, getHeaders());
+
+        technologyDto.setName("Prolog");
+        technologyDto.setPriority(4L);
+
+        ResponseEntity<?> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH, HttpMethod.PUT, httpEntity,
+                Void.class);
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+
+        ResponseEntity<List<TechnologyDto>> responseAfter = restTemplate.exchange(
+                LOCALHOST + port + SERVICE_PATH + "findAll", HttpMethod.GET, httpEntity, responseTypeTechnology);
+
+        TechnologyDto newtechnologyDto = responseAfter.getBody().stream()
+                .filter(element -> element.getName().equals("Prolog")).findFirst().orElse(null);
+
+        assertEquals(4, responseAfter.getBody().size());
+        assertEquals("Prolog", newtechnologyDto.getName());
+        assertEquals(4L, newtechnologyDto.getPriority());
+    }
+
+    /**
+     * Intenta guardar una nueva tecnología en la base de datos, utilizando un
+     * nombre ya existente.
+     * 
+     * El test no debe guardar la tecnología y debe devolver un estado HTTP CONFLICT
+     * (409).
+     */
+    @Test
+    public void newTechnologyWithExistingNameShouldNotCreate() {
+
+        TechnologyDto technologyDto = new TechnologyDto();
+        HttpEntity<?> httpEntity = new HttpEntity<>(technologyDto, getHeaders());
+
+        technologyDto.setName("admin");
+        technologyDto.setPriority(4L);
+
+        ResponseEntity<?> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH, HttpMethod.PUT, httpEntity,
+                Void.class);
+
+        assertEquals(HttpStatus.CONFLICT, response.getStatusCode());
+    }
+
+    /**
+     * Intenta guardar una nueva tecnología en la base de datos, utilizando una
+     * prioridad ya existente.
+     * 
+     * El test no debe guardar la tecnología y debe devolver un estado HTTP CONFLICT
+     * (409).
+     */
+    @Test
+    public void NewTechnologyWithExistingPriorityShouldNotCreate() {
+
+        TechnologyDto technologyDto = new TechnologyDto();
+        HttpEntity<?> httpEntity = new HttpEntity<>(technologyDto, getHeaders());
+
+        technologyDto.setName("New Name");
+        technologyDto.setPriority(1L);
+
+        ResponseEntity<?> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH, HttpMethod.PUT, httpEntity,
+                Void.class);
+
+        assertEquals(HttpStatus.CONFLICT, response.getStatusCode());
+    }
+
 }
