@@ -11,4 +11,12 @@ public interface TechnologyRepository extends CrudRepository<TechnologyEntity, L
 
     List<TechnologyEntity> findAll(Sort sort);
 
+    boolean existsByPriority(Long priority);
+
+    boolean existsByName(String name);
+
+    boolean existsByIdIsNotAndName(Long id, String name);
+
+    boolean existsByIdIsNotAndPriority(Long id, Long priority);
+
 }
