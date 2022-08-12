@@ -104,6 +104,8 @@ public class TechnologyServiceImpl implements TechnologyService {
         technologyEntity.setName(dto.getName());
         technologyEntity.setPriority(dto.getPriority());
 
+        this.technologyRepository.save(technologyEntity);
+
     }
 
 }
