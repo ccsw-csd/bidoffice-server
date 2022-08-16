@@ -13,6 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.annotation.DirtiesContext;
 
@@ -26,6 +27,10 @@ public class OpportunityTypeIT extends BaseITAbstract {
     public static final String SERVICE_PATH = "/opportunitytype/";
 
     public static final Integer TOTAL_OPPORTUNITY_TYPE = 4;
+
+    public static final Long NOT_EXISTING_ID = 2L;
+
+    public static final Long EXISTING_ID = 1L;
 
     ParameterizedTypeReference<List<OpportunityTypeDto>> responseTypeOpportunityType = new ParameterizedTypeReference<List<OpportunityTypeDto>>() {
     };
@@ -42,5 +47,33 @@ public class OpportunityTypeIT extends BaseITAbstract {
         assertEquals(TOTAL_OPPORTUNITY_TYPE, response.getBody().size());
         assertTrue(response.getBody().stream().sorted(Comparator.comparing(OpportunityTypeDto::getPriority))
                 .collect(Collectors.toList()).equals(response.getBody()));
+    }
+
+    @Test
+    public void shouldDeleteIfDoesNotExistAnOffer() {
+        HttpEntity<?> httpEntity = new HttpEntity<>(getHeaders());
+
+        ResponseEntity<?> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH + NOT_EXISTING_ID,
+                HttpMethod.DELETE, httpEntity, Void.class);
+
+        assertNotNull(response);
+
+        ResponseEntity<List<OpportunityTypeDto>> responseAfter = restTemplate.exchange(
+                LOCALHOST + port + SERVICE_PATH + "findAll", HttpMethod.GET, httpEntity, responseTypeOpportunityType);
+
+        assertEquals(3, responseAfter.getBody().size());
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+
+    }
+
+    @Test
+    public void shouldNotDeleteIfExistsAnOffer() {
+        HttpEntity<?> httpEntity = new HttpEntity<>(getHeaders());
+
+        ResponseEntity<?> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH + EXISTING_ID,
+                HttpMethod.DELETE, httpEntity, Void.class);
+
+        assertNotNull(response);
+        assertEquals(HttpStatus.CONFLICT, response.getStatusCode());
     }
 }

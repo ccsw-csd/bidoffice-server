@@ -36,4 +36,9 @@ public class OfferServiceImpl implements OfferService {
         return this.offerRepository.findAll(dto.getPageable());
     }
 
+    @Override
+    public boolean checkIfExistsOffer(Long id) {
+        return this.offerRepository.existsByOpportunityTypeId(id);
+    }
+
 }
