@@ -19,4 +19,6 @@ public interface OfferRepository extends PagingAndSortingRepository<OfferEntity,
 
     List<Clients> findFirst15DistinctByClientIgnoreCaseContaining(String client);
 
+    boolean existsByOpportunityTypeId(Long id);
+
 }

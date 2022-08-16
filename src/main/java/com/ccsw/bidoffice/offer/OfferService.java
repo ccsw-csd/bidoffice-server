@@ -15,4 +15,6 @@ public interface OfferService {
 
     Page<OfferEntity> findPage(OfferSearchDto dto);
 
+    boolean checkIfExistsOffer(Long id);
+
 }
