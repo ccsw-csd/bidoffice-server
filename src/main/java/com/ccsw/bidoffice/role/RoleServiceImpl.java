@@ -4,6 +4,8 @@ import com.ccsw.bidoffice.role.model.RoleEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * @author ccsw
  */
@@ -12,6 +14,15 @@ public class RoleServiceImpl implements RoleService{
 
 	@Autowired
 	RoleRepository roleRepository;
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<RoleEntity> getAllDataFromRole() {
+
+		return (List<RoleEntity>) this.roleRepository.findAll();
+	}
 	
 	/**
 	 * {@inheritDoc}
