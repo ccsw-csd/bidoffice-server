@@ -43,4 +43,10 @@ public class OfferController {
         return this.beanMapper.mapPage(this.offerService.findPage(dto), OfferItemListDto.class);
     }
 
+    @RequestMapping(path = "/", method = RequestMethod.PUT)
+    public OfferDto save(@RequestBody OfferDto dto) {
+
+        return null;
+    }
+
 }

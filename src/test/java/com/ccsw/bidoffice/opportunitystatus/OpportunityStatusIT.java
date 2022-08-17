@@ -23,7 +23,7 @@ import com.ccsw.bidoffice.opportunitystatus.model.OpportunityStatusDto;
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 public class OpportunityStatusIT extends BaseITAbstract {
 
-    public static final String SERVICE_PATH = "/opportunitystatus/";
+    public static final String SERVICE_PATH = "/opportunityStatus/";
 
     public static final Integer TOTAL_OPPORTUNITY_STATUS = 4;
 

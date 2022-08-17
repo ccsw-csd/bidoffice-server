@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import com.ccsw.bidoffice.offer.model.Clients;
+import com.ccsw.bidoffice.offer.model.OfferDto;
 import com.ccsw.bidoffice.offer.model.OfferEntity;
 import com.ccsw.bidoffice.offer.model.OfferSearchDto;
 
@@ -34,6 +35,12 @@ public class OfferServiceImpl implements OfferService {
     public Page<OfferEntity> findPage(OfferSearchDto dto) {
 
         return this.offerRepository.findAll(dto.getPageable());
+    }
+
+    @Override
+    public OfferEntity save(OfferDto dto) {
+        // TODO Auto-generated method stub
+        return null;
     }
 
 }

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.data.domain.Page;
 
+import com.ccsw.bidoffice.offer.model.OfferDto;
 import com.ccsw.bidoffice.offer.model.OfferEntity;
 import com.ccsw.bidoffice.offer.model.OfferSearchDto;
 
@@ -14,5 +15,7 @@ public interface OfferService {
     List<String> findFirst15DistinctClientLikeFilter(String filter);
 
     Page<OfferEntity> findPage(OfferSearchDto dto);
+
+    OfferEntity save(OfferDto dto);
 
 }

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ccsw.bidoffice.config.mapper.BeanMapper;
 import com.ccsw.bidoffice.opportunitystatus.model.OpportunityStatusDto;
 
-@RequestMapping(value = "/opportunitystatus")
+@RequestMapping(value = "/opportunityStatus")
 @RestController
 public class OpportunityStatusController {
 
