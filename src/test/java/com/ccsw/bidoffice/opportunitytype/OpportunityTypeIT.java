@@ -76,4 +76,96 @@ public class OpportunityTypeIT extends BaseITAbstract {
         assertNotNull(response);
         assertEquals(HttpStatus.CONFLICT, response.getStatusCode());
     }
+
+    @Test
+    public void shouldNotSaveNewItemIfAttributesAreDuplicated() {
+        OpportunityTypeDto dto = new OpportunityTypeDto();
+        HttpEntity<?> httpEntity = new HttpEntity<>(dto, getHeaders());
+
+        dto.setName("New name");
+        dto.setPriority(1);
+
+        ResponseEntity<?> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH, HttpMethod.PUT, httpEntity,
+                Void.class);
+
+        assertEquals(HttpStatus.CONFLICT, response.getStatusCode());
+    }
+
+    @Test
+    public void shouldSaveIfAttributesAreNotDuplicated() {
+        OpportunityTypeDto dto = new OpportunityTypeDto();
+        HttpEntity<?> httpEntity = new HttpEntity<>(dto, getHeaders());
+
+        dto.setName("New name");
+        dto.setPriority(10);
+
+        ResponseEntity<?> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH, HttpMethod.PUT, httpEntity,
+                Void.class);
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+
+        ResponseEntity<List<OpportunityTypeDto>> responseAfter = restTemplate.exchange(
+                LOCALHOST + port + SERVICE_PATH + "findAll", HttpMethod.GET, httpEntity, responseTypeOpportunityType);
+
+        OpportunityTypeDto editedDto = responseAfter.getBody().stream()
+                .filter(element -> element.getName().equals("New name")).findFirst().orElse(null);
+
+        assertEquals("New name", editedDto.getName());
+        assertEquals(10, editedDto.getPriority());
+
+    }
+
+    @Test
+    public void shouldEditIfAttributesAreNotDupplicated() {
+        OpportunityTypeDto dto = new OpportunityTypeDto();
+        HttpEntity<?> httpEntity = new HttpEntity<>(dto, getHeaders());
+
+        dto.setId(1L);
+        dto.setName("Edited name");
+        dto.setPriority(10);
+
+        ResponseEntity<?> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH, HttpMethod.PUT, httpEntity,
+                Void.class);
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+
+        ResponseEntity<List<OpportunityTypeDto>> responseAfter = restTemplate.exchange(
+                LOCALHOST + port + SERVICE_PATH + "findAll", HttpMethod.GET, httpEntity, responseTypeOpportunityType);
+
+        OpportunityTypeDto editedDto = responseAfter.getBody().stream().filter(element -> element.getId().equals(1L))
+                .findFirst().orElse(null);
+
+        assertEquals("Edited name", editedDto.getName());
+        assertEquals(10, editedDto.getPriority());
+    }
+
+    @Test
+    public void shouldNotEditIfNameExists() {
+        OpportunityTypeDto dto = new OpportunityTypeDto();
+        HttpEntity<?> httpEntity = new HttpEntity<>(dto, getHeaders());
+
+        dto.setId(1L);
+        dto.setName("Otros3");
+        dto.setPriority(10);
+
+        ResponseEntity<?> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH, HttpMethod.PUT, httpEntity,
+                Void.class);
+
+        assertEquals(HttpStatus.CONFLICT, response.getStatusCode());
+    }
+
+    @Test
+    public void shouldNotEditIfPriorityExists() {
+        OpportunityTypeDto dto = new OpportunityTypeDto();
+        HttpEntity<?> httpEntity = new HttpEntity<>(dto, getHeaders());
+
+        dto.setId(1L);
+        dto.setName("Edited name");
+        dto.setPriority(2);
+
+        ResponseEntity<?> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH, HttpMethod.PUT, httpEntity,
+                Void.class);
+
+        assertEquals(HttpStatus.CONFLICT, response.getStatusCode());
+    }
 }
