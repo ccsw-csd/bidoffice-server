@@ -42,13 +42,13 @@ public class OfferingTest {
     public static final Integer TOTAL_OFFERING = 1;
     
     private static final String NOT_EXISTING_NAME = "Test 1";
-    private static final Long NOT_EXISTING_PRIORITY = 18L;
+    private static final Integer NOT_EXISTING_PRIORITY = 18;
 
     private static final long EXISTS_ITEM_ID = 1L;
     private static final long NOT_EXISTS_ITEM_ID = 15L;
 
     private static final String EXISTS_NAME = "Otros";
-    private static final Long EXISTS_PRIORITY = 1L;
+    private static final Integer EXISTS_PRIORITY = 1;
 
     @Test
     public void shouldReturnListFileTypeOrderByPriority() {

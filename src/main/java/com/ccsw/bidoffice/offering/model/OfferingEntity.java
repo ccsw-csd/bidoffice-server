@@ -20,7 +20,7 @@ public class OfferingEntity {
     private String name;
 
     @Column(name = "priority", nullable = false)
-    private long priority;
+    private Integer priority;
 
     public Long getId() {
         return id;
@@ -38,11 +38,11 @@ public class OfferingEntity {
         this.name = name;
     }
 
-    public long getPriority() {
+    public Integer getPriority() {
         return priority;
     }
 
-    public void setPriority(long l) {
+    public void setPriority(Integer l) {
         this.priority = l;
     }
 }

@@ -85,7 +85,7 @@ public class OfferingIT extends BaseITAbstract {
 
         offeringDto.setId(1L);
         offeringDto.setName("Name");
-        offeringDto.setPriority(15L);
+        offeringDto.setPriority(15);
 
         ResponseEntity<?> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH, HttpMethod.PUT, httpEntity,
                 Void.class);
@@ -98,7 +98,7 @@ public class OfferingIT extends BaseITAbstract {
 
         assertNotNull(editedOfferingDto);
         assertEquals("Name", editedOfferingDto.getName());
-        assertEquals(15L, editedOfferingDto.getPriority());
+        assertEquals(15, editedOfferingDto.getPriority());
         assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 
@@ -109,7 +109,7 @@ public class OfferingIT extends BaseITAbstract {
 
         offeringDto.setId(1L);
         offeringDto.setName("Otros3");
-        offeringDto.setPriority(1L);
+        offeringDto.setPriority(1);
 
         ResponseEntity<?> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH, HttpMethod.PUT, httpEntity,
                 Void.class);
@@ -124,7 +124,7 @@ public class OfferingIT extends BaseITAbstract {
 
         offeringDto.setId(1L);
         offeringDto.setName("Name 1");
-        offeringDto.setPriority(3L);
+        offeringDto.setPriority(3);
 
         ResponseEntity<?> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH, HttpMethod.PUT, httpEntity,
                 Void.class);
@@ -138,7 +138,7 @@ public class OfferingIT extends BaseITAbstract {
         HttpEntity<?> httpEntity = new HttpEntity<>(offeringDto, getHeaders());
 
         offeringDto.setName("New Name");
-        offeringDto.setPriority(13L);
+        offeringDto.setPriority(13);
 
         ResponseEntity<?> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH, HttpMethod.PUT, httpEntity,
                 Void.class);
@@ -153,7 +153,7 @@ public class OfferingIT extends BaseITAbstract {
 
         assertEquals(5, responseAfter.getBody().size());
         assertEquals("New Name", newOfferingDto.getName());
-        assertEquals(13L, newOfferingDto.getPriority());
+        assertEquals(13, newOfferingDto.getPriority());
     }
 
     @Test
@@ -162,7 +162,7 @@ public class OfferingIT extends BaseITAbstract {
         HttpEntity<?> httpEntity = new HttpEntity<>(offeringDto, getHeaders());
 
         offeringDto.setName("Otros");
-        offeringDto.setPriority(6L);
+        offeringDto.setPriority(6);
 
         ResponseEntity<?> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH, HttpMethod.PUT, httpEntity,
                 Void.class);
@@ -176,7 +176,7 @@ public class OfferingIT extends BaseITAbstract {
         HttpEntity<?> httpEntity = new HttpEntity<>(offeringDto, getHeaders());
 
         offeringDto.setName("Name 2");
-        offeringDto.setPriority(1L);
+        offeringDto.setPriority(1);
 
         ResponseEntity<?> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH, HttpMethod.PUT, httpEntity,
                 Void.class);

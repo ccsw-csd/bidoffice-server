@@ -35,7 +35,7 @@ public class OfferingController {
         this.offeringService.delete(id);
     }
 
-    @RequestMapping(path = { "" }, method = RequestMethod.PUT)
+    @RequestMapping(path = "" , method = RequestMethod.PUT)
     public void save(@RequestBody OfferingDto offeringDto)
             throws AlreadyExistsException, EntityNotFoundException {
         this.offeringService.save(offeringDto);
