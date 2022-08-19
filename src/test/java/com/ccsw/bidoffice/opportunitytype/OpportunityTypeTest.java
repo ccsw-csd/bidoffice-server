@@ -90,11 +90,11 @@ public class OpportunityTypeTest {
         dto.setName(name);
         dto.setPriority(priority);
 
-        ArgumentCaptor<OpportunityTypeEntity> opportunityEntity = ArgumentCaptor.forClass(OpportunityTypeEntity.class);
+        ArgumentCaptor<OpportunityTypeEntity> opportunityTypeEntity = ArgumentCaptor.forClass(OpportunityTypeEntity.class);
 
         this.opportunityTypeServiceImpl.save(dto);
 
-        verify(this.opportunityTypeRepository).save(opportunityEntity.capture());
+        verify(this.opportunityTypeRepository).save(opportunityTypeEntity.capture());
     }
 
     @Test
@@ -107,10 +107,10 @@ public class OpportunityTypeTest {
         dto.setName(name);
         dto.setPriority(priority);
 
-        ArgumentCaptor<OpportunityTypeEntity> opportunityEntity = ArgumentCaptor.forClass(OpportunityTypeEntity.class);
+        ArgumentCaptor<OpportunityTypeEntity> opportunityTypeEntity = ArgumentCaptor.forClass(OpportunityTypeEntity.class);
 
         assertThrows(AlreadyExistsException.class, () -> this.opportunityTypeServiceImpl.save(dto));
-        verify(this.opportunityTypeRepository, never()).save(opportunityEntity.capture());
+        verify(this.opportunityTypeRepository, never()).save(opportunityTypeEntity.capture());
     }
 
     @Test
@@ -128,12 +128,12 @@ public class OpportunityTypeTest {
         dto.setName(name);
         dto.setPriority(priority);
 
-        OpportunityTypeEntity opportunityEntity = mock(OpportunityTypeEntity.class);
-        when(this.opportunityTypeRepository.findById(id)).thenReturn(Optional.of(opportunityEntity));
+        OpportunityTypeEntity opportunityTypeEntity = mock(OpportunityTypeEntity.class);
+        when(this.opportunityTypeRepository.findById(id)).thenReturn(Optional.of(opportunityTypeEntity));
 
         this.opportunityTypeServiceImpl.save(dto);
 
-        verify(this.opportunityTypeRepository).save(opportunityEntity);
+        verify(this.opportunityTypeRepository).save(opportunityTypeEntity);
     }
 
     @Test
@@ -149,10 +149,10 @@ public class OpportunityTypeTest {
         dto.setName(name);
         dto.setPriority(priority);
 
-        ArgumentCaptor<OpportunityTypeEntity> opportunityEntity = ArgumentCaptor.forClass(OpportunityTypeEntity.class);
+        ArgumentCaptor<OpportunityTypeEntity> opportunityTypeEntity = ArgumentCaptor.forClass(OpportunityTypeEntity.class);
 
         assertThrows(AlreadyExistsException.class, () -> this.opportunityTypeServiceImpl.save(dto));
-        verify(this.opportunityTypeRepository, never()).save(opportunityEntity.capture());
+        verify(this.opportunityTypeRepository, never()).save(opportunityTypeEntity.capture());
     }
 
     @Test
@@ -169,9 +169,9 @@ public class OpportunityTypeTest {
         dto.setName(name);
         dto.setPriority(priority);
 
-        ArgumentCaptor<OpportunityTypeEntity> opportunityEntity = ArgumentCaptor.forClass(OpportunityTypeEntity.class);
+        ArgumentCaptor<OpportunityTypeEntity> opportunityTypeEntity = ArgumentCaptor.forClass(OpportunityTypeEntity.class);
 
         assertThrows(AlreadyExistsException.class, () -> this.opportunityTypeServiceImpl.save(dto));
-        verify(this.opportunityTypeRepository, never()).save(opportunityEntity.capture());
+        verify(this.opportunityTypeRepository, never()).save(opportunityTypeEntity.capture());
     }
 }

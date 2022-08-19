@@ -37,45 +37,47 @@ public class OpportunityTypeServiceImpl implements OpportunityTypeService {
     }
 
     @Override
-    public void save(OpportunityTypeDto opportunityDto) throws AlreadyExistsException, EntityNotFoundException {
+    public void save(OpportunityTypeDto opportunityTypeDto) throws AlreadyExistsException, EntityNotFoundException {
 
-        if (checkIfExistsAttributes(opportunityDto))
+        if (checkIfExistsAttributes(opportunityTypeDto))
             throw new AlreadyExistsException();
 
-        OpportunityTypeEntity opportunityEntity = null;
+        OpportunityTypeEntity opportunityTypeEntity = null;
 
-        if (opportunityDto.getId() != null) {
-            opportunityEntity = getId(opportunityDto);
+        if (opportunityTypeDto.getId() != null) {
+            opportunityTypeEntity = getId(opportunityTypeDto);
         } else {
-            opportunityEntity = new OpportunityTypeEntity();
+            opportunityTypeEntity = new OpportunityTypeEntity();
         }
 
-        opportunityEntity.setName(opportunityDto.getName());
-        opportunityEntity.setPriority(opportunityDto.getPriority());
+        opportunityTypeEntity.setName(opportunityTypeDto.getName());
+        opportunityTypeEntity.setPriority(opportunityTypeDto.getPriority());
 
-        this.opportunityTypeRepository.save(opportunityEntity);
+        this.opportunityTypeRepository.save(opportunityTypeEntity);
     }
 
-    private OpportunityTypeEntity getId(OpportunityTypeDto opportunityDto) throws EntityNotFoundException {
+    private OpportunityTypeEntity getId(OpportunityTypeDto opportunityTypeDto) throws EntityNotFoundException {
 
-        return this.opportunityTypeRepository.findById(opportunityDto.getId())
+        return this.opportunityTypeRepository.findById(opportunityTypeDto.getId())
                 .orElseThrow(EntityNotFoundException::new);
     }
 
-    private boolean checkIfExistsAttributes(OpportunityTypeDto opportunityDto) throws AlreadyExistsException {
+    private boolean checkIfExistsAttributes(OpportunityTypeDto opportunityTypeDto) throws AlreadyExistsException {
 
-        boolean checkForNewItem = false, checkForAnExistingItemName = false, checkForAnExistingItemPriority = false,
-                results = false;
+        boolean checkForNewItem = false;
+        boolean checkForAnExistingItemName = false;
+        boolean checkForAnExistingItemPriority = false;
+        boolean results = false;
 
-        if (opportunityDto.getId() == null) {
-            checkForNewItem = this.opportunityTypeRepository.existsByNameOrPriority(opportunityDto.getName(),
-                    opportunityDto.getPriority());
+        if (opportunityTypeDto.getId() == null) {
+            checkForNewItem = this.opportunityTypeRepository.existsByNameOrPriority(opportunityTypeDto.getName(),
+                    opportunityTypeDto.getPriority());
         } else {
-            checkForAnExistingItemName = this.opportunityTypeRepository.existsByIdNotAndName(opportunityDto.getId(),
-                    opportunityDto.getName());
+            checkForAnExistingItemName = this.opportunityTypeRepository.existsByIdNotAndName(opportunityTypeDto.getId(),
+                    opportunityTypeDto.getName());
 
             checkForAnExistingItemPriority = this.opportunityTypeRepository
-                    .existsByIdNotAndPriority(opportunityDto.getId(), opportunityDto.getPriority());
+                    .existsByIdNotAndPriority(opportunityTypeDto.getId(), opportunityTypeDto.getPriority());
         }
 
         if (checkForNewItem || checkForAnExistingItemName || checkForAnExistingItemPriority)

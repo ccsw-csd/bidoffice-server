@@ -37,8 +37,8 @@ public class OpportunityTypeController {
     }
 
     @RequestMapping(path = "", method = RequestMethod.PUT)
-    public void save(@RequestBody OpportunityTypeDto opportunity)
+    public void save(@RequestBody OpportunityTypeDto opportunityTypeDto)
             throws AlreadyExistsException, EntityNotFoundException {
-        this.opportunityTypeService.save(opportunity);
+        this.opportunityTypeService.save(opportunityTypeDto);
     }
 }
