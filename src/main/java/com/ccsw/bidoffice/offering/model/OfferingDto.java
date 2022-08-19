@@ -6,7 +6,7 @@ public class OfferingDto {
 
     private String name;
 
-    private Integer priority;
+    private long priority;
 
     public Long getId() {
         return id;
@@ -24,11 +24,11 @@ public class OfferingDto {
         this.name = name;
     }
 
-    public Integer getPriority() {
+    public long getPriority() {
         return priority;
     }
 
-    public void setPriority(Integer priority) {
-        this.priority = priority;
+    public void setPriority(long l) {
+        this.priority = l;
     }
 }
