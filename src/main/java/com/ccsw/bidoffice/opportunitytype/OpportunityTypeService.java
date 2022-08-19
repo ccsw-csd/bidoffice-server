@@ -14,4 +14,6 @@ public interface OpportunityTypeService {
     void delete(Long id) throws AlreadyExistsException;
 
     void save(OpportunityTypeDto opportunity) throws AlreadyExistsException, EntityNotFoundException;
+
+    public OpportunityTypeEntity getById(OpportunityTypeDto opportunityTypeDto) throws EntityNotFoundException;
 }

@@ -56,7 +56,8 @@ public class OpportunityTypeServiceImpl implements OpportunityTypeService {
         this.opportunityTypeRepository.save(opportunityTypeEntity);
     }
 
-    private OpportunityTypeEntity getById(OpportunityTypeDto opportunityTypeDto) throws EntityNotFoundException {
+    @Override
+    public OpportunityTypeEntity getById(OpportunityTypeDto opportunityTypeDto) throws EntityNotFoundException {
 
         return this.opportunityTypeRepository.findById(opportunityTypeDto.getId())
                 .orElseThrow(EntityNotFoundException::new);
