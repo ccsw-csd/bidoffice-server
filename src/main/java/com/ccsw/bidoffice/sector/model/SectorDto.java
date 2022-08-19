@@ -1,5 +1,7 @@
 package com.ccsw.bidoffice.sector.model;
 
+import java.time.LocalDate;
+
 public class SectorDto {
 
     private Long id;
@@ -7,6 +9,10 @@ public class SectorDto {
     private String name;
 
     private Integer priority;
+
+    private LocalDate startDate;
+
+    private LocalDate endDate;
 
     public Long getId() {
         return id;
@@ -31,4 +37,21 @@ public class SectorDto {
     public void setPriority(Integer priority) {
         this.priority = priority;
     }
+
+    public LocalDate getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(LocalDate startDate) {
+        this.startDate = startDate;
+    }
+
+    public LocalDate getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(LocalDate endDate) {
+        this.endDate = endDate;
+    }
+
 }

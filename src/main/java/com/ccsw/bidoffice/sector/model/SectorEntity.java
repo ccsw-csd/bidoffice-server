@@ -1,5 +1,7 @@
 package com.ccsw.bidoffice.sector.model;
 
+import java.time.LocalDate;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -21,6 +23,12 @@ public class SectorEntity {
 
     @Column(name = "priority", nullable = false)
     private Integer priority;
+
+    @Column(name = "start_date")
+    private LocalDate startDate;
+
+    @Column(name = "end_date")
+    private LocalDate endDate;
 
     public Long getId() {
         return id;
@@ -45,4 +53,21 @@ public class SectorEntity {
     public void setPriority(Integer priority) {
         this.priority = priority;
     }
+
+    public LocalDate getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(LocalDate startDate) {
+        this.startDate = startDate;
+    }
+
+    public LocalDate getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(LocalDate endDate) {
+        this.endDate = endDate;
+    }
+
 }

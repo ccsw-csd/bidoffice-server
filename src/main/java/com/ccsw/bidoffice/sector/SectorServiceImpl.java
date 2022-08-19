@@ -14,6 +14,9 @@ public class SectorServiceImpl implements SectorService {
     @Autowired
     SectorRepository sectorRepository;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<SectorEntity> findAllSectorOrderPriority() {
 
