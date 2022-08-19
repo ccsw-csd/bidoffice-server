@@ -30,6 +30,11 @@ public class SectorIT extends BaseITAbstract {
     ParameterizedTypeReference<List<SectorDto>> responseTypeSector = new ParameterizedTypeReference<List<SectorDto>>() {
     };
 
+    /**
+     * Recupera todos los sectores de la Base de Datos.
+     * 
+     * El test debe devolver 4 sectores.
+     */
     @Test
     public void shouldReturnListSectorOrderByPriority() {
 

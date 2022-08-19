@@ -28,6 +28,12 @@ public class SectorTest {
     @InjectMocks
     private SectorServiceImpl sectorServiceImpl;
 
+    /**
+     * Comprueba que se devuelve un listado ordenado por prioridades.
+     * 
+     * El test debe devolver un listado ordenado por el atributo "priority", de
+     * forma ascendente.
+     */
     @Test
     public void shouldReturnListFileTypeOrderByPriority() {
 
