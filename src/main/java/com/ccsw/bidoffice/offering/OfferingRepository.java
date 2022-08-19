@@ -11,12 +11,12 @@ public interface OfferingRepository extends CrudRepository<OfferingEntity, Long>
 
     List<OfferingEntity> findAll(Sort sort);
     
-    boolean existsByPriority(Integer priority);
+    Boolean existsByPriority(Integer priority);
 
-    boolean existsByName(String name);
+    Boolean existsByName(String name);
 
-    boolean existsByIdIsNotAndName(Long id, String name);
+    Boolean existsByIdIsNotAndName(Long id, String name);
 
-    boolean existsByIdIsNotAndPriority(Long id, Integer priority);
+    Boolean existsByIdIsNotAndPriority(Long id, Integer priority);
 
 }

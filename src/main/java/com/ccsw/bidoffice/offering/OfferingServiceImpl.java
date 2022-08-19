@@ -59,7 +59,8 @@ public class OfferingServiceImpl implements OfferingService {
     }
 
     private void checkWhenAttributesAreWrong(OfferingDto dto) throws AlreadyExistsException {
-        boolean nameExists = false, priorityExists = false;
+        Boolean nameExists = false;
+        Boolean priorityExists = false;
 
         if (dto.getId() == null) {
             nameExists = this.offeringRepository.existsByName(dto.getName());
