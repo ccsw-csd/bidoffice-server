@@ -13,6 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.annotation.DirtiesContext;
 
@@ -26,6 +27,9 @@ public class ProjectTypeIT extends BaseITAbstract {
     public static final String SERVICE_PATH = "/projecttype/";
 
     public static final Integer TOTAL_PROJECT_TYPE = 4;
+
+    private static final Long EXISTING_PROJECTTYPE_ID = 1L;
+    private static final Long NOT_EXISTING_PROJECTTYPE_ID = 4L;
 
     ParameterizedTypeReference<List<ProjectTypeDto>> responseTypeProjectType = new ParameterizedTypeReference<List<ProjectTypeDto>>() {
     };
@@ -43,6 +47,36 @@ public class ProjectTypeIT extends BaseITAbstract {
         assertTrue(response.getBody().stream().sorted(Comparator.comparing(ProjectTypeDto::getPriority))
                 .collect(Collectors.toList()).equals(response.getBody()));
 
+    }
+
+    @Test
+    public void ifUsingProjectTypeInOfferShouldNotDelete() {
+
+        HttpEntity<?> httpEntity = new HttpEntity<>(getHeaders());
+
+        ResponseEntity<?> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH + EXISTING_PROJECTTYPE_ID,
+                HttpMethod.DELETE, httpEntity, Void.class);
+
+        assertNotNull(response);
+        assertEquals(HttpStatus.CONFLICT, response.getStatusCode());
+    }
+
+    @Test
+    public void IfNotUsingProjectTypeInOfferShouldDelete() {
+
+        HttpEntity<?> httpEntity = new HttpEntity<>(getHeaders());
+
+        ResponseEntity<?> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH + NOT_EXISTING_PROJECTTYPE_ID,
+                HttpMethod.DELETE, httpEntity, Void.class);
+
+        ResponseEntity<List<ProjectTypeDto>> responseList = restTemplate.exchange(
+                LOCALHOST + port + SERVICE_PATH + "findAll", HttpMethod.GET, httpEntity, responseTypeProjectType);
+
+        assertNotNull(response);
+        assertNotNull(responseList);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(HttpStatus.OK, responseList.getStatusCode());
+        assertEquals(3, responseList.getBody().size());
     }
 
 }
