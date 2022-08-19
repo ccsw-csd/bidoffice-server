@@ -45,7 +45,7 @@ public class OpportunityTypeServiceImpl implements OpportunityTypeService {
         OpportunityTypeEntity opportunityTypeEntity = null;
 
         if (opportunityTypeDto.getId() != null) {
-            opportunityTypeEntity = getId(opportunityTypeDto);
+            opportunityTypeEntity = getById(opportunityTypeDto);
         } else {
             opportunityTypeEntity = new OpportunityTypeEntity();
         }
@@ -56,7 +56,7 @@ public class OpportunityTypeServiceImpl implements OpportunityTypeService {
         this.opportunityTypeRepository.save(opportunityTypeEntity);
     }
 
-    private OpportunityTypeEntity getId(OpportunityTypeDto opportunityTypeDto) throws EntityNotFoundException {
+    private OpportunityTypeEntity getById(OpportunityTypeDto opportunityTypeDto) throws EntityNotFoundException {
 
         return this.opportunityTypeRepository.findById(opportunityTypeDto.getId())
                 .orElseThrow(EntityNotFoundException::new);
