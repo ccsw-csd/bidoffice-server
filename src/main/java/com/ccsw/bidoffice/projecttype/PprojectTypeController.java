@@ -3,11 +3,9 @@ package com.ccsw.bidoffice.projecttype;
 import java.util.List;
 
 import com.ccsw.bidoffice.common.exception.AlreadyExistsException;
+import com.ccsw.bidoffice.common.exception.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.ccsw.bidoffice.config.mapper.BeanMapper;
 import com.ccsw.bidoffice.projecttype.model.ProjectTypeDto;
@@ -31,5 +29,10 @@ public class PprojectTypeController {
     @RequestMapping(path="/{id}", method = RequestMethod.DELETE)
     public void delete(@PathVariable("id") Long id) throws AlreadyExistsException {
         this.projectTypeService.delete(id);
+    }
+
+    @RequestMapping(path="", method = RequestMethod.PUT)
+    public ProjectTypeDto modifyProjectType(@RequestBody ProjectTypeDto projectTypeDto) throws EntityNotFoundException {
+        return this.beanMapper.map(projectTypeService.modifyProjectType(projectTypeDto), ProjectTypeDto.class);
     }
 }

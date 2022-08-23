@@ -30,6 +30,7 @@ public class ProjectTypeIT extends BaseITAbstract {
 
     private static final Long EXISTING_PROJECTTYPE_ID = 1L;
     private static final Long NOT_EXISTING_PROJECTTYPE_ID = 4L;
+    private static final Long NOT_EXISTS_ID_PROJECTTYPE = 5L;
 
     ParameterizedTypeReference<List<ProjectTypeDto>> responseTypeProjectType = new ParameterizedTypeReference<List<ProjectTypeDto>>() {
     };
@@ -77,6 +78,42 @@ public class ProjectTypeIT extends BaseITAbstract {
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(HttpStatus.OK, responseList.getStatusCode());
         assertEquals(3, responseList.getBody().size());
+    }
+
+    @Test
+    public void modifyWithNotExistIdShouldThrowException() {
+
+        ProjectTypeDto dto = new ProjectTypeDto();
+        dto.setId(NOT_EXISTS_ID_PROJECTTYPE);
+        HttpEntity<?> httpEntity = new HttpEntity<>(dto, getHeaders());
+
+        ResponseEntity<?> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH, HttpMethod.PUT, httpEntity,
+                ProjectTypeDto.class);
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+    }
+
+    @Test
+    public void modifyWithExistIdShouldModifyProjectType() {
+        ProjectTypeDto dto = new ProjectTypeDto();
+        dto.setId(EXISTING_PROJECTTYPE_ID);
+        dto.setName("pepe");
+        dto.setPriority(10);
+
+        HttpEntity<?> httpEntity = new HttpEntity<>(getHeaders());
+
+        restTemplate.exchange(LOCALHOST + port + SERVICE_PATH, HttpMethod.PUT,
+                new HttpEntity<>(dto, getHeaders()), ProjectTypeDto.class);
+
+        ResponseEntity<List<ProjectTypeDto>> response = restTemplate.exchange(
+                LOCALHOST + port + SERVICE_PATH + "findAll", HttpMethod.GET, httpEntity, responseTypeProjectType);
+        assertNotNull(response.getBody());
+        assertEquals(4, response.getBody().size());
+        System.out.println(response.getBody().stream().filter(item -> item.getId().equals(EXISTING_PROJECTTYPE_ID)).findFirst().orElse(null).getName());
+
+        ProjectTypeDto projectTypeSearch = response.getBody().stream().filter(item -> item.getId().equals(EXISTING_PROJECTTYPE_ID))
+                .findFirst().orElse(null);
+        assertNotNull(projectTypeSearch);
+        assertEquals("pepe", projectTypeSearch.getName());
     }
 
 }
