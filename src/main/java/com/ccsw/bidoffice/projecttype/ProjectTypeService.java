@@ -34,6 +34,6 @@ public interface ProjectTypeService {
      *
      * @param dto
      */
-    ProjectTypeEntity modifyProjectType(ProjectTypeDto dto) throws EntityNotFoundException;
+    ProjectTypeEntity saveProjectType(ProjectTypeDto dto) throws AlreadyExistsException, EntityNotFoundException;
 
 }

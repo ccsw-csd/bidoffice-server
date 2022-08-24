@@ -12,7 +12,7 @@ import com.ccsw.bidoffice.projecttype.model.ProjectTypeDto;
 
 @RequestMapping(value = "/projecttype")
 @RestController
-public class PprojectTypeController {
+public class ProjectTypeController {
 
     @Autowired
     private ProjectTypeService projectTypeService;
@@ -32,7 +32,7 @@ public class PprojectTypeController {
     }
 
     @RequestMapping(path="", method = RequestMethod.PUT)
-    public ProjectTypeDto modifyProjectType(@RequestBody ProjectTypeDto projectTypeDto) throws EntityNotFoundException {
-        return this.beanMapper.map(projectTypeService.modifyProjectType(projectTypeDto), ProjectTypeDto.class);
+    public ProjectTypeDto saveProjectType(@RequestBody ProjectTypeDto projectTypeDto) throws AlreadyExistsException, EntityNotFoundException {
+        return this.beanMapper.map(projectTypeService.saveProjectType(projectTypeDto), ProjectTypeDto.class);
     }
 }

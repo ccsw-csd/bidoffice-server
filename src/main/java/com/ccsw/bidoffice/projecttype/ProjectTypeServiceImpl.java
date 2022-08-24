@@ -55,15 +55,37 @@ public class ProjectTypeServiceImpl implements ProjectTypeService {
      * {@inheritDoc}
      */
     @Override
-    public ProjectTypeEntity modifyProjectType(ProjectTypeDto projectTypeDto) throws EntityNotFoundException {
+    public ProjectTypeEntity saveProjectType(ProjectTypeDto projectTypeDto) throws AlreadyExistsException, EntityNotFoundException {
 
-        if(projectTypeDto.getId()==null){
-            throw new EntityNotFoundException();
+        this.checkWhenProjectTypeAttributesAlreadyUsed(projectTypeDto);
+
+        ProjectTypeEntity projectTypeEntity = null;
+
+        if(projectTypeDto.getId()!=null){
+            projectTypeEntity = get(projectTypeDto.getId());
+        } else {
+            projectTypeEntity = new ProjectTypeEntity();
         }
 
-        ProjectTypeEntity updateProjectType = this.get(projectTypeDto.getId());
-        BeanUtils.copyProperties(projectTypeDto, updateProjectType, "id");
-        return this.projectTypeRepository.save(updateProjectType);
+        BeanUtils.copyProperties(projectTypeDto, projectTypeEntity, "id");
+
+        return this.projectTypeRepository.save(projectTypeEntity);
+    }
+
+    private void checkWhenProjectTypeAttributesAlreadyUsed(ProjectTypeDto dto) throws AlreadyExistsException {
+        boolean nameExists = false;
+        boolean priorityExists = false;
+
+        if(dto.getId() == null){
+            nameExists = this.projectTypeRepository.existsByName(dto.getName());
+            priorityExists = this.projectTypeRepository.existsByPriority(dto.getPriority());
+        } else {
+            nameExists = this.projectTypeRepository.existsByIdIsNotAndName(dto.getId(), dto.getName());
+            priorityExists = this.projectTypeRepository.existsByIdIsNotAndPriority(dto.getId(), dto.getPriority());
+        }
+
+        if(nameExists || priorityExists)
+            throw new AlreadyExistsException();
     }
 
 }

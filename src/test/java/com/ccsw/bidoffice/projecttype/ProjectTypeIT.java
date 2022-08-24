@@ -31,6 +31,8 @@ public class ProjectTypeIT extends BaseITAbstract {
     private static final Long EXISTING_PROJECTTYPE_ID = 1L;
     private static final Long NOT_EXISTING_PROJECTTYPE_ID = 4L;
     private static final Long NOT_EXISTS_ID_PROJECTTYPE = 5L;
+    private static final Integer EXISTING_PROJECTTYPE_PRIORITY = 2;
+    public static final String EXISTING_PROJECTTYPE_NAME = "Otros2";
 
     ParameterizedTypeReference<List<ProjectTypeDto>> responseTypeProjectType = new ParameterizedTypeReference<List<ProjectTypeDto>>() {
     };
@@ -108,12 +110,128 @@ public class ProjectTypeIT extends BaseITAbstract {
                 LOCALHOST + port + SERVICE_PATH + "findAll", HttpMethod.GET, httpEntity, responseTypeProjectType);
         assertNotNull(response.getBody());
         assertEquals(4, response.getBody().size());
-        System.out.println(response.getBody().stream().filter(item -> item.getId().equals(EXISTING_PROJECTTYPE_ID)).findFirst().orElse(null).getName());
 
         ProjectTypeDto projectTypeSearch = response.getBody().stream().filter(item -> item.getId().equals(EXISTING_PROJECTTYPE_ID))
                 .findFirst().orElse(null);
         assertNotNull(projectTypeSearch);
         assertEquals("pepe", projectTypeSearch.getName());
+    }
+
+    @Test
+    public void ifNameAndPriorityAreOkShouldEdit(){
+        ProjectTypeDto dto = new ProjectTypeDto();
+        dto.setId(EXISTING_PROJECTTYPE_ID);
+        dto.setName("pepa");
+        dto.setPriority(11);
+
+        System.out.println(dto.getId());
+        System.out.println(dto.getName());
+        System.out.println(dto.getPriority());
+
+        HttpEntity<?> httpEntity = new HttpEntity<>(getHeaders());
+        ResponseEntity<?> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH, HttpMethod.PUT,  new HttpEntity<>(dto, getHeaders()),
+                ProjectTypeDto.class);
+
+        ResponseEntity<List<ProjectTypeDto>> responseAfter = restTemplate.exchange(
+                LOCALHOST + port + SERVICE_PATH + "findAll", HttpMethod.GET, httpEntity, responseTypeProjectType);
+
+        assertNotNull(responseAfter.getBody());
+        assertEquals(4, responseAfter.getBody().size());
+
+        ProjectTypeDto projectTypeSearch = responseAfter.getBody().stream().filter(item -> item.getId().equals(EXISTING_PROJECTTYPE_ID))
+                .findFirst().orElse(null);
+
+        assertNotNull(projectTypeSearch);
+        assertEquals("pepa", projectTypeSearch.getName());
+        assertEquals(11, projectTypeSearch.getPriority());
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+    }
+
+    @Test
+    public void ifNameExistsShouldNotEdit() {
+
+        ProjectTypeDto dto = new ProjectTypeDto();
+        HttpEntity<?> httpEntity = new HttpEntity<>(dto, getHeaders());
+
+        dto.setId(EXISTING_PROJECTTYPE_ID);
+        dto.setName(EXISTING_PROJECTTYPE_NAME);
+        dto.setPriority(11);
+
+        ResponseEntity<?> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH, HttpMethod.PUT, httpEntity,
+                ProjectTypeDto.class);
+
+        assertEquals(HttpStatus.CONFLICT, response.getStatusCode());
+
+    }
+
+    @Test
+    public void ifPrioriryExistsShouldNotEdit() {
+        ProjectTypeDto dto = new ProjectTypeDto();
+        HttpEntity<?> httpEntity = new HttpEntity<>(dto, getHeaders());
+
+        dto.setId(EXISTING_PROJECTTYPE_ID);
+        dto.setName("pepe");
+        dto.setPriority(EXISTING_PROJECTTYPE_PRIORITY);
+
+        ResponseEntity<?> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH, HttpMethod.PUT, httpEntity,
+                ProjectTypeDto.class);
+
+        assertEquals(HttpStatus.CONFLICT, response.getStatusCode());
+    }
+
+    @Test
+    public void NewProjectTypeWithNotExistingNameAndPriorityShouldCreate() {
+        ProjectTypeDto dto = new ProjectTypeDto();
+        HttpEntity<?> httpEntity = new HttpEntity<>(dto, getHeaders());
+
+        dto.setName("pepe");
+        dto.setPriority(11);
+
+        ResponseEntity<?> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH, HttpMethod.PUT, httpEntity,
+                ProjectTypeDto.class);
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+
+        ResponseEntity<List<ProjectTypeDto>> responseAfter = restTemplate.exchange(
+                LOCALHOST + port + SERVICE_PATH + "findAll", HttpMethod.GET, httpEntity, responseTypeProjectType);
+
+        ProjectTypeDto projectTypeSearch = responseAfter.getBody().stream().filter(item -> item.getName().equals("pepe"))
+                .findFirst().orElse(null);
+
+        assertNotNull(responseAfter.getBody());
+        assertEquals(5, responseAfter.getBody().size());
+        assertNotNull(projectTypeSearch);
+        assertEquals("pepe", projectTypeSearch.getName());
+        assertEquals(11, projectTypeSearch.getPriority());
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+    }
+
+    @Test
+    public void newProjectTypeWithExistingNameShouldNotCreate() {
+        ProjectTypeDto dto = new ProjectTypeDto();
+        HttpEntity<?> httpEntity = new HttpEntity<>(dto, getHeaders());
+
+        dto.setName(EXISTING_PROJECTTYPE_NAME);
+        dto.setPriority(11);
+
+        ResponseEntity<?> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH, HttpMethod.PUT, httpEntity,
+                ProjectTypeDto.class);
+
+        assertEquals(HttpStatus.CONFLICT, response.getStatusCode());
+    }
+
+    @Test
+    public void newProjectTypeWithExistingPriorityShouldNotCreate() {
+        ProjectTypeDto dto = new ProjectTypeDto();
+        HttpEntity<?> httpEntity = new HttpEntity<>(dto, getHeaders());
+
+        dto.setName("pepe");
+        dto.setPriority(EXISTING_PROJECTTYPE_PRIORITY);
+
+        ResponseEntity<?> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH, HttpMethod.PUT, httpEntity,
+                ProjectTypeDto.class);
+
+        assertEquals(HttpStatus.CONFLICT, response.getStatusCode());
     }
 
 }
