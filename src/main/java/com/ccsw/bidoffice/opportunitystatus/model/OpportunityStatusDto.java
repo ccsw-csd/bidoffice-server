@@ -6,8 +6,6 @@ public class OpportunityStatusDto {
 
     private String name;
 
-    private Integer priority;
-
     public Long getId() {
         return id;
     }
@@ -22,13 +20,5 @@ public class OpportunityStatusDto {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Integer getPriority() {
-        return priority;
-    }
-
-    public void setPriority(Integer priority) {
-        this.priority = priority;
     }
 }

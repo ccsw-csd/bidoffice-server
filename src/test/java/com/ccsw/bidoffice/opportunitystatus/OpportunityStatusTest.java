@@ -13,10 +13,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.data.domain.Sort;
 
-import com.ccsw.bidoffice.opportunitystatus.OpportunityStatusRepository;
-import com.ccsw.bidoffice.opportunitystatus.OpportunityStatusServiceImpl;
 import com.ccsw.bidoffice.opportunitystatus.model.OpportunityStatusEntity;
 
 @ExtendWith(MockitoExtension.class)
@@ -36,10 +33,9 @@ public class OpportunityStatusTest {
         List<OpportunityStatusEntity> list = new ArrayList<>();
         list.add(mock(OpportunityStatusEntity.class));
 
-        when(opportunityStatusRepository.findAll(Sort.by(Sort.Direction.ASC, "priority"))).thenReturn(list);
+        when(opportunityStatusRepository.findAll()).thenReturn(list);
 
-        List<OpportunityStatusEntity> opportunityStatus = opportunityStatusServiceImpl
-                .findAllOpportunityStatusOrderPriority();
+        List<OpportunityStatusEntity> opportunityStatus = opportunityStatusServiceImpl.findAllOpportunityStatus();
 
         assertNotNull(opportunityStatus);
         assertEquals(TOTAL_OPPORTUNITY_STATUS, opportunityStatus.size());

@@ -20,7 +20,6 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 
 import com.ccsw.bidoffice.person.model.PersonEntity;
-import com.ccsw.bidoffice.person.model.PersonSearchDto;
 
 @ExtendWith(MockitoExtension.class)
 public class PersonTest {
@@ -39,20 +38,13 @@ public class PersonTest {
     @InjectMocks
     private PersonServiceImpl personServiceImpl;
 
-    private PersonSearchDto personSearchDto;
-
     @BeforeEach
     public void setUp() {
 
-        personSearchDto = new PersonSearchDto();
-        personSearchDto.setName("Ayoub");
-        personSearchDto.setLastname("El Moussaoui");
     }
 
     @Test
     public void findPageShouldReturnFilteredPerson() {
-
-        personSearchDto.setUsername(USERNAME_PERSON_ACTIVE);
 
         List<PersonEntity> list = new ArrayList<>();
         list.add(mock(PersonEntity.class));
@@ -60,7 +52,7 @@ public class PersonTest {
         when(this.personRepository.findAll(any(), eq(PageRequest.of(0, 15))))
                 .thenReturn(new PageImpl<>(list, PageRequest.of(0, 15), list.size()));
 
-        List<PersonEntity> persons = this.personServiceImpl.findFirst15Filter(personSearchDto);
+        List<PersonEntity> persons = this.personServiceImpl.findFirst15Filter(USERNAME_PERSON_ACTIVE);
 
         assertNotNull(persons);
         assertEquals(TOTAL_PERSON, persons.size());
@@ -70,14 +62,12 @@ public class PersonTest {
     @Test
     public void findPageWithUsernameNotActiveShouldReturnEmptyPerson() {
 
-        personSearchDto.setUsername(USERNAME_PERSON_NOT_ACTIVE);
-
         List<PersonEntity> list = new ArrayList<>();
 
         when(this.personRepository.findAll(any(), eq(PageRequest.of(0, 15))))
                 .thenReturn(new PageImpl<>(list, PageRequest.of(0, 10), list.size()));
 
-        List<PersonEntity> persons = this.personServiceImpl.findFirst15Filter(personSearchDto);
+        List<PersonEntity> persons = this.personServiceImpl.findFirst15Filter(USERNAME_PERSON_NOT_ACTIVE);
 
         assertNotNull(persons);
         assertEquals(EMPTY_PERSON, persons.size());

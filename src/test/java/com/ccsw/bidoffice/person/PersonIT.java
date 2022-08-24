@@ -63,33 +63,29 @@ public class PersonIT extends BaseITAbstract {
     @Test
     public void findPageShouldReturnFilteredPerson() {
 
-        personSearchDto.setUsername(USERNAME_PERSON_ACTIVE);
-        personSearchDto.setName(NAME_PERSON_ACTIVE);
-        personSearchDto.setLastname(LASTNAME_PERSON_ACTIVE);
-
         HttpEntity<?> httpEntity = new HttpEntity<>(personSearchDto, getHeaders());
 
-        ResponseEntity<List<PersonDto>> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH + "findFilter",
-                HttpMethod.POST, httpEntity, responseTypeListPerson);
+        ResponseEntity<List<PersonDto>> response = restTemplate.exchange(
+                LOCALHOST + port + SERVICE_PATH + USERNAME_PERSON_ACTIVE, HttpMethod.POST, httpEntity,
+                responseTypeListPerson);
 
-        assertEquals(1, response.getBody().size());
-        assertEquals(USERNAME_PERSON_ACTIVE, response.getBody().get(0).getUsername());
+        assertNotNull(response.getBody().size());
+        assertEquals(true,
+                response.getBody().stream().allMatch(item -> item.getUsername().contains(USERNAME_PERSON_ACTIVE)));
     }
 
     @Test
     public void findPageWithUsernameNotActiveShouldReturnEmptyPerson() {
 
-        personSearchDto.setUsername(USERNAME_PERSON_NOT_ACTIVE);
-        personSearchDto.setName(NAME_PERSON_ACTIVE);
-        personSearchDto.setLastname(LASTNAME_PERSON_ACTIVE);
-
         HttpEntity<?> httpEntity = new HttpEntity<>(personSearchDto, getHeaders());
 
-        ResponseEntity<List<PersonDto>> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH + "findFilter",
-                HttpMethod.POST, httpEntity, responseTypeListPerson);
+        ResponseEntity<List<PersonDto>> response = restTemplate.exchange(
+                LOCALHOST + port + SERVICE_PATH + USERNAME_PERSON_NOT_ACTIVE, HttpMethod.POST, httpEntity,
+                responseTypeListPerson);
 
         assertNotNull(response.getBody());
-        assertEquals(EMPTY_PERSON, response.getBody().size());
+        assertEquals(true,
+                response.getBody().stream().noneMatch(item -> item.getUsername().contains(USERNAME_PERSON_NOT_ACTIVE)));
     }
 
     @Test

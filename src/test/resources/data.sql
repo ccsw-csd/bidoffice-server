@@ -195,9 +195,9 @@ CREATE TABLE file_type (
   	PRIMARY KEY (id)
 );
 
-INSERT INTO file_type (name,priority) VALUES ( 'user1', 1);
-INSERT INTO file_type (name,priority) VALUES ( 'user2', 2);
-INSERT INTO file_type (name,priority) VALUES ( 'user3', 3);
+INSERT INTO file_type (id,name,priority) VALUES (1, 'user1', 1);
+INSERT INTO file_type (id,name,priority) VALUES (2, 'user2', 2);
+INSERT INTO file_type (id,name,priority) VALUES (3, 'user3', 3);
 
 CREATE TABLE offer_data_chapter (
 	id bigint NOT NULL AUTO_INCREMENT,
@@ -211,7 +211,7 @@ CREATE TABLE offer_data_chapter (
 	planning int(1) DEFAULT NULL,
 	value_added int(1) DEFAULT NULL,
 	innovation int(1) DEFAULT NULL,
-	references int(1) DEFAULT NULL,
+	reference int(1) DEFAULT NULL,
 	key_document int(1) DEFAULT NULL,
 	PRIMARY KEY (id),
  	CONSTRAINT offer_offer_fk8 FOREIGN KEY (offer_id) REFERENCES offer (id) ON DELETE CASCADE ON UPDATE CASCADE
@@ -232,7 +232,7 @@ CREATE TABLE offer_data_files (
 ); 
 
 INSERT INTO offer_data_files (offer_id,name,file_type_id,link) VALUES (1,'admin',1,'admin.com');
-INSERT INTO offer_data_files (offer_id,name,file_type_id,link) VALUES (1,'jopepe',2,'jopepe.com');
+INSERT INTO offer_data_files (offer_id,name,file_type_id,link) VALUES (1,'jopepe',3,'jopepe.com');
 
 CREATE TABLE offer_data_project (
 	id int(11) NOT NULL AUTO_INCREMENT,
@@ -307,6 +307,8 @@ CREATE TABLE technology (
 );
 
 INSERT INTO technology (name,priority) VALUES ('admin',1);
+INSERT INTO technology (name,priority) VALUES ('VisualBasic',2);
+INSERT INTO technology (name,priority) VALUES ('Quantum++',3);
 
 CREATE TABLE offer_technology (
 	id int(11) NOT NULL AUTO_INCREMENT,
@@ -318,7 +320,7 @@ CREATE TABLE offer_technology (
 );
 
 INSERT INTO offer_technology (offer_id,technology_id) VALUES (1,1);
-INSERT INTO offer_technology (offer_id,technology_id) VALUES (1,1);
+INSERT INTO offer_technology (offer_id,technology_id) VALUES (1,2);
 
 CREATE TABLE offer_tracing (
 	id int(11) NOT NULL AUTO_INCREMENT,

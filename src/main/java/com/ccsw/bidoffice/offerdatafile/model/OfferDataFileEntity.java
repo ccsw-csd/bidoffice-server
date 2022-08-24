@@ -46,11 +46,11 @@ public class OfferDataFileEntity {
         this.id = id;
     }
 
-    public OfferEntity getOfferEntity() {
+    public OfferEntity getOffer() {
         return offer;
     }
 
-    public void setOfferEntity(OfferEntity offer) {
+    public void setOffer(OfferEntity offer) {
         this.offer = offer;
     }
 

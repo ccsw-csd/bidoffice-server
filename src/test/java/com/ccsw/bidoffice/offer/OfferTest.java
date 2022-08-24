@@ -2,11 +2,13 @@ package com.ccsw.bidoffice.offer;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -21,9 +23,16 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 
+import com.ccsw.bidoffice.common.exception.EntityNotFoundException;
+import com.ccsw.bidoffice.common.exception.InvalidDataException;
+import com.ccsw.bidoffice.config.mapper.BeanMapper;
 import com.ccsw.bidoffice.offer.model.Clients;
+import com.ccsw.bidoffice.offer.model.OfferDto;
 import com.ccsw.bidoffice.offer.model.OfferEntity;
 import com.ccsw.bidoffice.offer.model.OfferSearchDto;
+import com.ccsw.bidoffice.opportunitystatus.model.OpportunityStatusDto;
+import com.ccsw.bidoffice.opportunitytype.model.OpportunityTypeDto;
+import com.ccsw.bidoffice.sector.model.SectorDto;
 
 @ExtendWith(MockitoExtension.class)
 public class OfferTest {
@@ -46,12 +55,25 @@ public class OfferTest {
     @InjectMocks
     private OfferServiceImpl offerServiceImpl;
 
+    @Mock
+    private BeanMapper beanMapper;
+
     private OfferSearchDto offerSearchDto;
+
+    private OfferDto offerDto;
 
     @BeforeEach
     public void setUp() {
 
         offerSearchDto = new OfferSearchDto();
+
+        offerDto = new OfferDto();
+        offerDto.setClient("new client");
+        offerDto.setName("new name");
+        offerDto.setRequestedDate(LocalDate.of(2022, 8, 15));
+        offerDto.setSector(new SectorDto());
+        offerDto.setOpportunityStatus(new OpportunityStatusDto());
+        offerDto.setOpportunityType(new OpportunityTypeDto());
     }
 
     @Test
@@ -101,27 +123,68 @@ public class OfferTest {
     }
 
     @Test
-    public void findOfferNotExistIdOfferShouldEmpty() {
+    public void findOfferNotExistIdOfferShouldEmpty() throws EntityNotFoundException {
 
         when(this.offerRepository.findById(ID_OFFER_NOT_EXIST)).thenReturn(Optional.empty());
 
-        assertNull(this.offerServiceImpl.getOffer(ID_OFFER_NOT_EXIST));
-        verify(this.offerRepository).findById(ID_OFFER_NOT_EXIST);
+        assertThrows(EntityNotFoundException.class, () -> offerServiceImpl.getOffer(ID_OFFER_NOT_EXIST));
 
     }
 
     @Test
-    public void findOfferExistIdOfferShouldOffer() {
+    public void findOfferExistIdOfferShouldOffer() throws EntityNotFoundException {
 
         OfferEntity offerEntity = mock(OfferEntity.class);
 
         when(this.offerRepository.findById(ID_OFFER_EXIST)).thenReturn(Optional.of(offerEntity));
-
         OfferEntity offerResponse = this.offerServiceImpl.getOffer(ID_OFFER_EXIST);
 
         assertNotNull(offerResponse);
         assertEquals(offerResponse, offerEntity);
         verify(this.offerRepository).findById(ID_OFFER_EXIST);
+
+    }
+
+    @Test
+    public void saveOfferWithInvalidDataShouldThrowException() {
+
+        offerDto.setSector(null);
+
+        assertThrows(InvalidDataException.class, () -> offerServiceImpl.save(offerDto));
+
+    }
+
+    @Test
+    public void saveNewOfferShouldOffer() throws InvalidDataException, EntityNotFoundException {
+
+        OfferEntity offerEntity = mock(OfferEntity.class);
+
+        when(this.beanMapper.map(offerDto, OfferEntity.class)).thenReturn(offerEntity);
+        offerServiceImpl.save(offerDto);
+
+        verify(this.offerRepository).save(offerEntity);
+    }
+
+    @Test
+    public void modifyOfferWithExistIdShouldOffer() throws InvalidDataException, EntityNotFoundException {
+
+        offerDto.setId(ID_OFFER_EXIST);
+        OfferEntity offerEntity = mock(OfferEntity.class);
+
+        when(offerRepository.findById(ID_OFFER_EXIST)).thenReturn(Optional.of(offerEntity));
+        when(this.beanMapper.map(offerDto, OfferEntity.class)).thenReturn(offerEntity);
+        offerServiceImpl.save(offerDto);
+
+        verify(this.offerRepository).save(offerEntity);
+    }
+
+    @Test
+    public void modifyOfferWithNotExistIdShouldThrowException() {
+
+        offerDto.setId(ID_OFFER_NOT_EXIST);
+        doReturn(Optional.empty()).when(this.offerRepository).findById(ID_OFFER_NOT_EXIST);
+
+        assertThrows(EntityNotFoundException.class, () -> offerServiceImpl.save(offerDto));
 
     }
 

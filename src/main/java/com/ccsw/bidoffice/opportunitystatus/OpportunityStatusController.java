@@ -21,9 +21,9 @@ public class OpportunityStatusController {
     private BeanMapper beanMapper;
 
     @RequestMapping(path = "/findAll", method = RequestMethod.GET)
-    public List<OpportunityStatusDto> findAllOpportunityStatusOrderPriority() {
+    public List<OpportunityStatusDto> findAllOpportunityStatus() {
 
-        return this.beanMapper.mapList(this.opportunityStatusService.findAllOpportunityStatusOrderPriority(),
+        return this.beanMapper.mapList(this.opportunityStatusService.findAllOpportunityStatus(),
                 OpportunityStatusDto.class);
     }
 }

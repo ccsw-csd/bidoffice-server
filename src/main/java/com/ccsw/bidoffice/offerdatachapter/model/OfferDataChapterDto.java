@@ -22,7 +22,7 @@ public class OfferDataChapterDto {
 
     private Boolean innovation;
 
-    private Boolean references;
+    private Boolean reference;
 
     private Boolean keyDocument;
 
@@ -106,12 +106,12 @@ public class OfferDataChapterDto {
         this.innovation = innovation;
     }
 
-    public Boolean getReferences() {
-        return references;
+    public Boolean getReference() {
+        return reference;
     }
 
-    public void setReferences(Boolean references) {
-        this.references = references;
+    public void setReferences(Boolean reference) {
+        this.reference = reference;
     }
 
     public Boolean getKeyDocument() {

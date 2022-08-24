@@ -11,4 +11,12 @@ public interface HyperscalerRepository extends CrudRepository<HyperscalerEntity,
 
     List<HyperscalerEntity> findAll(Sort sort);
 
+    boolean existsByPriority(Long priority);
+
+    boolean existsByName(String name);
+
+    boolean existsByIdIsNotAndName(Long id, String name);
+
+    boolean existsByIdIsNotAndPriority(Long id, Long priority);
+
 }
