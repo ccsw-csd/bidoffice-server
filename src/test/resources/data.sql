@@ -61,14 +61,16 @@ CREATE TABLE sector (
   id int(11) NOT NULL AUTO_INCREMENT,
   name varchar(20) NOT NULL,
   priority int(11) NOT NULL,
+  start_date date,
+  end_date date,
   PRIMARY KEY (id),
   UNIQUE KEY se_name (name)
 );
 
-INSERT INTO sector (name,priority) VALUES ('Otros', 2);
-INSERT INTO sector (name,priority) VALUES ('Otros2', 4);
-INSERT INTO sector (name,priority) VALUES ('Otros3', 3);
-INSERT INTO sector (name,priority) VALUES ('Otros4', 1);
+INSERT INTO sector (name,priority, start_date, end_date) VALUES ('Otros', 2, '2022-02-10', '2022-03-10');
+INSERT INTO sector (name,priority, start_date, end_date) VALUES ('Otros2', 4, '2022-03-12', '2022-04-12');
+INSERT INTO sector (name,priority, start_date, end_date) VALUES ('Otros3', 3, '2022-04-15', '2022-05-15');
+INSERT INTO sector (name,priority, start_date, end_date) VALUES ('Otros4', 1, '2022-05-17', '2022-06-17');
 
 CREATE TABLE person (
   id bigint(20) NOT NULL AUTO_INCREMENT,
