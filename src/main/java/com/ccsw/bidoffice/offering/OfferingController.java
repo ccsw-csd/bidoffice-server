@@ -36,8 +36,7 @@ public class OfferingController {
     }
 
     @RequestMapping(path = "" , method = RequestMethod.PUT)
-    public void save(@RequestBody OfferingDto offeringDto)
-            throws AlreadyExistsException, EntityNotFoundException {
+    public void save(@RequestBody OfferingDto offeringDto) throws AlreadyExistsException, EntityNotFoundException {
         this.offeringService.save(offeringDto);
     }
 }

@@ -4,8 +4,6 @@ import java.util.List;
 
 import com.ccsw.bidoffice.common.exception.AlreadyExistsException;
 import com.ccsw.bidoffice.common.exception.EntityNotFoundException;
-import com.ccsw.bidoffice.hyperscaler.model.HyperscalerDto;
-import com.ccsw.bidoffice.hyperscaler.model.HyperscalerEntity;
 import com.ccsw.bidoffice.offering.model.OfferingDto;
 import com.ccsw.bidoffice.offering.model.OfferingEntity;
 

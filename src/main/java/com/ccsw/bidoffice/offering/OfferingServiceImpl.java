@@ -29,9 +29,10 @@ public class OfferingServiceImpl implements OfferingService {
     
     @Override
     public void save(OfferingDto offeringDto) throws AlreadyExistsException, EntityNotFoundException {
-    	OfferingEntity offeringEntity = null;
         
-    	checkWhenAttributesAreWrong(offeringDto);
+    	checkIfAttributesAreWrong(offeringDto);
+    	
+    	OfferingEntity offeringEntity = null;
 
         if (offeringDto.getId() == null) {
         	offeringEntity = new OfferingEntity();
@@ -58,9 +59,9 @@ public class OfferingServiceImpl implements OfferingService {
         return this.offeringRepository.findById(id).orElseThrow(EntityNotFoundException::new);
     }
 
-    private void checkWhenAttributesAreWrong(OfferingDto dto) throws AlreadyExistsException {
-        Boolean nameExists = false;
-        Boolean priorityExists = false;
+    private void checkIfAttributesAreWrong(OfferingDto dto) throws AlreadyExistsException {
+        Boolean nameExists;
+        Boolean priorityExists;
 
         if (dto.getId() == null) {
             nameExists = this.offeringRepository.existsByName(dto.getName());
@@ -70,9 +71,9 @@ public class OfferingServiceImpl implements OfferingService {
             priorityExists = this.offeringRepository.existsByIdIsNotAndPriority(dto.getId(), dto.getPriority());
         }
 
-        if (nameExists || priorityExists)
+        if (nameExists || priorityExists) {
             throw new AlreadyExistsException();
-
+        }
     }
 
 }

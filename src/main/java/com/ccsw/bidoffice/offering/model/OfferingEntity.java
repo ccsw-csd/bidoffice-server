@@ -42,7 +42,7 @@ public class OfferingEntity {
         return priority;
     }
 
-    public void setPriority(Integer l) {
-        this.priority = l;
+    public void setPriority(Integer priority) {
+        this.priority = priority;
     }
 }

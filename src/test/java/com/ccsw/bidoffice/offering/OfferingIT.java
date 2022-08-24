@@ -81,25 +81,28 @@ public class OfferingIT extends BaseITAbstract {
     @Test
     public void IfAllAreCorrectShouldEdit() {
     	OfferingDto offeringDto = new OfferingDto();
-        HttpEntity<?> httpEntity = new HttpEntity<>(offeringDto, getHeaders());
 
-        offeringDto.setId(1L);
+        offeringDto.setId(EXISTING_OFFERING_ID);
         offeringDto.setName("Name");
         offeringDto.setPriority(15);
+        
+        HttpEntity<?> httpEntity = new HttpEntity<>(offeringDto, getHeaders());
 
         ResponseEntity<?> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH, HttpMethod.PUT, httpEntity,
                 Void.class);
 
-        ResponseEntity<List<OfferingDto>> responseAfter = restTemplate.exchange(
+        ResponseEntity<List<OfferingDto>> responseList = restTemplate.exchange(
                 LOCALHOST + port + SERVICE_PATH + "findAll", HttpMethod.GET, httpEntity, responseTypeOffering);
 
-        OfferingDto editedOfferingDto = responseAfter.getBody().stream()
-                .filter(element -> element.getName().equals("Name")).findFirst().orElse(null);
+        OfferingDto editedOfferingDto = responseList.getBody().stream()
+                .filter(element -> element.getId().equals(EXISTING_OFFERING_ID)).findFirst().orElse(null);
 
         assertNotNull(editedOfferingDto);
+        assertEquals(1L, editedOfferingDto.getId());
         assertEquals("Name", editedOfferingDto.getName());
         assertEquals(15, editedOfferingDto.getPriority());
         assertEquals(HttpStatus.OK, response.getStatusCode());
+        
     }
 
     @Test
@@ -107,7 +110,7 @@ public class OfferingIT extends BaseITAbstract {
         OfferingDto offeringDto = new OfferingDto();
         HttpEntity<?> httpEntity = new HttpEntity<>(offeringDto, getHeaders());
 
-        offeringDto.setId(1L);
+        offeringDto.setId(EXISTING_OFFERING_ID);
         offeringDto.setName("Otros3");
         offeringDto.setPriority(1);
 
@@ -122,7 +125,7 @@ public class OfferingIT extends BaseITAbstract {
     	OfferingDto offeringDto = new OfferingDto();
         HttpEntity<?> httpEntity = new HttpEntity<>(offeringDto, getHeaders());
 
-        offeringDto.setId(1L);
+        offeringDto.setId(EXISTING_OFFERING_ID);
         offeringDto.setName("Name 1");
         offeringDto.setPriority(3);
 

@@ -25,7 +25,6 @@ import com.ccsw.bidoffice.common.exception.EntityNotFoundException;
 import com.ccsw.bidoffice.offering.model.OfferingDto;
 import com.ccsw.bidoffice.offering.model.OfferingEntity;
 import com.ccsw.bidoffice.offeroffering.OfferOfferingServiceImpl;
-import com.ccsw.bidoffice.offering.model.OfferingEntity;
 
 @ExtendWith(MockitoExtension.class)
 public class OfferingTest {
