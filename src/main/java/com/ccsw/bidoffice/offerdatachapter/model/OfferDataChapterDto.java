@@ -1,5 +1,7 @@
 package com.ccsw.bidoffice.offerdatachapter.model;
 
+import com.ccsw.bidoffice.offer.model.OfferDto;
+
 public class OfferDataChapterDto {
 
     private Long id;
@@ -25,6 +27,8 @@ public class OfferDataChapterDto {
     private Boolean reference;
 
     private Boolean keyDocument;
+
+    private OfferDto offer;
 
     public Long getId() {
         return id;
@@ -120,5 +124,17 @@ public class OfferDataChapterDto {
 
     public void setKeyDocument(Boolean keyDocument) {
         this.keyDocument = keyDocument;
+    }
+
+    public void setReference(Boolean reference) {
+        this.reference = reference;
+    }
+
+    public OfferDto getOffer() {
+        return offer;
+    }
+
+    public void setOffer(OfferDto offer) {
+        this.offer = offer;
     }
 }

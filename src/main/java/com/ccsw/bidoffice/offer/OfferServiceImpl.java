@@ -124,8 +124,8 @@ public class OfferServiceImpl implements OfferService {
 
     private void mappingEntitiesOffer() {
 
-        if (offerEntity.getDataChapter() != null)
-            offerEntity.getDataChapter().setOffer(offerEntity);
+        // if (offerEntity.getDataChapter() != null)
+        // offerEntity.getDataChapter().setOffer(offerEntity);
 
         if (offerEntity.getDataFiles() != null)
             offerEntity.setDataFiles(offerEntity.getDataFiles().stream().peek(item -> item.setOffer(offerEntity))
