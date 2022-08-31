@@ -1,6 +1,5 @@
 package com.ccsw.bidoffice.offerdatachapter.model;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -21,7 +20,7 @@ public class OfferDataChapterEntity {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "offer_id", nullable = false)
     private OfferEntity offer;
 
