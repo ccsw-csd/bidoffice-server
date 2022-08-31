@@ -213,7 +213,7 @@ CREATE TABLE offer_data_chapter (
 	planning int(1) DEFAULT NULL,
 	value_added int(1) DEFAULT NULL,
 	innovation int(1) DEFAULT NULL,
-	references int(1) DEFAULT NULL,
+	reference int(1) DEFAULT NULL,
 	key_document int(1) DEFAULT NULL,
 	PRIMARY KEY (id),
  	CONSTRAINT offer_offer_fk8 FOREIGN KEY (offer_id) REFERENCES offer (id) ON DELETE CASCADE ON UPDATE CASCADE

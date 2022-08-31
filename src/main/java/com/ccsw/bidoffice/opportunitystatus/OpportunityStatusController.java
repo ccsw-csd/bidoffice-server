@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ccsw.bidoffice.config.mapper.BeanMapper;
 import com.ccsw.bidoffice.opportunitystatus.model.OpportunityStatusDto;
 
-@RequestMapping(value = "/opportunitystatus")
+@RequestMapping(value = "/opportunityStatus")
 @RestController
 public class OpportunityStatusController {
 
@@ -21,9 +21,9 @@ public class OpportunityStatusController {
     private BeanMapper beanMapper;
 
     @RequestMapping(path = "/findAll", method = RequestMethod.GET)
-    public List<OpportunityStatusDto> findAllOpportunityStatusOrderPriority() {
+    public List<OpportunityStatusDto> findAllOpportunityStatus() {
 
-        return this.beanMapper.mapList(this.opportunityStatusService.findAllOpportunityStatusOrderPriority(),
+        return this.beanMapper.mapList(this.opportunityStatusService.findAllOpportunityStatus(),
                 OpportunityStatusDto.class);
     }
 }

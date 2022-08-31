@@ -6,5 +6,5 @@ import com.ccsw.bidoffice.opportunitystatus.model.OpportunityStatusEntity;
 
 public interface OpportunityStatusService {
 
-    List<OpportunityStatusEntity> findAllOpportunityStatusOrderPriority();
+    List<OpportunityStatusEntity> findAllOpportunityStatus();
 }

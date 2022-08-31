@@ -24,37 +24,37 @@ public class OfferDataChapterEntity {
     @JoinColumn(name = "offer_id", nullable = false)
     private OfferEntity offer;
 
-    @Column(name = "presentation")
+    @Column(name = "presentation", columnDefinition = "boolean default false")
     private Boolean presentation;
 
-    @Column(name = "capabilities")
+    @Column(name = "capabilities", columnDefinition = "boolean default false")
     private Boolean capabilities;
 
-    @Column(name = "approach")
+    @Column(name = "approach", columnDefinition = "boolean default false")
     private Boolean approach;
 
-    @Column(name = "methodology")
+    @Column(name = "methodology", columnDefinition = "boolean default false")
     private Boolean methodology;
 
-    @Column(name = "work_model")
+    @Column(name = "work_model", columnDefinition = "boolean default false")
     private Boolean workModel;
 
-    @Column(name = "team")
+    @Column(name = "team", columnDefinition = "boolean default false")
     private Boolean team;
 
-    @Column(name = "planning")
+    @Column(name = "planning", columnDefinition = "boolean default false")
     private Boolean planning;
 
-    @Column(name = "value_added")
+    @Column(name = "value_added", columnDefinition = "boolean default false")
     private Boolean valueAdded;
 
-    @Column(name = "innovation")
+    @Column(name = "innovation", columnDefinition = "boolean default false")
     private Boolean innovation;
 
-    @Column(name = "references")
-    private Boolean references;
+    @Column(name = "reference", columnDefinition = "boolean default false")
+    private Boolean reference;
 
-    @Column(name = "key_document")
+    @Column(name = "key_document", columnDefinition = "boolean default false")
     private Boolean keyDocument;
 
     public Long getId() {
@@ -145,12 +145,12 @@ public class OfferDataChapterEntity {
         this.innovation = innovation;
     }
 
-    public Boolean getReferences() {
-        return references;
+    public Boolean getReference() {
+        return reference;
     }
 
-    public void setReferences(Boolean references) {
-        this.references = references;
+    public void setReference(Boolean reference) {
+        this.reference = reference;
     }
 
     public Boolean getKeyDocument() {

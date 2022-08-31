@@ -7,9 +7,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import com.ccsw.bidoffice.common.criteria.SearchCriteria;
+import com.ccsw.bidoffice.common.criteria.TernarySearchCriteria;
 import com.ccsw.bidoffice.person.model.PersonEntity;
-import com.ccsw.bidoffice.person.model.PersonSearchDto;
 
 @Service
 public class PersonServiceImpl implements PersonService {
@@ -18,19 +17,15 @@ public class PersonServiceImpl implements PersonService {
     PersonRepository personRepository;
 
     @Override
-    public List<PersonEntity> findFirst15Filter(PersonSearchDto personSearchDto) {
+    public List<PersonEntity> findFirst15Filter(String filter) {
 
-        PersonSpecification username = new PersonSpecification(
-                new SearchCriteria("username", ":", personSearchDto.getUsername()));
+        PersonSpecification active = new PersonSpecification(
+                new TernarySearchCriteria("active", null, null, ":", true));
 
-        PersonSpecification name = new PersonSpecification(new SearchCriteria("name", ":", personSearchDto.getName()));
+        PersonSpecification usernameNameLastname = new PersonSpecification(
+                new TernarySearchCriteria("username", "name", "lastname", "concat concat :", filter));
 
-        PersonSpecification lastname = new PersonSpecification(
-                new SearchCriteria("lastname", ":", personSearchDto.getLastname()));
-
-        PersonSpecification active = new PersonSpecification(new SearchCriteria("active", ":", true));
-
-        Specification<PersonEntity> specification = Specification.where(username).and(name).and(lastname).and(active);
+        Specification<PersonEntity> specification = Specification.where(active).and(usernameNameLastname);
 
         return this.personRepository.findAll(specification, PageRequest.of(0, 15)).getContent();
     }

@@ -2,11 +2,8 @@ package com.ccsw.bidoffice.opportunitystatus;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -23,7 +20,7 @@ import com.ccsw.bidoffice.opportunitystatus.model.OpportunityStatusDto;
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 public class OpportunityStatusIT extends BaseITAbstract {
 
-    public static final String SERVICE_PATH = "/opportunitystatus/";
+    public static final String SERVICE_PATH = "/opportunityStatus/";
 
     public static final Integer TOTAL_OPPORTUNITY_STATUS = 4;
 
@@ -40,7 +37,5 @@ public class OpportunityStatusIT extends BaseITAbstract {
 
         assertNotNull(response.getBody());
         assertEquals(TOTAL_OPPORTUNITY_STATUS, response.getBody().size());
-        assertTrue(response.getBody().stream().sorted(Comparator.comparing(OpportunityStatusDto::getPriority))
-                .collect(Collectors.toList()).equals(response.getBody()));
     }
 }

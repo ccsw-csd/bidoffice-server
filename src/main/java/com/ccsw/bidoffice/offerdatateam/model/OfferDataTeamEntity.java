@@ -24,10 +24,10 @@ public class OfferDataTeamEntity {
     @JoinColumn(name = "offer_id", nullable = false)
     private OfferEntity offer;
 
-    @Column(name = "cca")
+    @Column(name = "cca", columnDefinition = "boolean default false")
     private Boolean cca;
 
-    @Column(name = "multitower")
+    @Column(name = "multitower", columnDefinition = "boolean default false")
     private Boolean multitower;
 
     @Column(name = "practices")

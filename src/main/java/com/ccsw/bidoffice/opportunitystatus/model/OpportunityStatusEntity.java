@@ -19,9 +19,6 @@ public class OpportunityStatusEntity {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "priority", nullable = false)
-    private Integer priority;
-
     public Long getId() {
         return id;
     }
@@ -36,13 +33,5 @@ public class OpportunityStatusEntity {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Integer getPriority() {
-        return priority;
-    }
-
-    public void setPriority(Integer priority) {
-        this.priority = priority;
     }
 }
