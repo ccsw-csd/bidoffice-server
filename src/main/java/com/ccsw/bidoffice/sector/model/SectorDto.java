@@ -54,4 +54,25 @@ public class SectorDto {
         this.endDate = endDate;
     }
 
+    /**
+     * Devuelve si un Sector se considera activo o no, en función de si la fecha de
+     * hoy está comprendida entre la fecha de inicio y la fecha final.
+     * 
+     * @return boolean True si el elemento es activo.
+     */
+    public boolean getActive() {
+
+        LocalDate toDay = LocalDate.now();
+
+        if ((toDay.isAfter(startDate)) && (toDay.isBefore(endDate))) {
+
+            return true;
+
+        } else {
+
+            return false;
+        }
+
+    }
+
 }
