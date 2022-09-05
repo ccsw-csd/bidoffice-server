@@ -77,6 +77,12 @@ public class SectorTest {
         verify(this.sectorRepository).deleteById(EXISTS_SECTOR_ID);
     }
 
+    /**
+     * Intenta borrar un sector que no existe en la base de datos. El test debe
+     * verificar que no se ha borrado el sector.
+     * 
+     * @throws AlreadyExistsException
+     */
     @Test
     public void deleteIfNotExistsSectorIdShouldThrowsException() throws AlreadyExistsException {
 

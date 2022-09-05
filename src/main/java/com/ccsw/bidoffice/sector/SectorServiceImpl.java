@@ -34,7 +34,7 @@ public class SectorServiceImpl implements SectorService {
     @Override
     public void delete(Long id) throws AlreadyExistsException {
 
-        if (this.offerService.checkIfExistsOffer(id)) {
+        if (this.offerService.checkIfSectorIsUsingInOfferBySectorId(id)) {
             throw new AlreadyExistsException();
         }
 

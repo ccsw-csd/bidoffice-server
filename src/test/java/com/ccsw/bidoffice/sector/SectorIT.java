@@ -13,6 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.annotation.DirtiesContext;
 
@@ -23,9 +24,10 @@ import com.ccsw.bidoffice.sector.model.SectorDto;
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 public class SectorIT extends BaseITAbstract {
 
-    public static final String SERVICE_PATH = "/sector/";
-
-    public static final Integer TOTAL_SECTOR = 4;
+    private static final String SERVICE_PATH = "/sector/";
+    private static final Integer TOTAL_SECTOR = 4;
+    private static final Long EXISTING_SECTOR_ID = 2L;
+    private static final Long NOT_EXISTING_SECTOR_ID = 3L;
 
     ParameterizedTypeReference<List<SectorDto>> responseTypeSector = new ParameterizedTypeReference<List<SectorDto>>() {
     };
@@ -47,5 +49,41 @@ public class SectorIT extends BaseITAbstract {
         assertEquals(TOTAL_SECTOR, response.getBody().size());
         assertTrue(response.getBody().stream().sorted(Comparator.comparing(SectorDto::getPriority))
                 .collect(Collectors.toList()).equals(response.getBody()));
+    }
+
+    /**
+     * Intenta borrar un sector que está siendo utilizado en alguna oferta.
+     * 
+     * El sector no debe poder ser borrado. Al intentar borrarlo, el ResponseEntity
+     * debe devolver un estado HTTP 409 (conflicto).
+     */
+    @Test
+    public void ifUsingSectorInOfferShouldNotDelete() {
+
+        HttpEntity<?> httpEntity = new HttpEntity<>(getHeaders());
+
+        ResponseEntity<?> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH + EXISTING_SECTOR_ID,
+                HttpMethod.DELETE, httpEntity, Void.class);
+
+        assertNotNull(response);
+        assertEquals(HttpStatus.CONFLICT, response.getStatusCode());
+    }
+
+    @Test
+    public void ifNotUsingSectorInOfferShouldDelete() {
+
+        HttpEntity<?> httpEntity = new HttpEntity<>(getHeaders());
+
+        ResponseEntity<?> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH + NOT_EXISTING_SECTOR_ID,
+                HttpMethod.DELETE, httpEntity, Void.class);
+
+        ResponseEntity<List<SectorDto>> responseList = restTemplate
+                .exchange(LOCALHOST + port + SERVICE_PATH + "findAll", HttpMethod.GET, httpEntity, responseTypeSector);
+
+        assertNotNull(response);
+        assertNotNull(responseList);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(HttpStatus.OK, responseList.getStatusCode());
+        assertEquals(3, responseList.getBody().size());
     }
 }
