@@ -7,4 +7,7 @@ import com.ccsw.bidoffice.person.model.PersonEntity;
 
 public interface PersonRepository extends CrudRepository<PersonEntity, Long>, JpaSpecificationExecutor<PersonEntity> {
 
+    PersonEntity findByUsernameAndActive(String username, Boolean active);
+
+    Boolean existsByUsernameAndActive(String username, Boolean active);
 }

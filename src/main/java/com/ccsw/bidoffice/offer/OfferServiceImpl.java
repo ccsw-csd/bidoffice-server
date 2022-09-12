@@ -1,8 +1,12 @@
 package com.ccsw.bidoffice.offer;
 
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
@@ -11,11 +15,18 @@ import com.ccsw.bidoffice.common.exception.EntityNotFoundException;
 import com.ccsw.bidoffice.common.exception.InvalidDataException;
 import com.ccsw.bidoffice.config.mapper.BeanMapper;
 import com.ccsw.bidoffice.offer.model.Clients;
+import com.ccsw.bidoffice.offer.model.ModifyStatusDto;
 import com.ccsw.bidoffice.offer.model.OfferDto;
 import com.ccsw.bidoffice.offer.model.OfferEntity;
 import com.ccsw.bidoffice.offer.model.OfferSearchDto;
+import com.ccsw.bidoffice.offerchangestatus.enums.StatusEnum;
+import com.ccsw.bidoffice.offerchangestatus.model.OfferChangeStatusDto;
+import com.ccsw.bidoffice.offerchangestatus.model.OfferChangeStatusEntity;
 import com.ccsw.bidoffice.offerdatafile.model.OfferDataFileDto;
 import com.ccsw.bidoffice.offertracing.model.OfferTracingDto;
+import com.ccsw.bidoffice.offertracing.model.OfferTracingEntity;
+import com.ccsw.bidoffice.opportunitystatus.model.OpportunityStatusEntity;
+import com.ccsw.bidoffice.person.PersonService;
 
 @Service
 public class OfferServiceImpl implements OfferService {
@@ -25,6 +36,9 @@ public class OfferServiceImpl implements OfferService {
 
     @Autowired
     private BeanMapper beanMapper;
+
+    @Autowired
+    private PersonService personService;
 
     private OfferEntity offerEntity;
 
@@ -155,6 +169,76 @@ public class OfferServiceImpl implements OfferService {
         if (offerEntity.getTracings() != null)
             offerEntity.setTracings(offerEntity.getTracings().stream().peek(item -> item.setOffer(offerEntity))
                     .collect(Collectors.toSet()));
+
+        if (offerEntity.getChangeStatus() != null) {
+            offerEntity.setChangeStatus(offerEntity.getChangeStatus().stream().peek(item -> item.setOffer(offerEntity))
+                    .collect(Collectors.toSet()));
+        }
+    }
+
+    @Override
+    public OfferEntity modifyStatus(ModifyStatusDto dto) throws InvalidDataException, EntityNotFoundException {
+
+        offerEntity = this.getOffer(dto.getId());
+
+        if (!StatusEnum.isValidChangeStatus(offerEntity.getOpportunityStatus().getName(),
+                dto.getOpportunityStatus().getName())) {
+            throw new InvalidDataException();
+        }
+
+        this.MappingStatusDtoToOfferEntity(dto);
+
+        return this.offerRepository.save(offerEntity);
+    }
+
+    private void MappingStatusDtoToOfferEntity(ModifyStatusDto dto) throws EntityNotFoundException {
+
+        this.mappingChangeStatusDtoToEntity(dto.getChangeStatus());
+
+        if (dto.getTracing() != null)
+            this.mappingTrcingDtoToEntity(dto.getTracing(), dto.getChangeStatus().getUsername());
+
+        if (dto.getDeliveryDate() != null)
+            offerEntity.setDeliveryDate(dto.getDeliveryDate());
+
+        if (dto.getGoNogoDate() != null)
+            offerEntity.setGoNogoDate(dto.getGoNogoDate());
+
+        if (dto.getWin() != null)
+            offerEntity.setOpportunityWin(dto.getWin());
+    }
+
+    private void mappingTrcingDtoToEntity(OfferTracingDto dto, String username) throws EntityNotFoundException {
+        OfferTracingEntity tracingEntity = new OfferTracingEntity();
+        BeanUtils.copyProperties(dto, tracingEntity);
+
+        if (tracingEntity.getComment() != null) {
+            tracingEntity.setPerson(this.personService.findPersonByUsername(username));
+            tracingEntity.setOffer(offerEntity);
+            if (offerEntity.getTracings() != null)
+                offerEntity.getTracings().add(tracingEntity);
+            else {
+                Set<OfferTracingEntity> tracings = new HashSet<>(Arrays.asList(tracingEntity));
+                offerEntity.setTracings(tracings);
+            }
+        }
+    }
+
+    private void mappingChangeStatusDtoToEntity(OfferChangeStatusDto dto) {
+        OfferChangeStatusEntity changeStatusEntity = new OfferChangeStatusEntity();
+        OpportunityStatusEntity opportunityStatusEntity = new OpportunityStatusEntity();
+
+        BeanUtils.copyProperties(dto, changeStatusEntity);
+        BeanUtils.copyProperties(dto.getOpportunityStatus(), opportunityStatusEntity);
+        changeStatusEntity.setOpportunityStatus(opportunityStatusEntity);
+        changeStatusEntity.setOffer(offerEntity);
+
+        if (offerEntity.getChangeStatus() != null) {
+            offerEntity.getChangeStatus().add(changeStatusEntity);
+        } else {
+            Set<OfferChangeStatusEntity> changes = new HashSet<>(Arrays.asList(changeStatusEntity));
+            offerEntity.setChangeStatus(changes);
+        }
     }
 
 }

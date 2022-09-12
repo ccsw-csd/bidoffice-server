@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -27,10 +28,13 @@ import com.ccsw.bidoffice.common.exception.EntityNotFoundException;
 import com.ccsw.bidoffice.common.exception.InvalidDataException;
 import com.ccsw.bidoffice.config.mapper.BeanMapper;
 import com.ccsw.bidoffice.offer.model.Clients;
+import com.ccsw.bidoffice.offer.model.ModifyStatusDto;
 import com.ccsw.bidoffice.offer.model.OfferDto;
 import com.ccsw.bidoffice.offer.model.OfferEntity;
 import com.ccsw.bidoffice.offer.model.OfferSearchDto;
+import com.ccsw.bidoffice.offerchangestatus.model.OfferChangeStatusDto;
 import com.ccsw.bidoffice.opportunitystatus.model.OpportunityStatusDto;
+import com.ccsw.bidoffice.opportunitystatus.model.OpportunityStatusEntity;
 import com.ccsw.bidoffice.opportunitytype.model.OpportunityTypeDto;
 import com.ccsw.bidoffice.sector.model.SectorDto;
 
@@ -62,18 +66,35 @@ public class OfferTest {
 
     private OfferDto offerDto;
 
+    private ModifyStatusDto modifyStatusDto;
+
+    private OpportunityStatusDto opportunityStatusDto;
+
     @BeforeEach
     public void setUp() {
 
         offerSearchDto = new OfferSearchDto();
+        opportunityStatusDto = new OpportunityStatusDto();
+        opportunityStatusDto.setName("Desestimada");
 
         offerDto = new OfferDto();
         offerDto.setClient("new client");
         offerDto.setName("new name");
         offerDto.setRequestedDate(LocalDate.of(2022, 8, 15));
         offerDto.setSector(new SectorDto());
-        offerDto.setOpportunityStatus(new OpportunityStatusDto());
+        offerDto.setOpportunityStatus(opportunityStatusDto);
         offerDto.setOpportunityType(new OpportunityTypeDto());
+
+        opportunityStatusDto = new OpportunityStatusDto();
+        opportunityStatusDto.setName("Entregada");
+        OfferChangeStatusDto offerChangeStatusDto = new OfferChangeStatusDto();
+        offerChangeStatusDto.setOpportunityStatus(opportunityStatusDto);
+        offerChangeStatusDto.setDate(LocalDate.of(2022, 8, 15));
+        offerChangeStatusDto.setUsername("aelmouss");
+        modifyStatusDto = new ModifyStatusDto();
+        modifyStatusDto.setChangeStatus(offerChangeStatusDto);
+        modifyStatusDto.setOpportunityStatus(opportunityStatusDto);
+
     }
 
     @Test
@@ -188,4 +209,28 @@ public class OfferTest {
 
     }
 
+    @Test
+    public void modifyStatusWithNotValidStatusChangeShouldThrowException() {
+
+        modifyStatusDto.setId(ID_OFFER_EXIST);
+        OfferEntity offerEntity = mock(OfferEntity.class);
+        when(offerRepository.findById(ID_OFFER_EXIST)).thenReturn(Optional.of(offerEntity));
+        when(offerEntity.getOpportunityStatus()).thenReturn(mock(OpportunityStatusEntity.class));
+        when(offerEntity.getOpportunityStatus().getName()).thenReturn("Entregada");
+
+        assertThrows(InvalidDataException.class, () -> offerServiceImpl.modifyStatus(modifyStatusDto));
+        verify(this.offerRepository, never()).save(offerEntity);
+    }
+
+    public void modifyStatusWithValidStatusChangeShould() throws InvalidDataException, EntityNotFoundException {
+
+        modifyStatusDto.setId(ID_OFFER_EXIST);
+        OfferEntity offerEntity = mock(OfferEntity.class);
+        when(offerRepository.findById(ID_OFFER_EXIST)).thenReturn(Optional.of(offerEntity));
+        when(offerEntity.getOpportunityStatus()).thenReturn(mock(OpportunityStatusEntity.class));
+        when(offerEntity.getOpportunityStatus().getName()).thenReturn("En curso");
+
+        assertNotNull(offerServiceImpl.modifyStatus(modifyStatusDto));
+        verify(this.offerRepository).save(offerEntity);
+    }
 }

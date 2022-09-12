@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ccsw.bidoffice.common.exception.EntityNotFoundException;
 import com.ccsw.bidoffice.common.exception.InvalidDataException;
 import com.ccsw.bidoffice.config.mapper.BeanMapper;
+import com.ccsw.bidoffice.offer.model.ModifyStatusDto;
 import com.ccsw.bidoffice.offer.model.OfferDto;
 import com.ccsw.bidoffice.offer.model.OfferItemListDto;
 import com.ccsw.bidoffice.offer.model.OfferSearchDto;
@@ -49,6 +50,13 @@ public class OfferController {
     public OfferDto save(@RequestBody OfferDto dto) throws InvalidDataException, EntityNotFoundException {
 
         return this.beanMapper.map(this.offerService.save(dto), OfferDto.class);
+    }
+
+    @RequestMapping(path = "/status", method = RequestMethod.PUT)
+    public OfferItemListDto modifyStatus(@RequestBody ModifyStatusDto dto)
+            throws InvalidDataException, EntityNotFoundException {
+
+        return this.beanMapper.map(this.offerService.modifyStatus(dto), OfferItemListDto.class);
     }
 
 }
