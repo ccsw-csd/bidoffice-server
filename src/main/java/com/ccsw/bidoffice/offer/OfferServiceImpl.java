@@ -83,6 +83,15 @@ public class OfferServiceImpl implements OfferService {
         return this.offerRepository.existsByOpportunityTypeId(id);
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean checkIfSectorIsUsingInOfferBySectorId(Long id) {
+
+        return this.offerRepository.existsBySectorId(id);
+    }
+
     private Boolean isValidOffer(OfferDto dto) {
 
         if (isNullOrEmpty(dto.getName()) || isNullOrEmpty(dto.getClient()) || dto.getRequestedDate() == null)

@@ -24,4 +24,13 @@ public interface OfferService {
     boolean checkIfExistsOffer(Long id);
 
     OfferEntity modifyStatus(ModifyStatusDto dto) throws InvalidDataException, EntityNotFoundException;
+
+    /**
+     * Comprueba si el código de un Sector está siendo utilizado en algún Offer.
+     * 
+     * @param id Long identificador del sector a buscar.
+     * 
+     * @return boolean true si el sector está siendo utilizado en alguna oferta.
+     */
+    boolean checkIfSectorIsUsingInOfferBySectorId(Long id);
 }

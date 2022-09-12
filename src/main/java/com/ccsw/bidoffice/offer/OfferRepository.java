@@ -21,4 +21,13 @@ public interface OfferRepository extends PagingAndSortingRepository<OfferEntity,
 
     boolean existsByOpportunityTypeId(Long id);
 
+    /**
+     * Comprueba si un sector está siendo utilizado en al menos una oferta.
+     * 
+     * @param id Long identificador del sector a buscar.
+     * 
+     * @return boolean True si se está usando en al menos una oferta.
+     */
+    boolean existsBySectorId(Long id);
+
 }
