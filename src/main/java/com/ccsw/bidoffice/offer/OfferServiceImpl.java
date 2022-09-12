@@ -241,7 +241,7 @@ public class OfferServiceImpl implements OfferService {
         BeanUtils.copyProperties(dto.getOpportunityStatus(), opportunityStatusEntity);
         changeStatusEntity.setOpportunityStatus(opportunityStatusEntity);
         changeStatusEntity.setOffer(offerEntity);
-
+        offerEntity.setOpportunityStatus(opportunityStatusEntity);
         if (offerEntity.getChangeStatus() != null) {
             offerEntity.getChangeStatus().add(changeStatusEntity);
         } else {
