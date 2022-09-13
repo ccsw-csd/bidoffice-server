@@ -75,7 +75,7 @@ public class SectorServiceImpl implements SectorService {
 
             if (result == true) {
                 throw new UpdateConflictException(
-                        "La fecha de creación alguna oferta usada en este sector<br>, está fuera de rango.");
+                        "La fecha de creación alguna oferta usada en este sector está fuera de rango.");
             }
         } else {
             sectorEntity = new SectorEntity();
