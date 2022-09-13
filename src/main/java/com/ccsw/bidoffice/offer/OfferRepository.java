@@ -30,4 +30,6 @@ public interface OfferRepository extends PagingAndSortingRepository<OfferEntity,
      */
     boolean existsBySectorId(Long id);
 
+    List<OfferEntity> findBySectorId(Long id);
+
 }

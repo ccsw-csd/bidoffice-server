@@ -8,7 +8,7 @@ public class SectorDto {
 
     private String name;
 
-    private Integer priority;
+    private Long priority;
 
     private LocalDate startDate;
 
@@ -30,11 +30,11 @@ public class SectorDto {
         this.name = name;
     }
 
-    public Integer getPriority() {
+    public Long getPriority() {
         return priority;
     }
 
-    public void setPriority(Integer priority) {
+    public void setPriority(Long priority) {
         this.priority = priority;
     }
 

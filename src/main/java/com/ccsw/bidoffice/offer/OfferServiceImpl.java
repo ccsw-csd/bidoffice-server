@@ -1,5 +1,6 @@
 package com.ccsw.bidoffice.offer;
 
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -27,6 +28,7 @@ import com.ccsw.bidoffice.offertracing.model.OfferTracingDto;
 import com.ccsw.bidoffice.offertracing.model.OfferTracingEntity;
 import com.ccsw.bidoffice.opportunitystatus.model.OpportunityStatusEntity;
 import com.ccsw.bidoffice.person.PersonService;
+import com.ccsw.bidoffice.sector.model.SectorDto;
 
 @Service
 public class OfferServiceImpl implements OfferService {
@@ -90,6 +92,31 @@ public class OfferServiceImpl implements OfferService {
     public boolean checkIfSectorIsUsingInOfferBySectorId(Long id) {
 
         return this.offerRepository.existsBySectorId(id);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean checkIfDateOfAllOfferAreInRange(SectorDto dto) {
+
+        boolean result = false;
+
+        List<LocalDate> scanning = this.offerRepository.findBySectorId(dto.getId()).stream()
+                .map(OfferEntity::getRequestedDate).collect(Collectors.toList());
+
+        for (int i = 0; i < scanning.size() && result == false; i++) {
+
+            if (scanning.get(i).isAfter(dto.getStartDate()) && (scanning.get(i).isBefore(dto.getEndDate()))) {
+
+                result = false;
+            } else {
+                result = true;
+            }
+
+        }
+
+        return result;
     }
 
     private Boolean isValidOffer(OfferDto dto) {

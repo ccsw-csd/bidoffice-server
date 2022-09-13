@@ -10,6 +10,7 @@ import com.ccsw.bidoffice.offer.model.ModifyStatusDto;
 import com.ccsw.bidoffice.offer.model.OfferDto;
 import com.ccsw.bidoffice.offer.model.OfferEntity;
 import com.ccsw.bidoffice.offer.model.OfferSearchDto;
+import com.ccsw.bidoffice.sector.model.SectorDto;
 
 public interface OfferService {
 
@@ -33,4 +34,12 @@ public interface OfferService {
      * @return boolean true si el sector está siendo utilizado en alguna oferta.
      */
     boolean checkIfSectorIsUsingInOfferBySectorId(Long id);
+
+    /**
+     * Comprueba que la fecha de creación de oferta está dentro del rango de fechas.
+     * 
+     * @param dto Objeto Dto de las fechas a comprobar.
+     * @return boolean true si hay fechas fuera de rango.
+     */
+    boolean checkIfDateOfAllOfferAreInRange(SectorDto dto);
 }

@@ -79,7 +79,7 @@ public class OfferIT extends BaseITAbstract {
 
         sectorDto.setId(ID_EXIST);
         sectorDto.setName("Otros");
-        sectorDto.setPriority(2);
+        sectorDto.setPriority(2L);
 
         opportunityStatusDto = new OpportunityStatusDto();
         opportunityStatusDto.setId(ID_EXIST);
