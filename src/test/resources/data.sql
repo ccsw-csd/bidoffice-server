@@ -38,10 +38,10 @@ CREATE TABLE opportunity_status (
 );
 
 
-INSERT INTO opportunity_status (name,priority) VALUES ('Otros', 2);
-INSERT INTO opportunity_status (name,priority) VALUES ('Otros2', 1);
-INSERT INTO opportunity_status (name,priority) VALUES ('Otros3', 4);
-INSERT INTO opportunity_status (name,priority) VALUES ('Otros4', 3);
+INSERT INTO opportunity_status (name,priority) VALUES ('En curso', 2);
+INSERT INTO opportunity_status (name,priority) VALUES ('Desestimada', 1);
+INSERT INTO opportunity_status (name,priority) VALUES ('Entregada', 4);
+INSERT INTO opportunity_status (name,priority) VALUES ('Finalizada', 3);
 
 CREATE TABLE opportunity_type (
   id int(11) NOT NULL AUTO_INCREMENT,
@@ -337,3 +337,16 @@ CREATE TABLE offer_tracing (
 
 INSERT INTO offer_tracing (offer_id,person_id,comment,date) VALUES (1,1,'comment','2022-07-19');
 INSERT INTO offer_tracing (offer_id,person_id,comment,date) VALUES (1,1, 'comment2','2022-07-19');
+
+
+CREATE TABLE offer_change_status (
+  id int(11) NOT NULL AUTO_INCREMENT,
+  offer_id int(11) NOT NULL,
+  username varchar(20) NOT NULL,
+  opportunity_status_id int(11) NOT NULL,
+  date timestamp NOT NULL ,
+  CONSTRAINT offer_offer_fk10 FOREIGN KEY (offer_id) REFERENCES offer (id) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT offer_opportunity_status_fk_1 FOREIGN KEY (opportunity_status_id) REFERENCES opportunity_status (id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+

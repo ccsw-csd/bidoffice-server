@@ -3,6 +3,7 @@ package com.ccsw.bidoffice.offer.model;
 import java.time.LocalDate;
 import java.util.Set;
 
+import com.ccsw.bidoffice.offerchangestatus.model.OfferChangeStatusDto;
 import com.ccsw.bidoffice.offerdatachapter.model.OfferDataChapterDto;
 import com.ccsw.bidoffice.offerdatafile.model.OfferDataFileDto;
 import com.ccsw.bidoffice.offerdataproject.model.OfferDataProjectDto;
@@ -64,6 +65,8 @@ public class OfferDto {
     private Set<OfferTechnologyDto> technologies;
 
     private Set<OfferTracingDto> tracings;
+
+    private Set<OfferChangeStatusDto> changeStatus;
 
     public Long getId() {
         return id;
@@ -247,5 +250,13 @@ public class OfferDto {
 
     public void setTracings(Set<OfferTracingDto> tracings) {
         this.tracings = tracings;
+    }
+
+    public Set<OfferChangeStatusDto> getChangeStatus() {
+        return changeStatus;
+    }
+
+    public void setChangeStatus(Set<OfferChangeStatusDto> changeStatus) {
+        this.changeStatus = changeStatus;
     }
 }

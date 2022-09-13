@@ -19,9 +19,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.annotation.DirtiesContext;
 
 import com.ccsw.bidoffice.config.BaseITAbstract;
+import com.ccsw.bidoffice.offer.model.ModifyStatusDto;
 import com.ccsw.bidoffice.offer.model.OfferDto;
 import com.ccsw.bidoffice.offer.model.OfferItemListDto;
 import com.ccsw.bidoffice.offer.model.OfferSearchDto;
+import com.ccsw.bidoffice.offerchangestatus.model.OfferChangeStatusDto;
 import com.ccsw.bidoffice.opportunitystatus.model.OpportunityStatusDto;
 import com.ccsw.bidoffice.opportunitytype.model.OpportunityTypeDto;
 import com.ccsw.bidoffice.sector.model.SectorDto;
@@ -56,10 +58,15 @@ public class OfferIT extends BaseITAbstract {
 
     private OpportunityTypeDto opportunityTypeDto;
 
+    private ModifyStatusDto modifyStatusDto;
+
     ParameterizedTypeReference<Page<OfferItemListDto>> responseTypePage = new ParameterizedTypeReference<Page<OfferItemListDto>>() {
     };
 
     ParameterizedTypeReference<List<String>> responseTypeListClients = new ParameterizedTypeReference<List<String>>() {
+    };
+
+    ParameterizedTypeReference<List<OpportunityStatusDto>> responseTypeOpportunityStatus = new ParameterizedTypeReference<List<OpportunityStatusDto>>() {
     };
 
     @BeforeEach
@@ -76,12 +83,18 @@ public class OfferIT extends BaseITAbstract {
 
         opportunityStatusDto = new OpportunityStatusDto();
         opportunityStatusDto.setId(ID_EXIST);
-        opportunityStatusDto.setName("Otros");
 
         opportunityTypeDto = new OpportunityTypeDto();
         opportunityTypeDto.setId(ID_EXIST);
         opportunityTypeDto.setName("Otros");
         opportunityTypeDto.setPriority(1);
+
+        OfferChangeStatusDto offerChangeStatusDto = new OfferChangeStatusDto();
+        modifyStatusDto = new ModifyStatusDto();
+
+        offerChangeStatusDto.setUsername("aelmouss");
+        offerChangeStatusDto.setDate(LocalDate.of(2022, 8, 15));
+        modifyStatusDto.setChangeStatus(offerChangeStatusDto);
     }
 
     @Test
@@ -230,6 +243,46 @@ public class OfferIT extends BaseITAbstract {
 
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
 
+    }
+
+    @Test
+    public void modifyStatusWithNotValidStatusChangeShouldThrowException() {
+
+        modifyStatusDto.setOpportunityStatus(opportunityStatusDto);
+        modifyStatusDto.getChangeStatus().setOpportunityStatus(opportunityStatusDto);
+        modifyStatusDto.setId(ID_EXIST);
+
+        HttpEntity<?> httpEntity = new HttpEntity<>(modifyStatusDto, getHeaders());
+        ResponseEntity<OfferItemListDto> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH + "/status",
+                HttpMethod.PUT, httpEntity, OfferItemListDto.class);
+
+        assertEquals(HttpStatus.UNPROCESSABLE_ENTITY, response.getStatusCode());
+
+    }
+
+    @Test
+    public void modifyStatusWithValidStatusChangeShouldOffer() {
+
+        opportunityStatusDto.setId(2L);
+        opportunityStatusDto.setName("Desestimada");
+        modifyStatusDto.setOpportunityStatus(opportunityStatusDto);
+        modifyStatusDto.getChangeStatus().setOpportunityStatus(opportunityStatusDto);
+        modifyStatusDto.setId(ID_EXIST);
+
+        HttpEntity<?> httpEntity = new HttpEntity<>(modifyStatusDto, getHeaders());
+        ResponseEntity<OfferItemListDto> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH + "status",
+                HttpMethod.PUT, httpEntity, OfferItemListDto.class);
+
+        assertNotNull(response);
+
+        httpEntity = new HttpEntity<>(getHeaders());
+        ResponseEntity<OfferDto> offer = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH + ID_EXIST,
+                HttpMethod.GET, httpEntity, OfferDto.class);
+
+        assertNotNull(response);
+        assertEquals(opportunityStatusDto.getName(), offer.getBody().getOpportunityStatus().getName());
+        assertEquals(opportunityStatusDto.getName(), offer.getBody().getChangeStatus().stream()
+                .filter(item -> item.getId() == ID_EXIST).findFirst().get().getOpportunityStatus().getName());
     }
 
 }

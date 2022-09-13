@@ -16,6 +16,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.ccsw.bidoffice.offerchangestatus.model.OfferChangeStatusEntity;
 import com.ccsw.bidoffice.offerdatachapter.model.OfferDataChapterEntity;
 import com.ccsw.bidoffice.offerdatafile.model.OfferDataFileEntity;
 import com.ccsw.bidoffice.offerdataproject.model.OfferDataProjectEntity;
@@ -109,6 +110,9 @@ public class OfferEntity {
 
     @OneToMany(mappedBy = "offer", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private Set<OfferTracingEntity> tracings;
+
+    @OneToMany(mappedBy = "offer", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    private Set<OfferChangeStatusEntity> changeStatus;
 
     public Long getId() {
         return id;
@@ -292,5 +296,14 @@ public class OfferEntity {
 
     public void setTracings(Set<OfferTracingEntity> tracings) {
         this.tracings = tracings;
+    }
+
+    public Set<OfferChangeStatusEntity> getChangeStatus() {
+        return changeStatus;
+    }
+
+    public void setChangeStatus(Set<OfferChangeStatusEntity> changeStatus) {
+        this.changeStatus = changeStatus;
+
     }
 }
