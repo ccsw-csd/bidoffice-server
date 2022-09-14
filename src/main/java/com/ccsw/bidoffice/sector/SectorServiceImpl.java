@@ -96,11 +96,12 @@ public class SectorServiceImpl implements SectorService {
      * Comprueba que no existe el mismo nombre de un sector o la misma prioridad.
      * 
      * @param dto Objeto DTO del sector a comprobar.
-     * @throws AlreadyExistsException Excepción lanzada si el nombre o la prioridad
-     *                                de un sector coinciden con algún registro de
-     *                                la BBDD.
+     * @throws UpdateConflictException Excepción lanzada si el nombre o la prioridad
+     *                                 de un sector coinciden con algún registro de
+     *                                 la BBDD.
      */
-    private void checkWhenSectorAttributesAlreadyUsed(SectorDto dto) throws AlreadyExistsException {
+    private void checkWhenSectorAttributesAlreadyUsed(SectorDto dto)
+            throws AlreadyExistsException, UpdateConflictException {
 
         boolean nameExists = false;
         boolean priorityExists = false;
@@ -114,7 +115,8 @@ public class SectorServiceImpl implements SectorService {
         }
 
         if (nameExists || priorityExists)
-            throw new AlreadyExistsException();
+            throw new UpdateConflictException(
+                    "El registro tiene la misma prioridad o nombre que otro registro y no se puede guardar");
     }
 
 }
