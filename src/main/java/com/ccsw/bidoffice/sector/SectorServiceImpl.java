@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ccsw.bidoffice.common.exception.AlreadyExistsException;
 import com.ccsw.bidoffice.common.exception.EntityNotFoundException;
@@ -35,7 +34,6 @@ public class SectorServiceImpl implements SectorService {
     /**
      * {@inheritDoc}
      */
-    @ResponseBody
     @Override
     public void delete(Long id) throws AlreadyExistsException {
 
@@ -58,7 +56,6 @@ public class SectorServiceImpl implements SectorService {
     /**
      * {@inheritDoc}
      */
-    @ResponseBody
     @Override
     public void saveSector(SectorDto dto)
             throws AlreadyExistsException, EntityNotFoundException, UpdateConflictException {
