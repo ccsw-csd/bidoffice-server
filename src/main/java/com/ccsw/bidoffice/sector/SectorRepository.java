@@ -11,4 +11,12 @@ public interface SectorRepository extends CrudRepository<SectorEntity, Long> {
 
     List<SectorEntity> findAll(Sort sort);
 
+    boolean existsByPriority(int i);
+
+    boolean existsByName(String name);
+
+    boolean existsByIdIsNotAndName(Long id, String name);
+
+    boolean existsByIdIsNotAndPriority(Long id, int priority);
+
 }

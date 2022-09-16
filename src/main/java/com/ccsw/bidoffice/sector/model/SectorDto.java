@@ -8,7 +8,7 @@ public class SectorDto {
 
     private String name;
 
-    private Integer priority;
+    private int priority;
 
     private LocalDate startDate;
 
@@ -30,11 +30,11 @@ public class SectorDto {
         this.name = name;
     }
 
-    public Integer getPriority() {
+    public int getPriority() {
         return priority;
     }
 
-    public void setPriority(Integer priority) {
+    public void setPriority(int priority) {
         this.priority = priority;
     }
 
@@ -64,10 +64,15 @@ public class SectorDto {
 
         LocalDate toDay = LocalDate.now();
 
-        if ((toDay.isAfter(startDate)) && (toDay.isBefore(endDate))) {
+        if ((startDate == null) && (endDate == null)) {
+
+            return false;
+        } else if ((toDay.isEqual(startDate)) || (toDay.isAfter(startDate)) && (endDate == null)) {
 
             return true;
+        } else if ((toDay.isEqual(startDate)) || (toDay.isAfter(startDate)) && (toDay.isBefore(endDate))) {
 
+            return true;
         } else {
 
             return false;

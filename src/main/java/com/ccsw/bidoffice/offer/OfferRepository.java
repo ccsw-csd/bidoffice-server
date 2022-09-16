@@ -1,5 +1,6 @@
 package com.ccsw.bidoffice.offer;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
@@ -29,5 +30,9 @@ public interface OfferRepository extends PagingAndSortingRepository<OfferEntity,
      * @return boolean True si se está usando en al menos una oferta.
      */
     boolean existsBySectorId(Long id);
+
+    int countBySectorId(Long id);
+
+    int countByRequestedDateBetween(LocalDate startDate, LocalDate endDate);
 
 }
