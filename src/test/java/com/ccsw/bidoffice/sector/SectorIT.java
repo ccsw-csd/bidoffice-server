@@ -69,6 +69,12 @@ public class SectorIT extends BaseITAbstract {
         assertEquals(HttpStatus.CONFLICT, response.getStatusCode());
     }
 
+    /**
+     * Intenta borrar un sector que NO está siendo utilizada en alguna oferta.
+     * 
+     * El sector debe ser borrada. Al borrarlo, el ResponseEntity debe devolver un
+     * estado HTTP 200 (OK).
+     */
     @Test
     public void ifNotUsingSectorInOfferShouldDelete() {
 
