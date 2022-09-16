@@ -64,10 +64,15 @@ public class SectorDto {
 
         LocalDate toDay = LocalDate.now();
 
-        if ((toDay.isAfter(startDate)) && (toDay.isBefore(endDate))) {
+        if ((startDate == null) && (endDate == null)) {
+
+            return false;
+        } else if ((toDay.isEqual(startDate)) || (toDay.isAfter(startDate)) && (endDate == null)) {
 
             return true;
+        } else if ((toDay.isEqual(startDate)) || (toDay.isAfter(startDate)) && (toDay.isBefore(endDate))) {
 
+            return true;
         } else {
 
             return false;

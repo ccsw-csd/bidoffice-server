@@ -1,5 +1,6 @@
 package com.ccsw.bidoffice.offer;
 
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -100,12 +101,22 @@ public class OfferServiceImpl implements OfferService {
     public boolean checkIfDateOfAllOfferAreInRange(SectorDto dto) {
 
         boolean result = false;
+        LocalDate endDay = LocalDate.of(2999, 12, 31);
 
-        int offers = this.offerRepository.countBySectorId(dto.getId());
-        int offersInRange = this.offerRepository.countByRequestedDateBetween(dto.getStartDate(), dto.getEndDate());
+        if (dto.getEndDate() != null)
+            endDay = dto.getEndDate();
 
-        if (offers > offersInRange)
-            result = true;
+        if ((dto.getStartDate() == null) && (dto.getEndDate() == null)) {
+
+            result = false;
+        } else {
+
+            int offers = this.offerRepository.countBySectorId(dto.getId());
+            int offersInRange = this.offerRepository.countByRequestedDateBetween(dto.getStartDate(), endDay);
+
+            if (offers > offersInRange)
+                result = true;
+        }
 
         return result;
 
