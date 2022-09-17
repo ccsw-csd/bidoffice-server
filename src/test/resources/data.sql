@@ -115,8 +115,8 @@ CREATE TABLE methodology (
 
 INSERT INTO methodology (name,priority) VALUES ('Otros', 1);
 INSERT INTO methodology (name,priority) VALUES ('Otros2', 3);
-INSERT INTO methodology (name,priority) VALUES ('Otros3', 1);
-INSERT INTO methodology (name,priority) VALUES ('Otros4', 2);
+INSERT INTO methodology (name,priority) VALUES ('Otros3', 2);
+INSERT INTO methodology (name,priority) VALUES ('Otros4', 4);
 
 CREATE TABLE offering (
   id int(11) NOT NULL AUTO_INCREMENT,

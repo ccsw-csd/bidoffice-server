@@ -69,8 +69,9 @@ public class ProjectTypeIT extends BaseITAbstract {
 
         HttpEntity<?> httpEntity = new HttpEntity<>(getHeaders());
 
-        ResponseEntity<?> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH + NOT_EXISTING_PROJECTTYPE_ID,
-                HttpMethod.DELETE, httpEntity, Void.class);
+        ResponseEntity<?> response = restTemplate.exchange(
+                LOCALHOST + port + SERVICE_PATH + NOT_EXISTING_PROJECTTYPE_ID, HttpMethod.DELETE, httpEntity,
+                Void.class);
 
         ResponseEntity<List<ProjectTypeDto>> responseList = restTemplate.exchange(
                 LOCALHOST + port + SERVICE_PATH + "findAll", HttpMethod.GET, httpEntity, responseTypeProjectType);
@@ -103,34 +104,34 @@ public class ProjectTypeIT extends BaseITAbstract {
 
         HttpEntity<?> httpEntity = new HttpEntity<>(getHeaders());
 
-        restTemplate.exchange(LOCALHOST + port + SERVICE_PATH, HttpMethod.PUT,
-                new HttpEntity<>(dto, getHeaders()), ProjectTypeDto.class);
+        restTemplate.exchange(LOCALHOST + port + SERVICE_PATH, HttpMethod.PUT, new HttpEntity<>(dto, getHeaders()),
+                ProjectTypeDto.class);
 
         ResponseEntity<List<ProjectTypeDto>> response = restTemplate.exchange(
                 LOCALHOST + port + SERVICE_PATH + "findAll", HttpMethod.GET, httpEntity, responseTypeProjectType);
         assertNotNull(response.getBody());
         assertEquals(4, response.getBody().size());
 
-        ProjectTypeDto projectTypeSearch = response.getBody().stream().filter(item -> item.getId().equals(EXISTING_PROJECTTYPE_ID))
-                .findFirst().orElse(null);
+        ProjectTypeDto projectTypeSearch = response.getBody().stream()
+                .filter(item -> item.getId().equals(EXISTING_PROJECTTYPE_ID)).findFirst().orElse(null);
         assertNotNull(projectTypeSearch);
         assertEquals("pepe", projectTypeSearch.getName());
     }
 
+    /**
+     * Se han suprimido tres System.out.println(...); que ya no eran necesarios,
+     * toda vez que se comprueba que el test funciona correctamente.
+     */
     @Test
-    public void ifNameAndPriorityAreOkShouldEdit(){
+    public void ifNameAndPriorityAreOkShouldEdit() {
         ProjectTypeDto dto = new ProjectTypeDto();
         dto.setId(EXISTING_PROJECTTYPE_ID);
         dto.setName("pepa");
         dto.setPriority(11);
 
-        System.out.println(dto.getId());
-        System.out.println(dto.getName());
-        System.out.println(dto.getPriority());
-
         HttpEntity<?> httpEntity = new HttpEntity<>(getHeaders());
-        ResponseEntity<?> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH, HttpMethod.PUT,  new HttpEntity<>(dto, getHeaders()),
-                ProjectTypeDto.class);
+        ResponseEntity<?> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH, HttpMethod.PUT,
+                new HttpEntity<>(dto, getHeaders()), ProjectTypeDto.class);
 
         ResponseEntity<List<ProjectTypeDto>> responseAfter = restTemplate.exchange(
                 LOCALHOST + port + SERVICE_PATH + "findAll", HttpMethod.GET, httpEntity, responseTypeProjectType);
@@ -138,8 +139,8 @@ public class ProjectTypeIT extends BaseITAbstract {
         assertNotNull(responseAfter.getBody());
         assertEquals(4, responseAfter.getBody().size());
 
-        ProjectTypeDto projectTypeSearch = responseAfter.getBody().stream().filter(item -> item.getId().equals(EXISTING_PROJECTTYPE_ID))
-                .findFirst().orElse(null);
+        ProjectTypeDto projectTypeSearch = responseAfter.getBody().stream()
+                .filter(item -> item.getId().equals(EXISTING_PROJECTTYPE_ID)).findFirst().orElse(null);
 
         assertNotNull(projectTypeSearch);
         assertEquals("pepa", projectTypeSearch.getName());
@@ -195,8 +196,8 @@ public class ProjectTypeIT extends BaseITAbstract {
         ResponseEntity<List<ProjectTypeDto>> responseAfter = restTemplate.exchange(
                 LOCALHOST + port + SERVICE_PATH + "findAll", HttpMethod.GET, httpEntity, responseTypeProjectType);
 
-        ProjectTypeDto projectTypeSearch = responseAfter.getBody().stream().filter(item -> item.getName().equals("pepe"))
-                .findFirst().orElse(null);
+        ProjectTypeDto projectTypeSearch = responseAfter.getBody().stream()
+                .filter(item -> item.getName().equals("pepe")).findFirst().orElse(null);
 
         assertNotNull(responseAfter.getBody());
         assertEquals(5, responseAfter.getBody().size());
