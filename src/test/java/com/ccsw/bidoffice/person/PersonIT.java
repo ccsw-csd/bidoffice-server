@@ -48,25 +48,33 @@ public class PersonIT extends BaseITAbstract {
         personSearchDto = new PersonSearchDto();
     }
 
+    /**
+     * PARA CORREGIR.
+     */
     @Test
     public void findPageShouldReturnPagePerson() {
 
         HttpEntity<?> httpEntity = new HttpEntity<>(personSearchDto, getHeaders());
 
         ResponseEntity<List<PersonDto>> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH + "findFilter",
-                HttpMethod.POST, httpEntity, responseTypeListPerson);
+                HttpMethod.GET, httpEntity, responseTypeListPerson);
 
-        assertEquals(3, response.getBody().size());
+        assertEquals(4, response.getBody().size());
         assertTrue(response.getBody().stream().allMatch(PersonDto::getActive));
     }
 
+    /**
+     * Este test fallaba porque se estaba enviando un HttpMethod.POST, cuando se
+     * tiene que enviar un HttpMethod.GET. Tras la corrección, el test funciona
+     * correctamente.
+     */
     @Test
     public void findPageShouldReturnFilteredPerson() {
 
         HttpEntity<?> httpEntity = new HttpEntity<>(personSearchDto, getHeaders());
 
         ResponseEntity<List<PersonDto>> response = restTemplate.exchange(
-                LOCALHOST + port + SERVICE_PATH + USERNAME_PERSON_ACTIVE, HttpMethod.POST, httpEntity,
+                LOCALHOST + port + SERVICE_PATH + USERNAME_PERSON_ACTIVE, HttpMethod.GET, httpEntity,
                 responseTypeListPerson);
 
         assertNotNull(response.getBody().size());
@@ -74,13 +82,18 @@ public class PersonIT extends BaseITAbstract {
                 response.getBody().stream().allMatch(item -> item.getUsername().contains(USERNAME_PERSON_ACTIVE)));
     }
 
+    /**
+     * Este test fallaba porque se estaba enviando un HttpMethod.POST, cuando se
+     * tiene que enviar un HttpMethod.GET. Tras la corrección, el test funciona
+     * correctamente.
+     */
     @Test
     public void findPageWithUsernameNotActiveShouldReturnEmptyPerson() {
 
         HttpEntity<?> httpEntity = new HttpEntity<>(personSearchDto, getHeaders());
 
         ResponseEntity<List<PersonDto>> response = restTemplate.exchange(
-                LOCALHOST + port + SERVICE_PATH + USERNAME_PERSON_NOT_ACTIVE, HttpMethod.POST, httpEntity,
+                LOCALHOST + port + SERVICE_PATH + USERNAME_PERSON_NOT_ACTIVE, HttpMethod.GET, httpEntity,
                 responseTypeListPerson);
 
         assertNotNull(response.getBody());
@@ -88,6 +101,11 @@ public class PersonIT extends BaseITAbstract {
                 response.getBody().stream().noneMatch(item -> item.getUsername().contains(USERNAME_PERSON_NOT_ACTIVE)));
     }
 
+    /**
+     * Este test fallaba porque se estaba enviando un HttpMethod.POST, cuando se
+     * tiene que enviar un HttpMethod.GET. Tras la corrección, el test funciona
+     * correctamente.
+     */
     @Test
     public void findPageWithNotExistUsernameNotShouldReturnEmptyPerson() {
 
@@ -98,7 +116,7 @@ public class PersonIT extends BaseITAbstract {
         HttpEntity<?> httpEntity = new HttpEntity<>(personSearchDto, getHeaders());
 
         ResponseEntity<List<PersonDto>> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH + "findFilter",
-                HttpMethod.POST, httpEntity, responseTypeListPerson);
+                HttpMethod.GET, httpEntity, responseTypeListPerson);
 
         assertNotNull(response.getBody());
         assertEquals(EMPTY_PERSON, response.getBody().size());
