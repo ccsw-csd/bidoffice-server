@@ -9,11 +9,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.annotation.DirtiesContext;
 
@@ -48,26 +48,41 @@ public class MethodologyIT extends BaseITAbstract {
                 .collect(Collectors.toList()).equals(response.getBody()));
     }
 
+    /**
+     * Descripción:
+     * 
+     * Este test debe actualizar los datos de una metodología ya existente. Debe
+     * devolver en posterior consulta el mismo nombre que se había utilizado para
+     * actualizar el registro.
+     * 
+     * Qué fallaba:
+     * 
+     * Lo especificado en los asertos de salida, no coincidía con las constantes de
+     * entrada.
+     * 
+     */
     @Test
     public void saveExistsMethodologyShouldUpdate() {
-        MethodologyDto dto = new MethodologyDto();
-        dto.setId(EXISTS_ID);
-        dto.setName(NEW_NAME);
-        dto.setPriority(NEW_PRIORITY);
 
-        HttpEntity<?> httpEntity = new HttpEntity<>(getHeaders());
+        MethodologyDto methodologyDto = new MethodologyDto();
+        HttpEntity<?> httpEntity = new HttpEntity<>(methodologyDto, getHeaders());
 
-        restTemplate.exchange(LOCALHOST + port + SERVICE_PATH + EXISTS_ID, HttpMethod.PUT,
-                new HttpEntity<>(dto, getHeaders()), Void.class);
+        methodologyDto.setId(EXISTS_ID);
+        methodologyDto.setName(NEW_NAME);
+        methodologyDto.setPriority(NEW_PRIORITY);
 
-        ResponseEntity<List<MethodologyDto>> response = restTemplate.exchange(
+        ResponseEntity<?> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH, HttpMethod.PUT, httpEntity,
+                Void.class);
+
+        ResponseEntity<List<MethodologyDto>> responseAfter = restTemplate.exchange(
                 LOCALHOST + port + SERVICE_PATH + "findAll", HttpMethod.GET, httpEntity, responseTypeMethodology);
-        assertNotNull(response.getBody());
-        assertEquals(TOTAL_METHODOLOGY, response.getBody().size());
 
-        MethodologyDto methodologySearch = response.getBody().stream().filter(item -> item.getId().equals(EXISTS_ID))
+        MethodologyDto editDto = responseAfter.getBody().stream().filter(element -> element.getName().equals(NEW_NAME))
                 .findFirst().orElse(null);
-        assertNotNull(methodologySearch);
-        assertEquals(NEW_NAME, methodologySearch.getName());
+
+        assertNotNull(editDto);
+        assertEquals(NEW_NAME, editDto.getName());
+        assertEquals(NEW_PRIORITY, editDto.getPriority());
+        assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 }
