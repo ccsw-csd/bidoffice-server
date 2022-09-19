@@ -177,25 +177,36 @@ public class OfferServiceImpl implements OfferService {
 
     private void mappingEntitiesOffer() {
 
-        if (offerEntity.getDataChapter() != null)
-            offerEntity.getDataChapter().setOffer(offerEntity);
+        /*
+         * if (offerEntity.getDataChapter() != null)
+         * offerEntity.getDataChapter().setOffer(offerEntity);
+         */
 
-        if (offerEntity.getDataFiles() != null)
-            offerEntity.setDataFiles(offerEntity.getDataFiles().stream().peek(item -> item.setOffer(offerEntity))
-                    .collect(Collectors.toSet()));
+        /*
+         * if (offerEntity.getDataFiles() != null)
+         * offerEntity.setDataFiles(offerEntity.getDataFiles().stream().peek(item ->
+         * item.setOffer(offerEntity)) .collect(Collectors.toSet()));
+         */
 
-        if (offerEntity.getDataProject() != null)
-            offerEntity.getDataProject().setOffer(offerEntity);
+        /*
+         * if (offerEntity.getDataProject() != null)
+         * offerEntity.getDataProject().setOffer(offerEntity);
+         */
+        /*
+         * if (offerEntity.getDataTeam() != null)
+         * offerEntity.getDataTeam().setOffer(offerEntity);
+         */
 
-        if (offerEntity.getDataTeam() != null)
-            offerEntity.getDataTeam().setOffer(offerEntity);
+        /*
+         * if (offerEntity.getDataTechnology() != null)
+         * offerEntity.getDataTechnology().setOffer(offerEntity);
+         */
 
-        if (offerEntity.getDataTechnology() != null)
-            offerEntity.getDataTechnology().setOffer(offerEntity);
-
-        if (offerEntity.getOfferings() != null)
-            offerEntity.setOfferings(offerEntity.getOfferings().stream().peek(item -> item.setOffer(offerEntity))
-                    .collect(Collectors.toSet()));
+        /*
+         * if (offerEntity.getOfferings() != null)
+         * offerEntity.setOfferings(offerEntity.getOfferings().stream().peek(item ->
+         * item.setOffer(offerEntity)) .collect(Collectors.toSet()));
+         */
 
         if (offerEntity.getTeamPerson() != null)
             offerEntity.setTeamPerson(offerEntity.getTeamPerson().stream().peek(item -> item.setOffer(offerEntity))
@@ -203,10 +214,6 @@ public class OfferServiceImpl implements OfferService {
 
         if (offerEntity.getTechnologies() != null)
             offerEntity.setTechnologies(offerEntity.getTechnologies().stream().peek(item -> item.setOffer(offerEntity))
-                    .collect(Collectors.toSet()));
-
-        if (offerEntity.getTracings() != null)
-            offerEntity.setTracings(offerEntity.getTracings().stream().peek(item -> item.setOffer(offerEntity))
                     .collect(Collectors.toSet()));
 
         if (offerEntity.getChangeStatus() != null) {
@@ -225,12 +232,12 @@ public class OfferServiceImpl implements OfferService {
             throw new InvalidDataException();
         }
 
-        this.MappingStatusDtoToOfferEntity(dto);
+        this.mappingStatusDtoToOfferEntity(dto);
 
         return this.offerRepository.save(offerEntity);
     }
 
-    private void MappingStatusDtoToOfferEntity(ModifyStatusDto dto) throws EntityNotFoundException {
+    private void mappingStatusDtoToOfferEntity(ModifyStatusDto dto) throws EntityNotFoundException {
 
         this.mappingChangeStatusDtoToEntity(dto.getChangeStatus());
 

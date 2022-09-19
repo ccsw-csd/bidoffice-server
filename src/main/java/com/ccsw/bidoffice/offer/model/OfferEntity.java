@@ -2,6 +2,7 @@ package com.ccsw.bidoffice.offer.model;
 
 import java.time.LocalDate;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -11,6 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -22,7 +24,7 @@ import com.ccsw.bidoffice.offerdatafile.model.OfferDataFileEntity;
 import com.ccsw.bidoffice.offerdataproject.model.OfferDataProjectEntity;
 import com.ccsw.bidoffice.offerdatateam.model.OfferDataTeamEntity;
 import com.ccsw.bidoffice.offerdatatechnology.model.OfferDataTechnologyEntity;
-import com.ccsw.bidoffice.offeroffering.model.OfferOfferingEntity;
+import com.ccsw.bidoffice.offering.model.OfferingEntity;
 import com.ccsw.bidoffice.offerteamperson.model.OfferTeamPersonEntity;
 import com.ccsw.bidoffice.offertechnology.model.OfferTechnologyEntity;
 import com.ccsw.bidoffice.offertracing.model.OfferTracingEntity;
@@ -99,8 +101,9 @@ public class OfferEntity {
     @OneToOne(mappedBy = "offer", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private OfferDataTechnologyEntity dataTechnology;
 
-    @OneToMany(mappedBy = "offer", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
-    private Set<OfferOfferingEntity> offerings;
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "offer_offering", joinColumns = @JoinColumn(name = "offer_id"), inverseJoinColumns = @JoinColumn(name = "offering_id"))
+    private Set<OfferingEntity> offerings;
 
     @OneToMany(mappedBy = "offer", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private Set<OfferTeamPersonEntity> teamPerson;
@@ -232,6 +235,7 @@ public class OfferEntity {
 
     public void setDataChapter(OfferDataChapterEntity dataChapter) {
         this.dataChapter = dataChapter;
+        this.dataChapter.setOffer(this);
     }
 
     public Set<OfferDataFileEntity> getDataFiles() {
@@ -240,6 +244,7 @@ public class OfferEntity {
 
     public void setDataFiles(Set<OfferDataFileEntity> dataFiles) {
         this.dataFiles = dataFiles;
+        this.dataFiles.stream().peek(item -> item.setOffer(this)).collect(Collectors.toSet());
     }
 
     public OfferDataProjectEntity getDataProject() {
@@ -248,6 +253,7 @@ public class OfferEntity {
 
     public void setDataProject(OfferDataProjectEntity dataProject) {
         this.dataProject = dataProject;
+        this.dataProject.setOffer(this);
     }
 
     public OfferDataTeamEntity getDataTeam() {
@@ -256,6 +262,7 @@ public class OfferEntity {
 
     public void setDataTeam(OfferDataTeamEntity dataTeam) {
         this.dataTeam = dataTeam;
+        this.dataTeam.setOffer(this);
     }
 
     public OfferDataTechnologyEntity getDataTechnology() {
@@ -264,13 +271,14 @@ public class OfferEntity {
 
     public void setDataTechnology(OfferDataTechnologyEntity dataTechnology) {
         this.dataTechnology = dataTechnology;
+        this.dataTechnology.setOffer(this);
     }
 
-    public Set<OfferOfferingEntity> getOfferings() {
+    public Set<OfferingEntity> getOfferings() {
         return offerings;
     }
 
-    public void setOfferings(Set<OfferOfferingEntity> offerings) {
+    public void setOfferings(Set<OfferingEntity> offerings) {
         this.offerings = offerings;
     }
 
@@ -296,6 +304,7 @@ public class OfferEntity {
 
     public void setTracings(Set<OfferTracingEntity> tracings) {
         this.tracings = tracings;
+        this.tracings.stream().peek(item -> item.setOffer(this)).collect(Collectors.toSet());
     }
 
     public Set<OfferChangeStatusEntity> getChangeStatus() {
