@@ -2,7 +2,6 @@ package com.ccsw.bidoffice.person;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
 
@@ -17,7 +16,6 @@ import org.springframework.test.annotation.DirtiesContext;
 
 import com.ccsw.bidoffice.config.BaseITAbstract;
 import com.ccsw.bidoffice.person.model.PersonDto;
-import com.ccsw.bidoffice.person.model.PersonSearchDto;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
@@ -40,33 +38,17 @@ public class PersonIT extends BaseITAbstract {
     ParameterizedTypeReference<List<PersonDto>> responseTypeListPerson = new ParameterizedTypeReference<List<PersonDto>>() {
     };
 
-    private PersonSearchDto personSearchDto;
-
     @BeforeEach
     public void setUp() {
-
-        personSearchDto = new PersonSearchDto();
     }
 
     @Test
-    public void findPageShouldReturnPagePerson() {
+    public void findPersonsShouldReturnFilteredListPerson() {
 
-        HttpEntity<?> httpEntity = new HttpEntity<>(personSearchDto, getHeaders());
-
-        ResponseEntity<List<PersonDto>> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH + "findFilter",
-                HttpMethod.POST, httpEntity, responseTypeListPerson);
-
-        assertEquals(3, response.getBody().size());
-        assertTrue(response.getBody().stream().allMatch(PersonDto::getActive));
-    }
-
-    @Test
-    public void findPageShouldReturnFilteredPerson() {
-
-        HttpEntity<?> httpEntity = new HttpEntity<>(personSearchDto, getHeaders());
+        HttpEntity<?> httpEntity = new HttpEntity<>(getHeaders());
 
         ResponseEntity<List<PersonDto>> response = restTemplate.exchange(
-                LOCALHOST + port + SERVICE_PATH + USERNAME_PERSON_ACTIVE, HttpMethod.POST, httpEntity,
+                LOCALHOST + port + SERVICE_PATH + USERNAME_PERSON_ACTIVE, HttpMethod.GET, httpEntity,
                 responseTypeListPerson);
 
         assertNotNull(response.getBody().size());
@@ -75,30 +57,26 @@ public class PersonIT extends BaseITAbstract {
     }
 
     @Test
-    public void findPageWithUsernameNotActiveShouldReturnEmptyPerson() {
+    public void findPersonsWithUsernameNotActiveShouldReturnEmptyListPersons() {
 
-        HttpEntity<?> httpEntity = new HttpEntity<>(personSearchDto, getHeaders());
+        HttpEntity<?> httpEntity = new HttpEntity<>(getHeaders());
 
         ResponseEntity<List<PersonDto>> response = restTemplate.exchange(
-                LOCALHOST + port + SERVICE_PATH + USERNAME_PERSON_NOT_ACTIVE, HttpMethod.POST, httpEntity,
+                LOCALHOST + port + SERVICE_PATH + USERNAME_PERSON_NOT_ACTIVE, HttpMethod.GET, httpEntity,
                 responseTypeListPerson);
 
         assertNotNull(response.getBody());
-        assertEquals(true,
-                response.getBody().stream().noneMatch(item -> item.getUsername().contains(USERNAME_PERSON_NOT_ACTIVE)));
+        assertEquals(EMPTY_PERSON, response.getBody().size());
     }
 
     @Test
     public void findPageWithNotExistUsernameNotShouldReturnEmptyPerson() {
 
-        personSearchDto.setUsername(USERNAME_PERSON_NOT_EXIST);
-        personSearchDto.setName(NAME_PERSON_ACTIVE);
-        personSearchDto.setLastname(LASTNAME_PERSON_ACTIVE);
+        HttpEntity<?> httpEntity = new HttpEntity<>(getHeaders());
 
-        HttpEntity<?> httpEntity = new HttpEntity<>(personSearchDto, getHeaders());
-
-        ResponseEntity<List<PersonDto>> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH + "findFilter",
-                HttpMethod.POST, httpEntity, responseTypeListPerson);
+        ResponseEntity<List<PersonDto>> response = restTemplate.exchange(
+                LOCALHOST + port + SERVICE_PATH + USERNAME_PERSON_NOT_EXIST, HttpMethod.GET, httpEntity,
+                responseTypeListPerson);
 
         assertNotNull(response.getBody());
         assertEquals(EMPTY_PERSON, response.getBody().size());
