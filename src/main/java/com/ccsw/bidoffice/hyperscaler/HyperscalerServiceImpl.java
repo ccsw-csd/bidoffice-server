@@ -43,20 +43,36 @@ public class HyperscalerServiceImpl implements HyperscalerService {
         return this.hyperscalerRepository.findById(id).orElseThrow(EntityNotFoundException::new);
     }
 
+    /**
+     * Comprueba que al guardar o editar un Hyperscaler, no existe otro registro con
+     * el mismo nombre o prioridad.
+     * 
+     * @param dto Objeto DTO a cotejar.
+     * 
+     * @throws AlreadyExistsException Excepción lanzada si ya existe otro registro
+     *                                con el mismo nombre o prioridad.
+     */
     private void checkWhenAttributesAreWrong(HyperscalerDto dto) throws AlreadyExistsException {
-        boolean nameExists = false, priorityExists = false;
 
-        if (dto.getId() == null) {
-            nameExists = this.hyperscalerRepository.existsByName(dto.getName());
-            priorityExists = this.hyperscalerRepository.existsByPriority(dto.getPriority());
-        } else {
-            nameExists = this.hyperscalerRepository.existsByIdIsNotAndName(dto.getId(), dto.getName());
-            priorityExists = this.hyperscalerRepository.existsByIdIsNotAndPriority(dto.getId(), dto.getPriority());
+        HyperscalerEntity compareHyperscaler = this.hyperscalerRepository.getByName(dto.getName());
+
+        if (compareHyperscaler != null) {
+
+            if (dto.getId() != compareHyperscaler.getId()) {
+
+                throw new AlreadyExistsException();
+            }
         }
 
-        if (nameExists || priorityExists)
-            throw new AlreadyExistsException();
+        compareHyperscaler = this.hyperscalerRepository.getByPriority(dto.getPriority());
 
+        if (compareHyperscaler != null) {
+
+            if (dto.getId() != compareHyperscaler.getId()) {
+
+                throw new AlreadyExistsException();
+            }
+        }
     }
 
     @Override

@@ -13,6 +13,6 @@ public interface TechnologyRepository extends CrudRepository<TechnologyEntity, L
 
     TechnologyEntity getByName(String name);
 
-    TechnologyEntity getByPriority(Long priority);
+    TechnologyEntity getByPriority(int existsPriority);
 
 }

@@ -36,10 +36,10 @@ public class TecnologyTest {
     private static final Long NOT_EXISTS_TECHNOLOGY_ID = 0L;
 
     private static final String NOT_EXISTING_NAME = "Not Exists Test";
-    private static final Long NOT_EXISTING_PRIORITY = 100L;
+    private static final int NOT_EXISTING_PRIORITY = 100;
 
-    private static final String EXISTS_NAME = "Tech exists";
-    private static final Long EXISTS_PRIORITY = 1L;
+    private static final String EXISTS_NAME = "admin";
+    private static final int EXISTS_PRIORITY = 1;
 
     @Mock
     private TechnologyRepository technologyRepository;
@@ -160,7 +160,7 @@ public class TecnologyTest {
 
         this.technologyServiceImpl.saveTechnology(technologyDto);
 
-        when(this.technologyRepository.existsByName(EXISTS_NAME)).thenReturn(true);
+        when(this.technologyRepository.getByName(EXISTS_NAME)).thenReturn(technologyEntity);
 
         assertThrows(AlreadyExistsException.class, () -> technologyServiceImpl.saveTechnology(technologyDto));
 
@@ -190,34 +190,7 @@ public class TecnologyTest {
 
         this.technologyServiceImpl.saveTechnology(technologyDto);
 
-        when(this.technologyRepository.existsByPriority(EXISTS_PRIORITY)).thenReturn(true);
-
-        assertThrows(AlreadyExistsException.class, () -> technologyServiceImpl.saveTechnology(technologyDto));
-
-        verify(this.technologyRepository, never()).save(technologyEntity);
-
-    }
-
-    /**
-     * Intenta guardar una nueva tecnología cuando el nombre y la prioridad son los
-     * mismos.
-     * 
-     * El test no debe guardar la tecnología y debe devolver una excepción.
-     * 
-     * @throws AlreadyExistsException Cuando existe exactamente esa tecnología con
-     *                                la misma prioridad.
-     */
-    @Test
-    public void editTechnologyWhenPriorityAndNameAlreadyExists() throws AlreadyExistsException {
-
-        TechnologyDto technologyDto = new TechnologyDto();
-        technologyDto.setId(EXISTS_TECHNOLOGY_ID);
-        technologyDto.setName(EXISTS_NAME);
-        technologyDto.setPriority(EXISTS_PRIORITY);
-
-        TechnologyEntity technologyEntity = mock(TechnologyEntity.class);
-
-        when(this.technologyRepository.existsByIdIsNotAndName(EXISTS_TECHNOLOGY_ID, EXISTS_NAME)).thenReturn(true);
+        when(this.technologyRepository.getByPriority(EXISTS_PRIORITY)).thenReturn(technologyEntity);
 
         assertThrows(AlreadyExistsException.class, () -> technologyServiceImpl.saveTechnology(technologyDto));
 
@@ -243,11 +216,9 @@ public class TecnologyTest {
 
         TechnologyEntity technologyEntity = mock(TechnologyEntity.class);
 
-        when(this.technologyRepository.existsByIdIsNotAndName(EXISTS_TECHNOLOGY_ID, NOT_EXISTING_NAME))
-                .thenReturn(false);
+        when(this.technologyRepository.getByName(NOT_EXISTING_NAME)).thenReturn(null);
 
-        when(this.technologyRepository.existsByIdIsNotAndPriority(EXISTS_TECHNOLOGY_ID, NOT_EXISTING_PRIORITY))
-                .thenReturn(false);
+        when(this.technologyRepository.getByPriority(NOT_EXISTING_PRIORITY)).thenReturn(null);
 
         when(this.technologyRepository.findById(EXISTS_TECHNOLOGY_ID)).thenReturn(Optional.of(technologyEntity));
 
