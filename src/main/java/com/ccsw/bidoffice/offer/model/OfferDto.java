@@ -1,6 +1,7 @@
 package com.ccsw.bidoffice.offer.model;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Set;
 
 import com.ccsw.bidoffice.offerchangestatus.model.OfferChangeStatusDto;
@@ -9,14 +10,13 @@ import com.ccsw.bidoffice.offerdatafile.model.OfferDataFileDto;
 import com.ccsw.bidoffice.offerdataproject.model.OfferDataProjectDto;
 import com.ccsw.bidoffice.offerdatateam.model.OfferDataTeamDto;
 import com.ccsw.bidoffice.offerdatatechnology.model.OfferDataTechnologyDto;
-import com.ccsw.bidoffice.offeroffering.model.OfferOfferingDto;
-import com.ccsw.bidoffice.offerteamperson.model.OfferTeamPersonDto;
-import com.ccsw.bidoffice.offertechnology.model.OfferTechnologyDto;
+import com.ccsw.bidoffice.offering.model.OfferingDto;
 import com.ccsw.bidoffice.offertracing.model.OfferTracingDto;
 import com.ccsw.bidoffice.opportunitystatus.model.OpportunityStatusDto;
 import com.ccsw.bidoffice.opportunitytype.model.OpportunityTypeDto;
 import com.ccsw.bidoffice.person.model.PersonDto;
 import com.ccsw.bidoffice.sector.model.SectorDto;
+import com.ccsw.bidoffice.technology.model.TechnologyDto;
 
 public class OfferDto {
 
@@ -58,11 +58,11 @@ public class OfferDto {
 
     private OfferDataTechnologyDto dataTechnology;
 
-    private Set<OfferOfferingDto> offerings;
+    private List<OfferingDto> offerings;
 
-    private Set<OfferTeamPersonDto> teamPerson;
+    private List<PersonDto> teamPerson;
 
-    private Set<OfferTechnologyDto> technologies;
+    private List<TechnologyDto> technologies;
 
     private Set<OfferTracingDto> tracings;
 
@@ -220,27 +220,27 @@ public class OfferDto {
         this.dataTechnology = dataTechnology;
     }
 
-    public Set<OfferOfferingDto> getOfferings() {
+    public List<OfferingDto> getOfferings() {
         return offerings;
     }
 
-    public void setOfferings(Set<OfferOfferingDto> offerings) {
+    public void setOfferings(List<OfferingDto> offerings) {
         this.offerings = offerings;
     }
 
-    public Set<OfferTeamPersonDto> getTeamPerson() {
+    public List<PersonDto> getTeamPerson() {
         return teamPerson;
     }
 
-    public void setTeamPerson(Set<OfferTeamPersonDto> teamPerson) {
+    public void setTeamPerson(List<PersonDto> teamPerson) {
         this.teamPerson = teamPerson;
     }
 
-    public Set<OfferTechnologyDto> getTechnologies() {
+    public List<TechnologyDto> getTechnologies() {
         return technologies;
     }
 
-    public void setTechnologies(Set<OfferTechnologyDto> technologies) {
+    public void setTechnologies(List<TechnologyDto> technologies) {
         this.technologies = technologies;
     }
 
