@@ -1,6 +1,7 @@
 package com.ccsw.bidoffice.offer.model;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -25,13 +26,12 @@ import com.ccsw.bidoffice.offerdataproject.model.OfferDataProjectEntity;
 import com.ccsw.bidoffice.offerdatateam.model.OfferDataTeamEntity;
 import com.ccsw.bidoffice.offerdatatechnology.model.OfferDataTechnologyEntity;
 import com.ccsw.bidoffice.offering.model.OfferingEntity;
-import com.ccsw.bidoffice.offerteamperson.model.OfferTeamPersonEntity;
-import com.ccsw.bidoffice.offertechnology.model.OfferTechnologyEntity;
 import com.ccsw.bidoffice.offertracing.model.OfferTracingEntity;
 import com.ccsw.bidoffice.opportunitystatus.model.OpportunityStatusEntity;
 import com.ccsw.bidoffice.opportunitytype.model.OpportunityTypeEntity;
 import com.ccsw.bidoffice.person.model.PersonEntity;
 import com.ccsw.bidoffice.sector.model.SectorEntity;
+import com.ccsw.bidoffice.technology.model.TechnologyEntity;
 
 @Entity
 @Table(name = "offer")
@@ -103,13 +103,15 @@ public class OfferEntity {
 
     @OneToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "offer_offering", joinColumns = @JoinColumn(name = "offer_id"), inverseJoinColumns = @JoinColumn(name = "offering_id"))
-    private Set<OfferingEntity> offerings;
+    private List<OfferingEntity> offerings;
 
-    @OneToMany(mappedBy = "offer", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
-    private Set<OfferTeamPersonEntity> teamPerson;
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "offer_team_person", joinColumns = @JoinColumn(name = "offer_id"), inverseJoinColumns = @JoinColumn(name = "person_id"))
+    private List<PersonEntity> teamPerson;
 
-    @OneToMany(mappedBy = "offer", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
-    private Set<OfferTechnologyEntity> technologies;
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "offer_technology", joinColumns = @JoinColumn(name = "offer_id"), inverseJoinColumns = @JoinColumn(name = "technology_id"))
+    private List<TechnologyEntity> technologies;
 
     @OneToMany(mappedBy = "offer", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private Set<OfferTracingEntity> tracings;
@@ -274,27 +276,27 @@ public class OfferEntity {
         this.dataTechnology.setOffer(this);
     }
 
-    public Set<OfferingEntity> getOfferings() {
+    public List<OfferingEntity> getOfferings() {
         return offerings;
     }
 
-    public void setOfferings(Set<OfferingEntity> offerings) {
+    public void setOfferings(List<OfferingEntity> offerings) {
         this.offerings = offerings;
     }
 
-    public Set<OfferTeamPersonEntity> getTeamPerson() {
+    public List<PersonEntity> getTeamPerson() {
         return teamPerson;
     }
 
-    public void setTeamPerson(Set<OfferTeamPersonEntity> teamPerson) {
+    public void setTeamPerson(List<PersonEntity> teamPerson) {
         this.teamPerson = teamPerson;
     }
 
-    public Set<OfferTechnologyEntity> getTechnologies() {
+    public List<TechnologyEntity> getTechnologies() {
         return technologies;
     }
 
-    public void setTechnologies(Set<OfferTechnologyEntity> technologies) {
+    public void setTechnologies(List<TechnologyEntity> technologies) {
         this.technologies = technologies;
     }
 
@@ -313,6 +315,7 @@ public class OfferEntity {
 
     public void setChangeStatus(Set<OfferChangeStatusEntity> changeStatus) {
         this.changeStatus = changeStatus;
+        this.changeStatus.stream().peek(item -> item.setOffer(this)).collect(Collectors.toSet());
 
     }
 }
