@@ -64,19 +64,25 @@ public class TechnologyServiceImpl implements TechnologyService {
      */
     private void checkWhenTechAttributesAlreadyUsed(TechnologyDto dto) throws AlreadyExistsException {
 
-        boolean nameExists = false;
-        boolean priorityExists = false;
+        TechnologyEntity compareTechnology = this.technologyRepository.getByName(dto.getName());
 
-        if (dto.getId() == null) {
-            nameExists = this.technologyRepository.existsByName(dto.getName());
-            priorityExists = this.technologyRepository.existsByPriority(dto.getPriority());
-        } else {
-            nameExists = this.technologyRepository.existsByIdIsNotAndName(dto.getId(), dto.getName());
-            priorityExists = this.technologyRepository.existsByIdIsNotAndPriority(dto.getId(), dto.getPriority());
+        if (compareTechnology != null) {
+
+            if (dto.getId() != compareTechnology.getId()) {
+
+                throw new AlreadyExistsException();
+            }
         }
 
-        if (nameExists || priorityExists)
-            throw new AlreadyExistsException();
+        compareTechnology = this.technologyRepository.getByPriority(dto.getPriority());
+
+        if (compareTechnology != null) {
+
+            if (dto.getId() != compareTechnology.getId()) {
+
+                throw new AlreadyExistsException();
+            }
+        }
 
     }
 
