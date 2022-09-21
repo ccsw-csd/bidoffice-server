@@ -118,10 +118,9 @@ public class SectorServiceImpl implements SectorService {
      * 
      * @throws UpdateConflictException Excepción lanzada si hay error.
      */
-    private void compareSectorGetId(SectorDto dto, SectorEntity compareSector) throws UpdateConflictException {
+    private void compareSectorGetId(SectorDto dto, SectorEntity compareSector) throws AlreadyExistsException {
 
         if ((compareSector != null) && (dto.getId() != compareSector.getId()))
-            throw new UpdateConflictException(
-                    "El registro tiene la misma prioridad o nombre que otro registro y no se puede guardar");
+            throw new AlreadyExistsException();
     }
 }
