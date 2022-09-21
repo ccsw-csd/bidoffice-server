@@ -72,19 +72,26 @@ public class OfferingServiceImpl implements OfferingService {
 
         OfferingEntity compareOffering = this.offeringRepository.getByName(dto.getName());
 
-        if (compareOffering != null) {
-            if (dto.getId() != compareOffering.getId()) {
-                throw new AlreadyExistsException();
-            }
-        }
+        compareOfferingGetId(dto, compareOffering);
 
         compareOffering = this.offeringRepository.getByPriority(dto.getPriority());
 
-        if (compareOffering != null) {
-            if (dto.getId() != compareOffering.getId()) {
-                throw new AlreadyExistsException();
-            }
-        }
+        compareOfferingGetId(dto, compareOffering);
+    }
+
+    /**
+     * Método que compara el ID del registro que se está editando con el existente
+     * en la base de datos.
+     * 
+     * @param dto               Registro que se está editando.
+     * @param compareTechnology Registro de la base de datos.
+     * 
+     * @throws AlreadyExistsException Excepción lanzada si hay error.
+     */
+    private void compareOfferingGetId(OfferingDto dto, OfferingEntity compareOffering) throws AlreadyExistsException {
+
+        if ((compareOffering != null) && (dto.getId() != compareOffering.getId()))
+            throw new AlreadyExistsException();
     }
 
 }

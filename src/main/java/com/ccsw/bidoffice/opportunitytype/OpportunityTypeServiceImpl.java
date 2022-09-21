@@ -76,19 +76,27 @@ public class OpportunityTypeServiceImpl implements OpportunityTypeService {
         OpportunityTypeEntity compareOpportunityType = this.opportunityTypeRepository
                 .getByName(opportunityTypeDto.getName());
 
-        if (compareOpportunityType != null) {
-            if (opportunityTypeDto.getId() != compareOpportunityType.getId()) {
-                throw new AlreadyExistsException();
-            }
-        }
+        compareOpportunityTypeGetId(opportunityTypeDto, compareOpportunityType);
 
         compareOpportunityType = this.opportunityTypeRepository.getByPriority(opportunityTypeDto.getPriority());
 
-        if (compareOpportunityType != null) {
-            if (opportunityTypeDto.getId() != compareOpportunityType.getId()) {
-                throw new AlreadyExistsException();
-            }
-        }
+        compareOpportunityTypeGetId(opportunityTypeDto, compareOpportunityType);
+    }
+
+    /**
+     * Método que compara el ID del registro que se está editando con el existente
+     * en la base de datos.
+     * 
+     * @param dto               Registro que se está editando.
+     * @param compareTechnology Registro de la base de datos.
+     * 
+     * @throws AlreadyExistsException Excepción lanzada si hay error.
+     */
+    private void compareOpportunityTypeGetId(OpportunityTypeDto opportunityTypeDto,
+            OpportunityTypeEntity compareOpportunityType) throws AlreadyExistsException {
+
+        if ((compareOpportunityType != null) && (opportunityTypeDto.getId() != compareOpportunityType.getId()))
+            throw new AlreadyExistsException();
     }
 
 }

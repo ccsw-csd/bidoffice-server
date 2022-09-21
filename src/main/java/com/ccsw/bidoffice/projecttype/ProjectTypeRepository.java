@@ -11,11 +11,8 @@ public interface ProjectTypeRepository extends CrudRepository<ProjectTypeEntity,
 
     List<ProjectTypeEntity> findAll(Sort sort);
 
-    boolean existsByPriority(Integer priority);
+    ProjectTypeEntity getByName(String name);
 
-    boolean existsByName(String name);
+    ProjectTypeEntity getByPriority(Integer priority);
 
-    boolean existsByIdIsNotAndName(Long id, String name);
-
-    boolean existsByIdIsNotAndPriority(Long id, Integer priority);
 }

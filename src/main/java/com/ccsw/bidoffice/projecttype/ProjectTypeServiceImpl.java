@@ -73,19 +73,40 @@ public class ProjectTypeServiceImpl implements ProjectTypeService {
         return this.projectTypeRepository.save(projectTypeEntity);
     }
 
+    /**
+     * Comprueba que no exista el mismo nombre de una tecnologia o la misma
+     * prioridad.
+     * 
+     * @param dto Objeto DTO de la tecnología a comprobar.
+     * 
+     * @throws AlreadyExistsException Excepción lanzada si el nombre o la prioridad
+     *                                coinciden con algún registro de la BBDD.
+     */
     private void checkWhenProjectTypeAttributesAlreadyUsed(ProjectTypeDto dto) throws AlreadyExistsException {
-        boolean nameExists = false;
-        boolean priorityExists = false;
 
-        if (dto.getId() == null) {
-            nameExists = this.projectTypeRepository.existsByName(dto.getName());
-            priorityExists = this.projectTypeRepository.existsByPriority(dto.getPriority());
-        } else {
-            nameExists = this.projectTypeRepository.existsByIdIsNotAndName(dto.getId(), dto.getName());
-            priorityExists = this.projectTypeRepository.existsByIdIsNotAndPriority(dto.getId(), dto.getPriority());
-        }
+        ProjectTypeEntity compareProjectType = this.projectTypeRepository.getByName(dto.getName());
 
-        if (nameExists || priorityExists)
+        compareProjectTypeGetId(dto, compareProjectType);
+
+        compareProjectType = this.projectTypeRepository.getByPriority(dto.getPriority());
+
+        compareProjectTypeGetId(dto, compareProjectType);
+
+    }
+
+    /**
+     * Método que compara el ID del registro que se está editando con el existente
+     * en la base de datos.
+     * 
+     * @param dto                Registro que se está editando.
+     * @param compareProjectType Registro de la base de datos.
+     * 
+     * @throws AlreadyExistsException Excepción lanzada si hay error.
+     */
+    private void compareProjectTypeGetId(ProjectTypeDto dto, ProjectTypeEntity compareProjectType)
+            throws AlreadyExistsException {
+
+        if ((compareProjectType != null) && (dto.getId() != compareProjectType.getId()))
             throw new AlreadyExistsException();
     }
 
