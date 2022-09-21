@@ -17,7 +17,7 @@ public class OfferingServiceImpl implements OfferingService {
 
     @Autowired
     OfferingRepository offeringRepository;
-    
+
     @Autowired
     OfferOfferingService offerOfferingService;
 
@@ -26,16 +26,16 @@ public class OfferingServiceImpl implements OfferingService {
 
         return this.offeringRepository.findAll(Sort.by(Sort.Direction.ASC, "priority"));
     }
-    
+
     @Override
     public void save(OfferingDto offeringDto) throws AlreadyExistsException, EntityNotFoundException {
-        
-    	checkIfAttributesAreWrong(offeringDto);
-    	
-    	OfferingEntity offeringEntity = null;
+
+        checkIfAttributesAreWrong(offeringDto);
+
+        OfferingEntity offeringEntity = null;
 
         if (offeringDto.getId() == null) {
-        	offeringEntity = new OfferingEntity();
+            offeringEntity = new OfferingEntity();
         } else {
             offeringEntity = getById(offeringDto.getId());
         }
@@ -45,7 +45,7 @@ public class OfferingServiceImpl implements OfferingService {
 
         this.offeringRepository.save(offeringEntity);
     }
-    
+
     @Override
     public void delete(Long id) throws AlreadyExistsException {
         if (this.offerOfferingService.checkExistsByOfferingId(id))
@@ -60,19 +60,21 @@ public class OfferingServiceImpl implements OfferingService {
     }
 
     private void checkIfAttributesAreWrong(OfferingDto dto) throws AlreadyExistsException {
-        Boolean nameExists;
-        Boolean priorityExists;
 
-        if (dto.getId() == null) {
-            nameExists = this.offeringRepository.existsByName(dto.getName());
-            priorityExists = this.offeringRepository.existsByPriority(dto.getPriority());
-        } else {
-            nameExists = this.offeringRepository.existsByIdIsNotAndName(dto.getId(), dto.getName());
-            priorityExists = this.offeringRepository.existsByIdIsNotAndPriority(dto.getId(), dto.getPriority());
+        OfferingEntity compareOffering = this.offeringRepository.getByName(dto.getName());
+
+        if (compareOffering != null) {
+            if (dto.getId() != compareOffering.getId()) {
+                throw new AlreadyExistsException();
+            }
         }
 
-        if (nameExists || priorityExists) {
-            throw new AlreadyExistsException();
+        compareOffering = this.offeringRepository.getByPriority(dto.getPriority());
+
+        if (compareOffering != null) {
+            if (dto.getId() != compareOffering.getId()) {
+                throw new AlreadyExistsException();
+            }
         }
     }
 

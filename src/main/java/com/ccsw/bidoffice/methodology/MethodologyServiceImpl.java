@@ -1,6 +1,5 @@
 package com.ccsw.bidoffice.methodology;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,19 +32,31 @@ public class MethodologyServiceImpl implements MethodologyService {
         return this.methodologyRepository.findAll(Sort.by(Sort.Direction.ASC, "priority"));
     }
 
+    /**
+     * Comprueba que al guardar o editar un Methodology, no existe otro registro con
+     * el mismo nombre o prioridad.
+     * 
+     * @param dto Objeto DTO a cotejar.
+     * 
+     * @throws AlreadyExistsException Excepción lanzada si ya existe otro registro
+     *                                con el mismo nombre o prioridad.
+     */
     private void checkIfValuesAreDuped(MethodologyDto dto) throws AlreadyExistsException {
-        Boolean dupeName, dupePriority;
 
-        if (dto.getId() != null) {
-            dupeName = this.methodologyRepository.existsByIdIsNotAndName(dto.getId(), dto.getName());
-            dupePriority = this.methodologyRepository.existsByIdIsNotAndPriority(dto.getId(), dto.getPriority());
-        } else {
-            dupeName = this.methodologyRepository.existsByName(dto.getName());
-            dupePriority = this.methodologyRepository.existsByPriority(dto.getPriority());
+        MethodologyEntity compareMethodology = this.methodologyRepository.getByName(dto.getName());
+
+        if (compareMethodology != null) {
+            if (dto.getId() != compareMethodology.getId()) {
+                throw new AlreadyExistsException();
+            }
         }
 
-        if (dupeName || dupePriority) {
-            throw new AlreadyExistsException();
+        compareMethodology = this.methodologyRepository.getByPriority(dto.getPriority());
+
+        if (compareMethodology != null) {
+            if (dto.getId() != compareMethodology.getId()) {
+                throw new AlreadyExistsException();
+            }
         }
     }
 
