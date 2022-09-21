@@ -11,10 +11,8 @@ public interface OpportunityTypeRepository extends CrudRepository<OpportunityTyp
 
     List<OpportunityTypeEntity> findAll(Sort sort);
 
-    boolean existsByIdNotAndPriority(Long id, Integer priority);
+    OpportunityTypeEntity getByName(String name);
 
-    boolean existsByIdNotAndName(Long id, String name);
-
-    boolean existsByNameOrPriority(String name, Integer priority);
+    OpportunityTypeEntity getByPriority(Integer priority);
 
 }

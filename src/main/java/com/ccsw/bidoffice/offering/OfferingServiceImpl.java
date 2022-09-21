@@ -59,6 +59,15 @@ public class OfferingServiceImpl implements OfferingService {
         return this.offeringRepository.findById(id).orElseThrow(EntityNotFoundException::new);
     }
 
+    /**
+     * Comprueba que al guardar o editar un Offering, no existe otro registro con el
+     * mismo nombre o prioridad.
+     * 
+     * @param dto Objeto DTO a cotejar.
+     * 
+     * @throws AlreadyExistsException Excepción lanzada si ya existe otro registro
+     *                                con el mismo nombre o prioridad.
+     */
     private void checkIfAttributesAreWrong(OfferingDto dto) throws AlreadyExistsException {
 
         OfferingEntity compareOffering = this.offeringRepository.getByName(dto.getName());

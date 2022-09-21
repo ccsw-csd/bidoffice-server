@@ -39,8 +39,7 @@ public class OpportunityTypeServiceImpl implements OpportunityTypeService {
     @Override
     public void save(OpportunityTypeDto opportunityTypeDto) throws AlreadyExistsException, EntityNotFoundException {
 
-        if (checkIfExistsAttributes(opportunityTypeDto))
-            throw new AlreadyExistsException();
+        this.checkIfExistsAttributes(opportunityTypeDto);
 
         OpportunityTypeEntity opportunityTypeEntity = null;
 
@@ -63,28 +62,33 @@ public class OpportunityTypeServiceImpl implements OpportunityTypeService {
                 .orElseThrow(EntityNotFoundException::new);
     }
 
-    private boolean checkIfExistsAttributes(OpportunityTypeDto opportunityTypeDto) throws AlreadyExistsException {
+    /**
+     * Comprueba que al guardar o editar un OpportunityType, no existe otro registro
+     * con el mismo nombre o prioridad.
+     * 
+     * @param dto Objeto DTO a cotejar.
+     * 
+     * @throws AlreadyExistsException Excepción lanzada si ya existe otro registro
+     *                                con el mismo nombre o prioridad.
+     */
+    private void checkIfExistsAttributes(OpportunityTypeDto opportunityTypeDto) throws AlreadyExistsException {
 
-        boolean checkForNewItem = false;
-        boolean checkForAnExistingItemName = false;
-        boolean checkForAnExistingItemPriority = false;
-        boolean results = false;
+        OpportunityTypeEntity compareOpportunityType = this.opportunityTypeRepository
+                .getByName(opportunityTypeDto.getName());
 
-        if (opportunityTypeDto.getId() == null) {
-            checkForNewItem = this.opportunityTypeRepository.existsByNameOrPriority(opportunityTypeDto.getName(),
-                    opportunityTypeDto.getPriority());
-        } else {
-            checkForAnExistingItemName = this.opportunityTypeRepository.existsByIdNotAndName(opportunityTypeDto.getId(),
-                    opportunityTypeDto.getName());
-
-            checkForAnExistingItemPriority = this.opportunityTypeRepository
-                    .existsByIdNotAndPriority(opportunityTypeDto.getId(), opportunityTypeDto.getPriority());
+        if (compareOpportunityType != null) {
+            if (opportunityTypeDto.getId() != compareOpportunityType.getId()) {
+                throw new AlreadyExistsException();
+            }
         }
 
-        if (checkForNewItem || checkForAnExistingItemName || checkForAnExistingItemPriority)
-            results = true;
+        compareOpportunityType = this.opportunityTypeRepository.getByPriority(opportunityTypeDto.getPriority());
 
-        return results;
+        if (compareOpportunityType != null) {
+            if (opportunityTypeDto.getId() != compareOpportunityType.getId()) {
+                throw new AlreadyExistsException();
+            }
+        }
     }
 
 }
