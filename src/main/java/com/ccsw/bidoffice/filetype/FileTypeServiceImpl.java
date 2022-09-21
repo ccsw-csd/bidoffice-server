@@ -58,19 +58,32 @@ public class FileTypeServiceImpl implements FileTypeService {
         this.fileTypeRepository.save(file);
     }
 
+    /**
+     * Comprueba que al guardar o editar un FileType, no existe otro registro con el
+     * mismo nombre o prioridad.
+     * 
+     * @param dto Objeto DTO a cotejar.
+     * 
+     * @throws AlreadyExistsException Excepción lanzada si ya existe otro registro
+     *                                con el mismo nombre o prioridad.
+     */
     private void checkIfValuesAreDuped(FileTypeDto dto) throws AlreadyExistsException {
-        Boolean dupeName, dupePriority;
 
-        if (dto.getId() != null) {
-            dupeName = this.fileTypeRepository.existsByIdIsNotAndName(dto.getId(), dto.getName());
-            dupePriority = this.fileTypeRepository.existsByIdIsNotAndPriority(dto.getId(), dto.getPriority());
-        } else {
-            dupeName = this.fileTypeRepository.existsByName(dto.getName());
-            dupePriority = this.fileTypeRepository.existsByPriority(dto.getPriority());
+        FileTypeEntity compareFileEntity = this.fileTypeRepository.getByName(dto.getName());
+
+        if (compareFileEntity != null) {
+            if (dto.getId() != compareFileEntity.getId()) {
+                throw new AlreadyExistsException();
+            }
         }
 
-        if (dupeName || dupePriority)
-            throw new AlreadyExistsException();
+        compareFileEntity = this.fileTypeRepository.getByPriority(dto.getPriority());
+
+        if (compareFileEntity != null) {
+            if (dto.getId() != compareFileEntity.getId()) {
+                throw new AlreadyExistsException();
+            }
+        }
     }
 
 }

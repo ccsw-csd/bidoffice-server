@@ -67,9 +67,7 @@ public class TechnologyServiceImpl implements TechnologyService {
         TechnologyEntity compareTechnology = this.technologyRepository.getByName(dto.getName());
 
         if (compareTechnology != null) {
-
             if (dto.getId() != compareTechnology.getId()) {
-
                 throw new AlreadyExistsException();
             }
         }
@@ -77,9 +75,7 @@ public class TechnologyServiceImpl implements TechnologyService {
         compareTechnology = this.technologyRepository.getByPriority(dto.getPriority());
 
         if (compareTechnology != null) {
-
             if (dto.getId() != compareTechnology.getId()) {
-
                 throw new AlreadyExistsException();
             }
         }

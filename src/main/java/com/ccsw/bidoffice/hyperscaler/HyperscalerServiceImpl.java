@@ -57,9 +57,7 @@ public class HyperscalerServiceImpl implements HyperscalerService {
         HyperscalerEntity compareHyperscaler = this.hyperscalerRepository.getByName(dto.getName());
 
         if (compareHyperscaler != null) {
-
             if (dto.getId() != compareHyperscaler.getId()) {
-
                 throw new AlreadyExistsException();
             }
         }
@@ -67,9 +65,7 @@ public class HyperscalerServiceImpl implements HyperscalerService {
         compareHyperscaler = this.hyperscalerRepository.getByPriority(dto.getPriority());
 
         if (compareHyperscaler != null) {
-
             if (dto.getId() != compareHyperscaler.getId()) {
-
                 throw new AlreadyExistsException();
             }
         }

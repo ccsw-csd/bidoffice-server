@@ -111,7 +111,7 @@ public class HyperscalerTest {
 
         this.hyperscalerServiceImpl.saveItem(hyperscalerDto);
 
-        when(this.hyperscalerRepository.existsByName(EXISTS_NAME)).thenReturn(true);
+        when(this.hyperscalerRepository.getByName(EXISTS_NAME)).thenReturn(hyperscalerEntity);
 
         assertThrows(AlreadyExistsException.class, () -> hyperscalerServiceImpl.saveItem(hyperscalerDto));
 
@@ -129,41 +129,7 @@ public class HyperscalerTest {
 
         this.hyperscalerServiceImpl.saveItem(hyperscalerDto);
 
-        when(this.hyperscalerRepository.existsByPriority(EXISTS_PRIORITY)).thenReturn(true);
-
-        assertThrows(AlreadyExistsException.class, () -> hyperscalerServiceImpl.saveItem(hyperscalerDto));
-
-        verify(this.hyperscalerRepository, never()).save(hyperscalerEntity);
-
-    }
-
-    @Test
-    public void editHyperscalerWhenNamesAreTheSameAndPriorityAlreadyExists() throws AlreadyExistsException {
-        HyperscalerDto hyperscalerDto = new HyperscalerDto();
-        hyperscalerDto.setId(EXISTS_ITEM_ID);
-        hyperscalerDto.setName(EXISTS_NAME);
-        hyperscalerDto.setPriority(EXISTS_PRIORITY);
-
-        HyperscalerEntity hyperscalerEntity = mock(HyperscalerEntity.class);
-
-        when(this.hyperscalerRepository.existsByIdIsNotAndPriority(EXISTS_ITEM_ID, EXISTS_PRIORITY)).thenReturn(true);
-
-        assertThrows(AlreadyExistsException.class, () -> hyperscalerServiceImpl.saveItem(hyperscalerDto));
-
-        verify(this.hyperscalerRepository, never()).save(hyperscalerEntity);
-
-    }
-
-    @Test
-    public void editHyperscalerWhenPrioritiesAreTheSameAndNameAlreadyExists() throws AlreadyExistsException {
-        HyperscalerDto hyperscalerDto = new HyperscalerDto();
-        hyperscalerDto.setId(EXISTS_ITEM_ID);
-        hyperscalerDto.setName(EXISTS_NAME);
-        hyperscalerDto.setPriority(EXISTS_PRIORITY);
-
-        HyperscalerEntity hyperscalerEntity = mock(HyperscalerEntity.class);
-
-        when(this.hyperscalerRepository.existsByIdIsNotAndName(EXISTS_ITEM_ID, EXISTS_NAME)).thenReturn(true);
+        when(this.hyperscalerRepository.getByPriority(EXISTS_PRIORITY)).thenReturn(hyperscalerEntity);
 
         assertThrows(AlreadyExistsException.class, () -> hyperscalerServiceImpl.saveItem(hyperscalerDto));
 
@@ -181,10 +147,9 @@ public class HyperscalerTest {
 
         HyperscalerEntity hyperscalerEntity = mock(HyperscalerEntity.class);
 
-        when(this.hyperscalerRepository.existsByIdIsNotAndName(EXISTS_ITEM_ID, NOT_EXISTING_NAME)).thenReturn(false);
+        when(this.hyperscalerRepository.getByName(NOT_EXISTING_NAME)).thenReturn(null);
 
-        when(this.hyperscalerRepository.existsByIdIsNotAndPriority(EXISTS_ITEM_ID, NOT_EXISTING_PRIORITY))
-                .thenReturn(false);
+        when(this.hyperscalerRepository.getByPriority(NOT_EXISTING_PRIORITY)).thenReturn(null);
 
         when(this.hyperscalerRepository.findById(EXISTS_ITEM_ID)).thenReturn(Optional.of(hyperscalerEntity));
 
