@@ -2,15 +2,15 @@ package com.ccsw.bidoffice.projecttype;
 
 import java.util.List;
 
-import com.ccsw.bidoffice.common.exception.AlreadyExistsException;
-import com.ccsw.bidoffice.common.exception.EntityNotFoundException;
-import com.ccsw.bidoffice.offerdataproject.OfferDataProjectService;
-import com.ccsw.bidoffice.projecttype.model.ProjectTypeDto;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import com.ccsw.bidoffice.common.exception.AlreadyExistsException;
+import com.ccsw.bidoffice.common.exception.EntityNotFoundException;
+import com.ccsw.bidoffice.offerdataproject.OfferDataProjectService;
+import com.ccsw.bidoffice.projecttype.model.ProjectTypeDto;
 import com.ccsw.bidoffice.projecttype.model.ProjectTypeEntity;
 
 @Service
@@ -45,7 +45,7 @@ public class ProjectTypeServiceImpl implements ProjectTypeService {
      */
     @Override
     public void delete(Long id) throws AlreadyExistsException {
-        if(this.offerDataProjectService.checkExistsByProjectTypeId(id))
+        if (this.offerDataProjectService.checkExistsByProjectTypeId(id))
             throw new AlreadyExistsException();
 
         this.projectTypeRepository.deleteById(id);
@@ -55,13 +55,14 @@ public class ProjectTypeServiceImpl implements ProjectTypeService {
      * {@inheritDoc}
      */
     @Override
-    public ProjectTypeEntity saveProjectType(ProjectTypeDto projectTypeDto) throws AlreadyExistsException, EntityNotFoundException {
+    public ProjectTypeEntity saveProjectType(ProjectTypeDto projectTypeDto)
+            throws AlreadyExistsException, EntityNotFoundException {
 
         this.checkWhenProjectTypeAttributesAlreadyUsed(projectTypeDto);
 
         ProjectTypeEntity projectTypeEntity = null;
 
-        if(projectTypeDto.getId()!=null){
+        if (projectTypeDto.getId() != null) {
             projectTypeEntity = get(projectTypeDto.getId());
         } else {
             projectTypeEntity = new ProjectTypeEntity();
@@ -76,7 +77,7 @@ public class ProjectTypeServiceImpl implements ProjectTypeService {
         boolean nameExists = false;
         boolean priorityExists = false;
 
-        if(dto.getId() == null){
+        if (dto.getId() == null) {
             nameExists = this.projectTypeRepository.existsByName(dto.getName());
             priorityExists = this.projectTypeRepository.existsByPriority(dto.getPriority());
         } else {
@@ -84,7 +85,7 @@ public class ProjectTypeServiceImpl implements ProjectTypeService {
             priorityExists = this.projectTypeRepository.existsByIdIsNotAndPriority(dto.getId(), dto.getPriority());
         }
 
-        if(nameExists || priorityExists)
+        if (nameExists || priorityExists)
             throw new AlreadyExistsException();
     }
 

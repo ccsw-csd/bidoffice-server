@@ -71,18 +71,26 @@ public class FileTypeServiceImpl implements FileTypeService {
 
         FileTypeEntity compareFileEntity = this.fileTypeRepository.getByName(dto.getName());
 
-        if (compareFileEntity != null) {
-            if (dto.getId() != compareFileEntity.getId()) {
-                throw new AlreadyExistsException();
-            }
-        }
+        compareFileTipeGetId(dto, compareFileEntity);
 
         compareFileEntity = this.fileTypeRepository.getByPriority(dto.getPriority());
 
-        if (compareFileEntity != null) {
-            if (dto.getId() != compareFileEntity.getId()) {
-                throw new AlreadyExistsException();
-            }
+        compareFileTipeGetId(dto, compareFileEntity);
+    }
+
+    /**
+     * Método que compara el ID del registro que se está editando con el existente
+     * en la base de datos.
+     * 
+     * @param dto               Registro que se está editando.
+     * @param compareTechnology Registro de la base de datos.
+     * 
+     * @throws AlreadyExistsException Excepción lanzada si hay error.
+     */
+    private void compareFileTipeGetId(FileTypeDto dto, FileTypeEntity compareFileEntity) throws AlreadyExistsException {
+
+        if ((compareFileEntity != null) && (dto.getId() != compareFileEntity.getId())) {
+            throw new AlreadyExistsException();
         }
     }
 

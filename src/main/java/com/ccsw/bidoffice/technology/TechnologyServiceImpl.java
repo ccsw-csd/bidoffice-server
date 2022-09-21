@@ -54,35 +54,6 @@ public class TechnologyServiceImpl implements TechnologyService {
     }
 
     /**
-     * Comprueba que no exista el mismo nombre de una tecnologia o la misma
-     * prioridad.
-     * 
-     * @param dto Objeto DTO de la tecnología a comprobar.
-     * 
-     * @throws AlreadyExistsException Excepción lanzada si el nombre o la prioridad
-     *                                coinciden con algún registro de la BBDD.
-     */
-    private void checkWhenTechAttributesAlreadyUsed(TechnologyDto dto) throws AlreadyExistsException {
-
-        TechnologyEntity compareTechnology = this.technologyRepository.getByName(dto.getName());
-
-        if (compareTechnology != null) {
-            if (dto.getId() != compareTechnology.getId()) {
-                throw new AlreadyExistsException();
-            }
-        }
-
-        compareTechnology = this.technologyRepository.getByPriority(dto.getPriority());
-
-        if (compareTechnology != null) {
-            if (dto.getId() != compareTechnology.getId()) {
-                throw new AlreadyExistsException();
-            }
-        }
-
-    }
-
-    /**
      * Guarda o modifica una tecnología existente en la base de datos.
      * 
      * @param dto Objeto DTO de la tecnología a guardar.
@@ -110,4 +81,40 @@ public class TechnologyServiceImpl implements TechnologyService {
 
     }
 
+    /**
+     * Comprueba que no exista el mismo nombre de una tecnologia o la misma
+     * prioridad.
+     * 
+     * @param dto Objeto DTO de la tecnología a comprobar.
+     * 
+     * @throws AlreadyExistsException Excepción lanzada si el nombre o la prioridad
+     *                                coinciden con algún registro de la BBDD.
+     */
+    private void checkWhenTechAttributesAlreadyUsed(TechnologyDto dto) throws AlreadyExistsException {
+
+        TechnologyEntity compareTechnology = this.technologyRepository.getByName(dto.getName());
+
+        compareTechnologyGetId(dto, compareTechnology);
+
+        compareTechnology = this.technologyRepository.getByPriority(dto.getPriority());
+
+        compareTechnologyGetId(dto, compareTechnology);
+
+    }
+
+    /**
+     * Método que compara el ID del registro que se está editando con el existente
+     * en la base de datos.
+     * 
+     * @param dto               Registro que se está editando.
+     * @param compareTechnology Registro de la base de datos.
+     * 
+     * @throws AlreadyExistsException Excepción lanzada si hay error.
+     */
+    private void compareTechnologyGetId(TechnologyDto dto, TechnologyEntity compareTechnology)
+            throws AlreadyExistsException {
+
+        if ((compareTechnology != null) && (dto.getId() != compareTechnology.getId()))
+            throw new AlreadyExistsException();
+    }
 }

@@ -32,34 +32,6 @@ public class MethodologyServiceImpl implements MethodologyService {
         return this.methodologyRepository.findAll(Sort.by(Sort.Direction.ASC, "priority"));
     }
 
-    /**
-     * Comprueba que al guardar o editar un Methodology, no existe otro registro con
-     * el mismo nombre o prioridad.
-     * 
-     * @param dto Objeto DTO a cotejar.
-     * 
-     * @throws AlreadyExistsException Excepción lanzada si ya existe otro registro
-     *                                con el mismo nombre o prioridad.
-     */
-    private void checkIfValuesAreDuped(MethodologyDto dto) throws AlreadyExistsException {
-
-        MethodologyEntity compareMethodology = this.methodologyRepository.getByName(dto.getName());
-
-        if (compareMethodology != null) {
-            if (dto.getId() != compareMethodology.getId()) {
-                throw new AlreadyExistsException();
-            }
-        }
-
-        compareMethodology = this.methodologyRepository.getByPriority(dto.getPriority());
-
-        if (compareMethodology != null) {
-            if (dto.getId() != compareMethodology.getId()) {
-                throw new AlreadyExistsException();
-            }
-        }
-    }
-
     @Override
     public void save(MethodologyDto dto) throws AlreadyExistsException, EntityNotFoundException {
         MethodologyEntity methodology = null;
@@ -82,5 +54,41 @@ public class MethodologyServiceImpl implements MethodologyService {
             throw new AlreadyExistsException();
 
         this.methodologyRepository.deleteById(id);
+    }
+
+    /**
+     * Comprueba que al guardar o editar un Methodology, no existe otro registro con
+     * el mismo nombre o prioridad.
+     * 
+     * @param dto Objeto DTO a cotejar.
+     * 
+     * @throws AlreadyExistsException Excepción lanzada si ya existe otro registro
+     *                                con el mismo nombre o prioridad.
+     */
+    private void checkIfValuesAreDuped(MethodologyDto dto) throws AlreadyExistsException {
+
+        MethodologyEntity compareMethodology = this.methodologyRepository.getByName(dto.getName());
+
+        compareMethodologyGetId(dto, compareMethodology);
+
+        compareMethodology = this.methodologyRepository.getByPriority(dto.getPriority());
+
+        compareMethodologyGetId(dto, compareMethodology);
+    }
+
+    /**
+     * Método que compara el ID del registro que se está editando con el existente
+     * en la base de datos.
+     * 
+     * @param dto               Registro que se está editando.
+     * @param compareTechnology Registro de la base de datos.
+     * 
+     * @throws AlreadyExistsException Excepción lanzada si hay error.
+     */
+    private void compareMethodologyGetId(MethodologyDto dto, MethodologyEntity compareMethodology)
+            throws AlreadyExistsException {
+
+        if ((compareMethodology != null) && (dto.getId() != compareMethodology.getId()))
+            throw new AlreadyExistsException();
     }
 }
