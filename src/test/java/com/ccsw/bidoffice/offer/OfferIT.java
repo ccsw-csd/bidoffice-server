@@ -281,8 +281,6 @@ public class OfferIT extends BaseITAbstract {
 
         assertNotNull(response);
         assertEquals(opportunityStatusDto.getName(), offer.getBody().getOpportunityStatus().getName());
-        assertEquals(opportunityStatusDto.getName(), offer.getBody().getChangeStatus().stream()
-                .filter(item -> item.getId() == ID_EXIST).findFirst().get().getOpportunityStatus().getName());
     }
 
 }

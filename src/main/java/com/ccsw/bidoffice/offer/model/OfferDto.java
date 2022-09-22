@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 
+import com.ccsw.bidoffice.common.converter.DateToLocalDateConverter;
 import com.ccsw.bidoffice.offerchangestatus.model.OfferChangeStatusDto;
 import com.ccsw.bidoffice.offerdatachapter.model.OfferDataChapterDto;
 import com.ccsw.bidoffice.offerdatafile.model.OfferDataFileDto;
@@ -17,6 +18,7 @@ import com.ccsw.bidoffice.opportunitytype.model.OpportunityTypeDto;
 import com.ccsw.bidoffice.person.model.PersonDto;
 import com.ccsw.bidoffice.sector.model.SectorDto;
 import com.ccsw.bidoffice.technology.model.TechnologyDto;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 public class OfferDto {
 
@@ -28,6 +30,7 @@ public class OfferDto {
 
     private PersonDto requestedBy;
 
+    @JsonDeserialize(converter = DateToLocalDateConverter.class)
     private LocalDate requestedDate;
 
     private PersonDto managedBy;
@@ -36,8 +39,10 @@ public class OfferDto {
 
     private SectorDto sector;
 
+    @JsonDeserialize(converter = DateToLocalDateConverter.class)
     private LocalDate goNogoDate;
 
+    @JsonDeserialize(converter = DateToLocalDateConverter.class)
     private LocalDate deliveryDate;
 
     private OpportunityStatusDto opportunityStatus;
@@ -250,13 +255,5 @@ public class OfferDto {
 
     public void setTracings(Set<OfferTracingDto> tracings) {
         this.tracings = tracings;
-    }
-
-    public Set<OfferChangeStatusDto> getChangeStatus() {
-        return changeStatus;
-    }
-
-    public void setChangeStatus(Set<OfferChangeStatusDto> changeStatus) {
-        this.changeStatus = changeStatus;
     }
 }
