@@ -121,7 +121,7 @@ public class TechnologyIT extends BaseITAbstract {
 
         technologyDto.setId(1L);
         technologyDto.setName("Zen++");
-        technologyDto.setPriority(200L);
+        technologyDto.setPriority(200);
 
         ResponseEntity<?> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH, HttpMethod.PUT, httpEntity,
                 Void.class);
@@ -153,7 +153,7 @@ public class TechnologyIT extends BaseITAbstract {
 
         technologyDto.setId(1L);
         technologyDto.setName("Quantum++");
-        technologyDto.setPriority(200L);
+        technologyDto.setPriority(200);
 
         ResponseEntity<?> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH, HttpMethod.PUT, httpEntity,
                 Void.class);
@@ -177,7 +177,7 @@ public class TechnologyIT extends BaseITAbstract {
 
         technologyDto.setId(1L);
         technologyDto.setName("AnguriñaJS");
-        technologyDto.setPriority(1L);
+        technologyDto.setPriority(1);
 
         ResponseEntity<?> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH, HttpMethod.PUT, httpEntity,
                 Void.class);
@@ -209,7 +209,7 @@ public class TechnologyIT extends BaseITAbstract {
 
         technologyDto.setId(1L);
         technologyDto.setName("Sushi++");
-        technologyDto.setPriority(3L);
+        technologyDto.setPriority(3);
 
         ResponseEntity<?> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH, HttpMethod.PUT, httpEntity,
                 Void.class);
@@ -231,7 +231,7 @@ public class TechnologyIT extends BaseITAbstract {
 
         technologyDto.setId(1L);
         technologyDto.setName("admin");
-        technologyDto.setPriority(20L);
+        technologyDto.setPriority(20);
 
         ResponseEntity<?> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH, HttpMethod.PUT, httpEntity,
                 Void.class);
@@ -263,7 +263,7 @@ public class TechnologyIT extends BaseITAbstract {
         HttpEntity<?> httpEntity = new HttpEntity<>(technologyDto, getHeaders());
 
         technologyDto.setName("Prolog");
-        technologyDto.setPriority(4L);
+        technologyDto.setPriority(4);
 
         ResponseEntity<?> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH, HttpMethod.PUT, httpEntity,
                 Void.class);
@@ -295,7 +295,7 @@ public class TechnologyIT extends BaseITAbstract {
         HttpEntity<?> httpEntity = new HttpEntity<>(technologyDto, getHeaders());
 
         technologyDto.setName("admin");
-        technologyDto.setPriority(4L);
+        technologyDto.setPriority(4);
 
         ResponseEntity<?> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH, HttpMethod.PUT, httpEntity,
                 Void.class);
@@ -317,7 +317,7 @@ public class TechnologyIT extends BaseITAbstract {
         HttpEntity<?> httpEntity = new HttpEntity<>(technologyDto, getHeaders());
 
         technologyDto.setName("New Name");
-        technologyDto.setPriority(1L);
+        technologyDto.setPriority(1);
 
         ResponseEntity<?> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH, HttpMethod.PUT, httpEntity,
                 Void.class);

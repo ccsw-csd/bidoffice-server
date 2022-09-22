@@ -31,15 +31,15 @@ public class OfferingTest {
 
     @Mock
     private OfferingRepository offeringRepository;
-    
+
     @Mock
     private OfferOfferingServiceImpl offerOfferingServiceImpl;
 
     @InjectMocks
     private OfferingServiceImpl offeringServiceImpl;
-    
+
     public static final Integer TOTAL_OFFERING = 1;
-    
+
     private static final String NOT_EXISTING_NAME = "Test 1";
     private static final Integer NOT_EXISTING_PRIORITY = 18;
 
@@ -110,7 +110,7 @@ public class OfferingTest {
 
         this.offeringServiceImpl.save(offeringDto);
 
-        when(this.offeringRepository.existsByName(EXISTS_NAME)).thenReturn(true);
+        when(this.offeringRepository.getByName(EXISTS_NAME)).thenReturn(offeringEntity);
 
         assertThrows(AlreadyExistsException.class, () -> offeringServiceImpl.save(offeringDto));
 
@@ -128,7 +128,7 @@ public class OfferingTest {
 
         this.offeringServiceImpl.save(offeringDto);
 
-        when(this.offeringRepository.existsByPriority(EXISTS_PRIORITY)).thenReturn(true);
+        when(this.offeringRepository.getByPriority(EXISTS_PRIORITY)).thenReturn(offeringEntity);
 
         assertThrows(AlreadyExistsException.class, () -> offeringServiceImpl.save(offeringDto));
 
@@ -145,7 +145,7 @@ public class OfferingTest {
 
         OfferingEntity offeringEntity = mock(OfferingEntity.class);
 
-        when(this.offeringRepository.existsByIdIsNotAndPriority(EXISTS_ITEM_ID, EXISTS_PRIORITY)).thenReturn(true);
+        when(this.offeringRepository.getByPriority(EXISTS_PRIORITY)).thenReturn(offeringEntity);
 
         assertThrows(AlreadyExistsException.class, () -> offeringServiceImpl.save(offeringDto));
 
@@ -162,7 +162,7 @@ public class OfferingTest {
 
         OfferingEntity offeringEntity = mock(OfferingEntity.class);
 
-        when(this.offeringRepository.existsByIdIsNotAndName(EXISTS_ITEM_ID, EXISTS_NAME)).thenReturn(true);
+        when(this.offeringRepository.getByName(EXISTS_NAME)).thenReturn(offeringEntity);
 
         assertThrows(AlreadyExistsException.class, () -> offeringServiceImpl.save(offeringDto));
 
@@ -180,10 +180,9 @@ public class OfferingTest {
 
         OfferingEntity offeringEntity = mock(OfferingEntity.class);
 
-        when(this.offeringRepository.existsByIdIsNotAndName(EXISTS_ITEM_ID, NOT_EXISTING_NAME)).thenReturn(false);
+        when(this.offeringRepository.getByName(NOT_EXISTING_NAME)).thenReturn(null);
 
-        when(this.offeringRepository.existsByIdIsNotAndPriority(EXISTS_ITEM_ID, NOT_EXISTING_PRIORITY))
-                .thenReturn(false);
+        when(this.offeringRepository.getByPriority(NOT_EXISTING_PRIORITY)).thenReturn(null);
 
         when(this.offeringRepository.findById(EXISTS_ITEM_ID)).thenReturn(Optional.of(offeringEntity));
 

@@ -10,7 +10,6 @@ import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -31,9 +30,14 @@ public class OpportunityTypeTest {
 
     public static final Integer TOTAL_OPPORTUNITY_TYPE = 1;
 
+    public static final Long EXISTING_ID = 1L;
     public static final Long NOT_EXISTING_ID = 2L;
 
-    public static final Long EXISTING_ID = 1L;
+    public static final String NOT_EXISTING_NAME = "Defensa";
+    public static final String EXISTS_NAME = "Otros";
+
+    public static final int NOT_EXISTING_PRIORITY = 20;
+    public static final int EXISTS_PRIORITY = 1;
 
     @Mock
     private OpportunityTypeRepository opportunityTypeRepository;
@@ -81,97 +85,55 @@ public class OpportunityTypeTest {
     @Test
     public void saveNewItemWithoutDuppedAttributesShouldSave() throws AlreadyExistsException, EntityNotFoundException {
 
-        String name = "Name doesn't exists";
-        Integer priority = 10;
+        OpportunityTypeDto opportunityTypeDto = new OpportunityTypeDto();
+        opportunityTypeDto.setName(NOT_EXISTING_NAME);
+        opportunityTypeDto.setPriority(NOT_EXISTING_PRIORITY);
 
-        when(this.opportunityTypeRepository.existsByNameOrPriority(name, priority)).thenReturn(false);
+        ArgumentCaptor<OpportunityTypeEntity> opportunityTypeEntity = ArgumentCaptor
+                .forClass(OpportunityTypeEntity.class);
 
-        OpportunityTypeDto dto = new OpportunityTypeDto();
-        dto.setName(name);
-        dto.setPriority(priority);
-
-        ArgumentCaptor<OpportunityTypeEntity> opportunityTypeEntity = ArgumentCaptor.forClass(OpportunityTypeEntity.class);
-
-        this.opportunityTypeServiceImpl.save(dto);
+        this.opportunityTypeServiceImpl.save(opportunityTypeDto);
 
         verify(this.opportunityTypeRepository).save(opportunityTypeEntity.capture());
-    }
 
-    @Test
-    public void saveNewItemWithDupplicatedAttributesShouldThrowError() throws AlreadyExistsException {
-        String name = "Name exists";
-        Integer priority = 10;
-        when(this.opportunityTypeRepository.existsByNameOrPriority(name, priority)).thenReturn(true);
-
-        OpportunityTypeDto dto = new OpportunityTypeDto();
-        dto.setName(name);
-        dto.setPriority(priority);
-
-        ArgumentCaptor<OpportunityTypeEntity> opportunityTypeEntity = ArgumentCaptor.forClass(OpportunityTypeEntity.class);
-
-        assertThrows(AlreadyExistsException.class, () -> this.opportunityTypeServiceImpl.save(dto));
-        verify(this.opportunityTypeRepository, never()).save(opportunityTypeEntity.capture());
-    }
-
-    @Test
-    public void editItemWithoutDupplicatedAttributesShouldEdit()
-            throws AlreadyExistsException, EntityNotFoundException {
-        Long id = 10L;
-        String name = "Name doesn't exists";
-        Integer priority = 10;
-
-        when(this.opportunityTypeRepository.existsByIdNotAndName(id, name)).thenReturn(false);
-        when(this.opportunityTypeRepository.existsByIdNotAndPriority(id, priority)).thenReturn(false);
-
-        OpportunityTypeDto dto = new OpportunityTypeDto();
-        dto.setId(id);
-        dto.setName(name);
-        dto.setPriority(priority);
-
-        OpportunityTypeEntity opportunityTypeEntity = mock(OpportunityTypeEntity.class);
-        when(this.opportunityTypeRepository.findById(id)).thenReturn(Optional.of(opportunityTypeEntity));
-
-        this.opportunityTypeServiceImpl.save(dto);
-
-        verify(this.opportunityTypeRepository).save(opportunityTypeEntity);
+        assertEquals(NOT_EXISTING_NAME, opportunityTypeEntity.getValue().getName());
+        assertEquals(NOT_EXISTING_PRIORITY, opportunityTypeEntity.getValue().getPriority());
     }
 
     @Test
     public void editItemWithDupplicatedNameShouldThrowError() throws AlreadyExistsException, EntityNotFoundException {
-        Long id = 10L;
-        String name = "Name exists";
-        Integer priority = 10;
 
-        when(this.opportunityTypeRepository.existsByIdNotAndName(id, name)).thenReturn(true);
+        OpportunityTypeDto opportunityTypeDto = new OpportunityTypeDto();
+        opportunityTypeDto.setName(EXISTS_NAME);
+        opportunityTypeDto.setPriority(NOT_EXISTING_PRIORITY);
 
-        OpportunityTypeDto dto = new OpportunityTypeDto();
-        dto.setId(id);
-        dto.setName(name);
-        dto.setPriority(priority);
+        OpportunityTypeEntity opportunityTypeEntity = mock(OpportunityTypeEntity.class);
 
-        ArgumentCaptor<OpportunityTypeEntity> opportunityTypeEntity = ArgumentCaptor.forClass(OpportunityTypeEntity.class);
+        this.opportunityTypeServiceImpl.save(opportunityTypeDto);
 
-        assertThrows(AlreadyExistsException.class, () -> this.opportunityTypeServiceImpl.save(dto));
-        verify(this.opportunityTypeRepository, never()).save(opportunityTypeEntity.capture());
+        when(this.opportunityTypeRepository.getByName(EXISTS_NAME)).thenReturn(opportunityTypeEntity);
+
+        assertThrows(AlreadyExistsException.class, () -> opportunityTypeServiceImpl.save(opportunityTypeDto));
+
+        verify(this.opportunityTypeRepository, never()).save(opportunityTypeEntity);
     }
 
     @Test
     public void editItemWithDupplicatedPriorityShouldThrowError()
             throws AlreadyExistsException, EntityNotFoundException {
-        Long id = 10L;
-        String name = "Name doesn't exists";
-        Integer priority = 10;
 
-        when(this.opportunityTypeRepository.existsByIdNotAndPriority(id, priority)).thenReturn(true);
+        OpportunityTypeDto opportunityTypeDto = new OpportunityTypeDto();
+        opportunityTypeDto.setName(NOT_EXISTING_NAME);
+        opportunityTypeDto.setPriority(EXISTS_PRIORITY);
 
-        OpportunityTypeDto dto = new OpportunityTypeDto();
-        dto.setId(id);
-        dto.setName(name);
-        dto.setPriority(priority);
+        OpportunityTypeEntity opportunityTypeEntity = mock(OpportunityTypeEntity.class);
 
-        ArgumentCaptor<OpportunityTypeEntity> opportunityTypeEntity = ArgumentCaptor.forClass(OpportunityTypeEntity.class);
+        this.opportunityTypeServiceImpl.save(opportunityTypeDto);
 
-        assertThrows(AlreadyExistsException.class, () -> this.opportunityTypeServiceImpl.save(dto));
-        verify(this.opportunityTypeRepository, never()).save(opportunityTypeEntity.capture());
+        when(this.opportunityTypeRepository.getByPriority(EXISTS_PRIORITY)).thenReturn(opportunityTypeEntity);
+
+        assertThrows(AlreadyExistsException.class, () -> opportunityTypeServiceImpl.save(opportunityTypeDto));
+
+        verify(this.opportunityTypeRepository, never()).save(opportunityTypeEntity);
     }
 }

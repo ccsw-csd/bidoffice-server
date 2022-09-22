@@ -7,8 +7,6 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.verify;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -85,7 +83,7 @@ public class MethodologyTest {
         methodologyDto.setName(EXISTS_NAME);
 
         MethodologyEntity methodology = mock(MethodologyEntity.class);
-        when(methodologyRepository.existsByIdIsNotAndName(EXISTS_ID, EXISTS_NAME)).thenReturn(true);
+        when(methodologyRepository.getByName(EXISTS_NAME)).thenReturn(methodology);
 
         assertThrows(AlreadyExistsException.class, () -> methodologyServiceImpl.save(methodologyDto));
 
@@ -99,23 +97,7 @@ public class MethodologyTest {
         methodologyDto.setPriority(EXISTS_PRIORITY);
 
         MethodologyEntity methodology = mock(MethodologyEntity.class);
-        when(methodologyRepository.existsByIdIsNotAndPriority(EXISTS_ID, EXISTS_PRIORITY)).thenReturn(true);
-
-        assertThrows(AlreadyExistsException.class, () -> methodologyServiceImpl.save(methodologyDto));
-
-        verify(methodologyRepository, never()).save(methodology);
-    }
-
-    @Test
-    public void saveExistsMethodologyAndNameAndPriorityShouldThrowException() throws AlreadyExistsException {
-        MethodologyDto methodologyDto = new MethodologyDto();
-        methodologyDto.setId(EXISTS_ID);
-        methodologyDto.setName(EXISTS_NAME);
-        methodologyDto.setPriority(EXISTS_PRIORITY);
-
-        MethodologyEntity methodology = mock(MethodologyEntity.class);
-        when(methodologyRepository.existsByIdIsNotAndName(EXISTS_ID, EXISTS_NAME)).thenReturn(true);
-        when(methodologyRepository.existsByIdIsNotAndPriority(EXISTS_ID, EXISTS_PRIORITY)).thenReturn(true);
+        when(methodologyRepository.getByPriority(EXISTS_PRIORITY)).thenReturn(methodology);
 
         assertThrows(AlreadyExistsException.class, () -> methodologyServiceImpl.save(methodologyDto));
 

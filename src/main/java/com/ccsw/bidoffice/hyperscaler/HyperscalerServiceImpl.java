@@ -43,22 +43,6 @@ public class HyperscalerServiceImpl implements HyperscalerService {
         return this.hyperscalerRepository.findById(id).orElseThrow(EntityNotFoundException::new);
     }
 
-    private void checkWhenAttributesAreWrong(HyperscalerDto dto) throws AlreadyExistsException {
-        boolean nameExists = false, priorityExists = false;
-
-        if (dto.getId() == null) {
-            nameExists = this.hyperscalerRepository.existsByName(dto.getName());
-            priorityExists = this.hyperscalerRepository.existsByPriority(dto.getPriority());
-        } else {
-            nameExists = this.hyperscalerRepository.existsByIdIsNotAndName(dto.getId(), dto.getName());
-            priorityExists = this.hyperscalerRepository.existsByIdIsNotAndPriority(dto.getId(), dto.getPriority());
-        }
-
-        if (nameExists || priorityExists)
-            throw new AlreadyExistsException();
-
-    }
-
     @Override
     public void saveItem(HyperscalerDto hyperscalerDto) throws AlreadyExistsException, EntityNotFoundException {
 
@@ -78,4 +62,41 @@ public class HyperscalerServiceImpl implements HyperscalerService {
 
         this.hyperscalerRepository.save(hyperscalerEntity);
     }
+
+    /**
+     * Comprueba que al guardar o editar un Hyperscaler, no existe otro registro con
+     * el mismo nombre o prioridad.
+     * 
+     * @param dto Objeto DTO a cotejar.
+     * 
+     * @throws AlreadyExistsException Excepción lanzada si ya existe otro registro
+     *                                con el mismo nombre o prioridad.
+     */
+    private void checkWhenAttributesAreWrong(HyperscalerDto dto) throws AlreadyExistsException {
+
+        HyperscalerEntity compareHyperscaler = this.hyperscalerRepository.getByName(dto.getName());
+
+        compareHyperScalerGetId(dto, compareHyperscaler);
+
+        compareHyperscaler = this.hyperscalerRepository.getByPriority(dto.getPriority());
+
+        compareHyperScalerGetId(dto, compareHyperscaler);
+    }
+
+    /**
+     * Método que compara el ID del registro que se está editando con el existente
+     * en la base de datos.
+     * 
+     * @param dto               Registro que se está editando.
+     * @param compareTechnology Registro de la base de datos.
+     * 
+     * @throws AlreadyExistsException Excepción lanzada si hay error.
+     */
+    private void compareHyperScalerGetId(HyperscalerDto dto, HyperscalerEntity compareHyperscaler)
+            throws AlreadyExistsException {
+
+        if ((compareHyperscaler != null) && (dto.getId() != compareHyperscaler.getId()))
+            throw new AlreadyExistsException();
+    }
+
 }

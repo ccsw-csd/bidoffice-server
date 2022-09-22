@@ -100,20 +100,27 @@ public class SectorServiceImpl implements SectorService {
     private void checkWhenSectorAttributesAlreadyUsed(SectorDto dto)
             throws AlreadyExistsException, UpdateConflictException {
 
-        boolean nameExists = false;
-        boolean priorityExists = false;
+        SectorEntity compareSector = this.sectorRepository.getByName(dto.getName());
 
-        if (dto.getId() == null) {
-            nameExists = this.sectorRepository.existsByName(dto.getName());
-            priorityExists = this.sectorRepository.existsByPriority(dto.getPriority());
-        } else {
-            nameExists = this.sectorRepository.existsByIdIsNotAndName(dto.getId(), dto.getName());
-            priorityExists = this.sectorRepository.existsByIdIsNotAndPriority(dto.getId(), dto.getPriority());
-        }
+        compareSectorGetId(dto, compareSector);
 
-        if (nameExists || priorityExists)
-            throw new UpdateConflictException(
-                    "El registro tiene la misma prioridad o nombre que otro registro y no se puede guardar");
+        compareSector = this.sectorRepository.getByPriority(dto.getPriority());
+
+        compareSectorGetId(dto, compareSector);
     }
 
+    /**
+     * Método que compara el ID del registro que se está editando con el existente
+     * en la base de datos.
+     * 
+     * @param dto           Registro que se está editando.
+     * @param compareSector Registro de la base de datos.
+     * 
+     * @throws UpdateConflictException Excepción lanzada si hay error.
+     */
+    private void compareSectorGetId(SectorDto dto, SectorEntity compareSector) throws AlreadyExistsException {
+
+        if ((compareSector != null) && (dto.getId() != compareSector.getId()))
+            throw new AlreadyExistsException();
+    }
 }

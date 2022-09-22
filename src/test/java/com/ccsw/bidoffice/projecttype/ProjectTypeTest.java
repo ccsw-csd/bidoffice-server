@@ -1,16 +1,19 @@
 package com.ccsw.bidoffice.projecttype;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.lenient;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import com.ccsw.bidoffice.common.exception.AlreadyExistsException;
-import com.ccsw.bidoffice.common.exception.EntityNotFoundException;
-import com.ccsw.bidoffice.offerdataproject.OfferDataProjectServiceImpl;
-import com.ccsw.bidoffice.projecttype.model.ProjectTypeDto;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -19,6 +22,10 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Sort;
 
+import com.ccsw.bidoffice.common.exception.AlreadyExistsException;
+import com.ccsw.bidoffice.common.exception.EntityNotFoundException;
+import com.ccsw.bidoffice.offerdataproject.OfferDataProjectServiceImpl;
+import com.ccsw.bidoffice.projecttype.model.ProjectTypeDto;
 import com.ccsw.bidoffice.projecttype.model.ProjectTypeEntity;
 
 @ExtendWith(MockitoExtension.class)
@@ -81,7 +88,7 @@ public class ProjectTypeTest {
     }
 
     @Test
-    public void  modifyWithExistIdShouldModifyProjectType() throws AlreadyExistsException, EntityNotFoundException {
+    public void modifyWithExistIdShouldModifyProjectType() throws AlreadyExistsException, EntityNotFoundException {
         this.projectTypeDto = new ProjectTypeDto();
         this.projectTypeDto.setId(EXISTS_PROJECTTYPE_ID);
         this.projectTypeDto.setName("");
@@ -99,15 +106,15 @@ public class ProjectTypeTest {
     }
 
     @Test
-    public void modifyWithNotExistIdShouldThrowException() throws AlreadyExistsException, EntityNotFoundException{
+    public void modifyWithNotExistIdShouldThrowException() throws AlreadyExistsException, EntityNotFoundException {
         this.projectTypeDto = new ProjectTypeDto();
         this.projectTypeDto.setId(NOT_EXISTS_PROJECTTYPE_ID);
         ProjectTypeEntity projectTypeEntity = mock(ProjectTypeEntity.class);
         doReturn(Optional.empty()).when(this.projectTypeRepository).findById(NOT_EXISTS_PROJECTTYPE_ID);
 
-        try{
+        try {
             this.projectTypeServiceImpl.saveProjectType(projectTypeDto);
-        } catch(EntityNotFoundException e) {
+        } catch (EntityNotFoundException e) {
         }
 
         verify(this.projectTypeRepository, never()).save(projectTypeEntity);
@@ -131,10 +138,8 @@ public class ProjectTypeTest {
         assertEquals(NOT_EXISTS_PROJECTTYPE_PRIORITY, projectTypeEntity.getValue().getPriority());
     }
 
-
     @Test
-    public void saveNewProjectTypeWhenNameExistsShouldNotSave()
-            throws AlreadyExistsException, EntityNotFoundException {
+    public void saveNewProjectTypeWhenNameExistsShouldNotSave() throws AlreadyExistsException, EntityNotFoundException {
 
         this.projectTypeDto = new ProjectTypeDto();
         this.projectTypeDto.setName(EXISTS_PROJECTTYPE_NAME);
@@ -144,7 +149,7 @@ public class ProjectTypeTest {
 
         this.projectTypeServiceImpl.saveProjectType(projectTypeDto);
 
-        when(this.projectTypeRepository.existsByName(EXISTS_PROJECTTYPE_NAME)).thenReturn(true);
+        when(this.projectTypeRepository.getByName(EXISTS_PROJECTTYPE_NAME)).thenReturn(projectTypeEntity);
 
         assertThrows(AlreadyExistsException.class, () -> projectTypeServiceImpl.saveProjectType(projectTypeDto));
 
@@ -164,7 +169,7 @@ public class ProjectTypeTest {
 
         this.projectTypeServiceImpl.saveProjectType(projectTypeDto);
 
-        when(this.projectTypeRepository.existsByPriority(EXISTS_PROJECTTYPE_PRIORITY)).thenReturn(true);
+        when(this.projectTypeRepository.getByPriority(EXISTS_PROJECTTYPE_PRIORITY)).thenReturn(projectTypeEntity);
 
         assertThrows(AlreadyExistsException.class, () -> projectTypeServiceImpl.saveProjectType(projectTypeDto));
 
@@ -181,7 +186,9 @@ public class ProjectTypeTest {
 
         ProjectTypeEntity projectTypeEntity = mock(ProjectTypeEntity.class);
 
-        when(this.projectTypeRepository.existsByIdIsNotAndName(EXISTS_PROJECTTYPE_ID, EXISTS_PROJECTTYPE_NAME)).thenReturn(true);
+        lenient().when(this.projectTypeRepository.getByName(EXISTS_PROJECTTYPE_NAME)).thenReturn(projectTypeEntity);
+        lenient().when(this.projectTypeRepository.getByPriority(EXISTS_PROJECTTYPE_PRIORITY))
+                .thenReturn(projectTypeEntity);
 
         assertThrows(AlreadyExistsException.class, () -> projectTypeServiceImpl.saveProjectType(projectTypeDto));
 
@@ -199,9 +206,9 @@ public class ProjectTypeTest {
 
         ProjectTypeEntity projectTypeEntity = mock(ProjectTypeEntity.class);
 
-        when(this.projectTypeRepository.existsByIdIsNotAndName(EXISTS_PROJECTTYPE_ID, NOT_EXISTS_PROJECTTYPE_NAME)).thenReturn(false);
+        when(this.projectTypeRepository.getByName(NOT_EXISTS_PROJECTTYPE_NAME)).thenReturn(null);
 
-        when(this.projectTypeRepository.existsByIdIsNotAndPriority(EXISTS_PROJECTTYPE_ID, NOT_EXISTS_PROJECTTYPE_PRIORITY)).thenReturn(false);
+        when(this.projectTypeRepository.getByPriority(NOT_EXISTS_PROJECTTYPE_PRIORITY)).thenReturn(null);
 
         when(this.projectTypeRepository.findById(EXISTS_PROJECTTYPE_ID)).thenReturn(Optional.of(projectTypeEntity));
 
