@@ -17,7 +17,7 @@ public class OfferingServiceImpl implements OfferingService {
 
     @Autowired
     OfferingRepository offeringRepository;
-    
+
     @Autowired
     OfferOfferingService offerOfferingService;
 
@@ -26,16 +26,16 @@ public class OfferingServiceImpl implements OfferingService {
 
         return this.offeringRepository.findAll(Sort.by(Sort.Direction.ASC, "priority"));
     }
-    
+
     @Override
     public void save(OfferingDto offeringDto) throws AlreadyExistsException, EntityNotFoundException {
-        
-    	checkIfAttributesAreWrong(offeringDto);
-    	
-    	OfferingEntity offeringEntity = null;
+
+        checkIfAttributesAreWrong(offeringDto);
+
+        OfferingEntity offeringEntity = null;
 
         if (offeringDto.getId() == null) {
-        	offeringEntity = new OfferingEntity();
+            offeringEntity = new OfferingEntity();
         } else {
             offeringEntity = getById(offeringDto.getId());
         }
@@ -45,7 +45,7 @@ public class OfferingServiceImpl implements OfferingService {
 
         this.offeringRepository.save(offeringEntity);
     }
-    
+
     @Override
     public void delete(Long id) throws AlreadyExistsException {
         if (this.offerOfferingService.checkExistsByOfferingId(id))
@@ -59,21 +59,39 @@ public class OfferingServiceImpl implements OfferingService {
         return this.offeringRepository.findById(id).orElseThrow(EntityNotFoundException::new);
     }
 
+    /**
+     * Comprueba que al guardar o editar un Offering, no existe otro registro con el
+     * mismo nombre o prioridad.
+     * 
+     * @param dto Objeto DTO a cotejar.
+     * 
+     * @throws AlreadyExistsException Excepción lanzada si ya existe otro registro
+     *                                con el mismo nombre o prioridad.
+     */
     private void checkIfAttributesAreWrong(OfferingDto dto) throws AlreadyExistsException {
-        Boolean nameExists;
-        Boolean priorityExists;
 
-        if (dto.getId() == null) {
-            nameExists = this.offeringRepository.existsByName(dto.getName());
-            priorityExists = this.offeringRepository.existsByPriority(dto.getPriority());
-        } else {
-            nameExists = this.offeringRepository.existsByIdIsNotAndName(dto.getId(), dto.getName());
-            priorityExists = this.offeringRepository.existsByIdIsNotAndPriority(dto.getId(), dto.getPriority());
-        }
+        OfferingEntity compareOffering = this.offeringRepository.getByName(dto.getName());
 
-        if (nameExists || priorityExists) {
+        compareOfferingGetId(dto, compareOffering);
+
+        compareOffering = this.offeringRepository.getByPriority(dto.getPriority());
+
+        compareOfferingGetId(dto, compareOffering);
+    }
+
+    /**
+     * Método que compara el ID del registro que se está editando con el existente
+     * en la base de datos.
+     * 
+     * @param dto               Registro que se está editando.
+     * @param compareTechnology Registro de la base de datos.
+     * 
+     * @throws AlreadyExistsException Excepción lanzada si hay error.
+     */
+    private void compareOfferingGetId(OfferingDto dto, OfferingEntity compareOffering) throws AlreadyExistsException {
+
+        if ((compareOffering != null) && (dto.getId() != compareOffering.getId()))
             throw new AlreadyExistsException();
-        }
     }
 
 }

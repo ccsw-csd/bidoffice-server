@@ -92,7 +92,7 @@ public class FileTypeTest {
 
         FileTypeEntity fileTypeEntity = mock(FileTypeEntity.class);
 
-        when(this.fileTypeRepository.existsByName(EXISTS_FILETYPE_NAME)).thenReturn(true);
+        when(this.fileTypeRepository.getByName(EXISTS_FILETYPE_NAME)).thenReturn(fileTypeEntity);
         assertThrows(AlreadyExistsException.class, () -> this.fileTypeService.save(fileTypeDto));
         verify(this.fileTypeRepository, never()).save(fileTypeEntity);
     }
@@ -107,7 +107,7 @@ public class FileTypeTest {
 
         FileTypeEntity fileTypeEntity = mock(FileTypeEntity.class);
 
-        when(this.fileTypeRepository.existsByPriority(EXISTS_FILETYPE_PRIORITY)).thenReturn(true);
+        when(this.fileTypeRepository.getByPriority(EXISTS_FILETYPE_PRIORITY)).thenReturn(fileTypeEntity);
         assertThrows(AlreadyExistsException.class, () -> this.fileTypeService.save(fileTypeDto));
         verify(this.fileTypeRepository, never()).save(fileTypeEntity);
     }
@@ -122,8 +122,8 @@ public class FileTypeTest {
 
         ArgumentCaptor<FileTypeEntity> fileTypeEntity = ArgumentCaptor.forClass(FileTypeEntity.class);
 
-        when(this.fileTypeRepository.existsByName("NEW")).thenReturn(false);
-        when(this.fileTypeRepository.existsByPriority(15L)).thenReturn(false);
+        when(this.fileTypeRepository.getByName("NEW")).thenReturn(null);
+        when(this.fileTypeRepository.getByPriority(15L)).thenReturn(null);
 
         fileTypeService.save(fileTypeDto);
 
@@ -141,8 +141,7 @@ public class FileTypeTest {
 
         FileTypeEntity fileTypeEntity = mock(FileTypeEntity.class);
 
-        when(fileTypeRepository.existsByIdIsNotAndPriority(EXISTS_FILETYPE_ID, EXISTS_FILETYPE_PRIORITY))
-                .thenReturn(true);
+        when(fileTypeRepository.getByPriority(EXISTS_FILETYPE_PRIORITY)).thenReturn(fileTypeEntity);
 
         assertThrows(AlreadyExistsException.class, () -> this.fileTypeService.save(fileTypeDto));
 
@@ -159,8 +158,7 @@ public class FileTypeTest {
         fileTypeDto.setPriority(EXISTS_FILETYPE_PRIORITY);
 
         FileTypeEntity fileTypeEntity = mock(FileTypeEntity.class);
-        when(fileTypeRepository.existsByIdIsNotAndName(EXISTS_FILETYPE_ID, ANOTHER_EXISTS_FILETYPE_NAME))
-                .thenReturn(true);
+        when(fileTypeRepository.getByName(ANOTHER_EXISTS_FILETYPE_NAME)).thenReturn(fileTypeEntity);
 
         assertThrows(AlreadyExistsException.class, () -> this.fileTypeService.save(fileTypeDto));
 
@@ -180,8 +178,7 @@ public class FileTypeTest {
 
         when(this.fileTypeRepository.findById(EXISTS_FILETYPE_ID)).thenReturn(Optional.of(fileTypeEntity));
 
-        when(this.fileTypeRepository.existsByIdIsNotAndName(EXISTS_FILETYPE_ID, NOT_EXISTS_FILETYPE_NAME))
-                .thenReturn(false);
+        when(this.fileTypeRepository.getByName(NOT_EXISTS_FILETYPE_NAME)).thenReturn(null);
         this.fileTypeService.save(fileTypeDto);
 
         verify(this.fileTypeRepository).save(fileTypeEntity);
@@ -199,8 +196,7 @@ public class FileTypeTest {
         FileTypeEntity fileTypeEntity = mock(FileTypeEntity.class);
         when(this.fileTypeRepository.findById(EXISTS_FILETYPE_ID)).thenReturn(Optional.of(fileTypeEntity));
 
-        when(fileTypeRepository.existsByIdIsNotAndPriority(EXISTS_FILETYPE_ID, NOT_EXISTS_FILETYPE_PRIORITY))
-                .thenReturn(false);
+        when(fileTypeRepository.getByPriority(NOT_EXISTS_FILETYPE_PRIORITY)).thenReturn(null);
         this.fileTypeService.save(fileTypeDto);
 
         verify(this.fileTypeRepository).save(fileTypeEntity);

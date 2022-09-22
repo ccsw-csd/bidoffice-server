@@ -157,7 +157,7 @@ public class SectorTest {
 
         this.sectorServiceImpl.saveSector(sectorDto);
 
-        when(this.sectorRepository.existsByName(EXISTS_NAME)).thenReturn(true);
+        when(this.sectorRepository.getByName(EXISTS_NAME)).thenReturn(sectorEntity);
 
         assertThrows(UpdateConflictException.class, () -> sectorServiceImpl.saveSector(sectorDto));
 
@@ -187,7 +187,7 @@ public class SectorTest {
 
         this.sectorServiceImpl.saveSector(sectorDto);
 
-        when(this.sectorRepository.existsByPriority(EXISTS_PRIORITY)).thenReturn(true);
+        when(this.sectorRepository.getByPriority(EXISTS_PRIORITY)).thenReturn(sectorEntity);
 
         assertThrows(UpdateConflictException.class, () -> sectorServiceImpl.saveSector(sectorDto));
 
@@ -213,7 +213,7 @@ public class SectorTest {
 
         SectorEntity sectorEntity = mock(SectorEntity.class);
 
-        when(this.sectorRepository.existsByIdIsNotAndName(EXISTS_SECTOR_ID, EXISTS_NAME)).thenReturn(true);
+        when(this.sectorRepository.getByName(EXISTS_NAME)).thenReturn(sectorEntity);
 
         assertThrows(UpdateConflictException.class, () -> sectorServiceImpl.saveSector(sectorDto));
 
@@ -240,10 +240,9 @@ public class SectorTest {
 
         SectorEntity sectorEntity = mock(SectorEntity.class);
 
-        when(this.sectorRepository.existsByIdIsNotAndName(EXISTS_SECTOR_ID, NOT_EXISTING_NAME)).thenReturn(false);
+        when(this.sectorRepository.getByName(NOT_EXISTING_NAME)).thenReturn(null);
 
-        when(this.sectorRepository.existsByIdIsNotAndPriority(EXISTS_SECTOR_ID, NOT_EXISTING_PRIORITY))
-                .thenReturn(false);
+        when(this.sectorRepository.getByPriority(NOT_EXISTING_PRIORITY)).thenReturn(null);
 
         when(this.sectorRepository.findById(EXISTS_SECTOR_ID)).thenReturn(Optional.of(sectorEntity));
 
