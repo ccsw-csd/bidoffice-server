@@ -87,7 +87,7 @@ public class HyperscalerIT extends BaseITAbstract {
 
         hyperscalerDto.setId(1L);
         hyperscalerDto.setName("Correct Name");
-        hyperscalerDto.setPriority(48L);
+        hyperscalerDto.setPriority(48);
 
         ResponseEntity<?> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH, HttpMethod.PUT, httpEntity,
                 Void.class);
@@ -100,7 +100,7 @@ public class HyperscalerIT extends BaseITAbstract {
 
         assertNotNull(editedHyperscalerDto);
         assertEquals("Correct Name", editedHyperscalerDto.getName());
-        assertEquals(48L, editedHyperscalerDto.getPriority());
+        assertEquals(48, editedHyperscalerDto.getPriority());
         assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 
@@ -111,7 +111,7 @@ public class HyperscalerIT extends BaseITAbstract {
 
         hyperscalerDto.setId(1L);
         hyperscalerDto.setName("Name 3");
-        hyperscalerDto.setPriority(1L);
+        hyperscalerDto.setPriority(1);
 
         ResponseEntity<?> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH, HttpMethod.PUT, httpEntity,
                 Void.class);
@@ -126,7 +126,7 @@ public class HyperscalerIT extends BaseITAbstract {
 
         hyperscalerDto.setId(1L);
         hyperscalerDto.setName("Name edited");
-        hyperscalerDto.setPriority(1L);
+        hyperscalerDto.setPriority(1);
 
         ResponseEntity<?> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH, HttpMethod.PUT, httpEntity,
                 Void.class);
@@ -140,7 +140,7 @@ public class HyperscalerIT extends BaseITAbstract {
                 .filter(element -> element.getName().equals("Name edited")).findFirst().orElse(null);
 
         assertEquals("Name edited", editedHyperscalerDto.getName());
-        assertEquals(1L, editedHyperscalerDto.getPriority());
+        assertEquals(1, editedHyperscalerDto.getPriority());
 
     }
 
@@ -151,7 +151,7 @@ public class HyperscalerIT extends BaseITAbstract {
 
         hyperscalerDto.setId(1L);
         hyperscalerDto.setName("Name 1");
-        hyperscalerDto.setPriority(3L);
+        hyperscalerDto.setPriority(3);
 
         ResponseEntity<?> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH, HttpMethod.PUT, httpEntity,
                 Void.class);
@@ -166,7 +166,7 @@ public class HyperscalerIT extends BaseITAbstract {
 
         hyperscalerDto.setId(1L);
         hyperscalerDto.setName("Name 1");
-        hyperscalerDto.setPriority(4L);
+        hyperscalerDto.setPriority(4);
 
         ResponseEntity<?> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH, HttpMethod.PUT, httpEntity,
                 Void.class);
@@ -180,7 +180,7 @@ public class HyperscalerIT extends BaseITAbstract {
                 .filter(element -> element.getName().equals("Name 1")).findFirst().orElse(null);
 
         assertEquals("Name 1", editedHyperscalerDto.getName());
-        assertEquals(4L, editedHyperscalerDto.getPriority());
+        assertEquals(4, editedHyperscalerDto.getPriority());
 
     }
 
@@ -190,7 +190,7 @@ public class HyperscalerIT extends BaseITAbstract {
         HttpEntity<?> httpEntity = new HttpEntity<>(hyperscalerDto, getHeaders());
 
         hyperscalerDto.setName("New Name");
-        hyperscalerDto.setPriority(4L);
+        hyperscalerDto.setPriority(4);
 
         ResponseEntity<?> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH, HttpMethod.PUT, httpEntity,
                 Void.class);
@@ -205,7 +205,7 @@ public class HyperscalerIT extends BaseITAbstract {
 
         assertEquals(4, responseAfter.getBody().size());
         assertEquals("New Name", newHyperscalerDto.getName());
-        assertEquals(4L, newHyperscalerDto.getPriority());
+        assertEquals(4, newHyperscalerDto.getPriority());
     }
 
     @Test
@@ -214,7 +214,7 @@ public class HyperscalerIT extends BaseITAbstract {
         HttpEntity<?> httpEntity = new HttpEntity<>(hyperscalerDto, getHeaders());
 
         hyperscalerDto.setName("Name 1");
-        hyperscalerDto.setPriority(4L);
+        hyperscalerDto.setPriority(4);
 
         ResponseEntity<?> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH, HttpMethod.PUT, httpEntity,
                 Void.class);
@@ -228,7 +228,7 @@ public class HyperscalerIT extends BaseITAbstract {
         HttpEntity<?> httpEntity = new HttpEntity<>(hyperscalerDto, getHeaders());
 
         hyperscalerDto.setName("New Name");
-        hyperscalerDto.setPriority(1L);
+        hyperscalerDto.setPriority(1);
 
         ResponseEntity<?> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH, HttpMethod.PUT, httpEntity,
                 Void.class);

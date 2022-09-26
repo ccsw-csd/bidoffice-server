@@ -13,6 +13,6 @@ public interface HyperscalerRepository extends CrudRepository<HyperscalerEntity,
 
     HyperscalerEntity getByName(String name);
 
-    HyperscalerEntity getByPriority(Long priority);
+    HyperscalerEntity getByPriority(Integer existsPriority);
 
 }

@@ -13,6 +13,6 @@ public interface FileTypeRepository extends CrudRepository<FileTypeEntity, Long>
 
     FileTypeEntity getByName(String name);
 
-    FileTypeEntity getByPriority(Long priority);
+    FileTypeEntity getByPriority(Integer existsFiletypePriority);
 
 }

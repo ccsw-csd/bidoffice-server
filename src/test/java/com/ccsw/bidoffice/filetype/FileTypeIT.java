@@ -32,9 +32,9 @@ public class FileTypeIT extends BaseITAbstract {
     public static final String NEW_FILETYPE_NAME = "TEST NAME";
     public static final String EXISTING_FILETYPE_NAME = "user1";
     public static final String SAME_FILETYPE_NAME = "user3";
-    public static final Long NEW_FILETYPE_PRIORITY = 7L;
-    public static final Long EXISTING_FILETYPE_PRIORITY = 1L;
-    public static final Long SAME_FILETYPE_PRIORITY = 3L;
+    public static final Integer NEW_FILETYPE_PRIORITY = 7;
+    public static final Integer EXISTING_FILETYPE_PRIORITY = 1;
+    public static final Integer SAME_FILETYPE_PRIORITY = 3;
 
     ParameterizedTypeReference<List<FileTypeDto>> responseType = new ParameterizedTypeReference<List<FileTypeDto>>() {
     };
@@ -45,7 +45,7 @@ public class FileTypeIT extends BaseITAbstract {
 
         this.fileTypeDto.setId(7L);
         this.fileTypeDto.setName("Holaquetal");
-        this.fileTypeDto.setPriority(7L);
+        this.fileTypeDto.setPriority(7);
     }
 
     @Test

@@ -60,7 +60,7 @@ public class SectorDto {
      * 
      * @return boolean True si el elemento es activo.
      */
-    public boolean getActive() {
+    public Boolean getActive() {
 
         LocalDate toDay = LocalDate.now();
 

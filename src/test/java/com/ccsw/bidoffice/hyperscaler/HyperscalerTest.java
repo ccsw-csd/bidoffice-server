@@ -39,13 +39,13 @@ public class HyperscalerTest {
     private HyperscalerServiceImpl hyperscalerServiceImpl;
 
     private static final String NOT_EXISTING_NAME = "Test 1";
-    private static final Long NOT_EXISTING_PRIORITY = 100L;
+    private static final Integer NOT_EXISTING_PRIORITY = 100;
 
     private static final long EXISTS_ITEM_ID = 1L;
     private static final long NOT_EXISTS_ITEM_ID = 0L;
 
     private static final String EXISTS_NAME = "Name exists";
-    private static final Long EXISTS_PRIORITY = 1L;
+    private static final Integer EXISTS_PRIORITY = 1;
 
     @Test
     public void getAllFromHyperscaleShouldReturnAllDataFromHyperscaler() {
