@@ -169,7 +169,10 @@ public class OfferServiceImpl implements OfferService {
         if (!this.offerRepository.existsById(dto.getId()))
             throw new EntityNotFoundException();
 
-        return this.offerRepository.save(this.beanMapper.map(dto, OfferEntity.class));
+        OfferEntity offerEntity = this.beanMapper.map(dto, OfferEntity.class);
+        offerEntity.setChangeStatus(this.getOffer(dto.getId()).getChangeStatus());
+
+        return this.offerRepository.save(offerEntity);
     }
 
     @Override

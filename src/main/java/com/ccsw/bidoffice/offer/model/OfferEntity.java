@@ -316,6 +316,5 @@ public class OfferEntity {
     public void setChangeStatus(Set<OfferChangeStatusEntity> changeStatus) {
         this.changeStatus = changeStatus;
         this.changeStatus.stream().peek(item -> item.setOffer(this)).collect(Collectors.toSet());
-
     }
 }
