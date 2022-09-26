@@ -123,7 +123,7 @@ public class SectorIT extends BaseITAbstract {
 
         assertNotNull(editDto);
         assertEquals("Zen++", editDto.getName());
-        assertEquals(200L, editDto.getPriority());
+        assertEquals(200, editDto.getPriority());
         assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 

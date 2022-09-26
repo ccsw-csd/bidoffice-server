@@ -134,7 +134,7 @@ public class TechnologyIT extends BaseITAbstract {
 
         assertNotNull(editDto);
         assertEquals("Zen++", editDto.getName());
-        assertEquals(200L, editDto.getPriority());
+        assertEquals(200, editDto.getPriority());
         assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 
@@ -191,7 +191,7 @@ public class TechnologyIT extends BaseITAbstract {
                 .filter(element -> element.getName().equals("AnguriñaJS")).findFirst().orElse(null);
 
         assertEquals("AnguriñaJS", editDto.getName());
-        assertEquals(1L, editDto.getPriority());
+        assertEquals(1, editDto.getPriority());
     }
 
     /**
@@ -245,7 +245,7 @@ public class TechnologyIT extends BaseITAbstract {
                 .findFirst().orElse(null);
 
         assertEquals("admin", editDto.getName());
-        assertEquals(20L, editDto.getPriority());
+        assertEquals(20, editDto.getPriority());
 
     }
 
@@ -278,7 +278,7 @@ public class TechnologyIT extends BaseITAbstract {
 
         assertEquals(4, responseAfter.getBody().size());
         assertEquals("Prolog", newtechnologyDto.getName());
-        assertEquals(4L, newtechnologyDto.getPriority());
+        assertEquals(4, newtechnologyDto.getPriority());
     }
 
     /**
