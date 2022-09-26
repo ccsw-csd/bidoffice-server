@@ -159,7 +159,7 @@ public class SectorTest {
 
         when(this.sectorRepository.getByName(EXISTS_NAME)).thenReturn(sectorEntity);
 
-        assertThrows(UpdateConflictException.class, () -> sectorServiceImpl.saveSector(sectorDto));
+        assertThrows(AlreadyExistsException.class, () -> sectorServiceImpl.saveSector(sectorDto));
 
         verify(this.sectorRepository, never()).save(sectorEntity);
     }
@@ -189,7 +189,7 @@ public class SectorTest {
 
         when(this.sectorRepository.getByPriority(EXISTS_PRIORITY)).thenReturn(sectorEntity);
 
-        assertThrows(UpdateConflictException.class, () -> sectorServiceImpl.saveSector(sectorDto));
+        assertThrows(AlreadyExistsException.class, () -> sectorServiceImpl.saveSector(sectorDto));
 
         verify(this.sectorRepository, never()).save(sectorEntity);
     }
@@ -215,7 +215,7 @@ public class SectorTest {
 
         when(this.sectorRepository.getByName(EXISTS_NAME)).thenReturn(sectorEntity);
 
-        assertThrows(UpdateConflictException.class, () -> sectorServiceImpl.saveSector(sectorDto));
+        assertThrows(AlreadyExistsException.class, () -> sectorServiceImpl.saveSector(sectorDto));
 
         verify(this.sectorRepository, never()).save(sectorEntity);
     }

@@ -6,7 +6,7 @@ public class TechnologyDto {
 
     private String name;
 
-    private int priority;
+    private Integer priority;
 
     public Long getId() {
         return id;
@@ -24,11 +24,11 @@ public class TechnologyDto {
         this.name = name;
     }
 
-    public int getPriority() {
+    public Integer getPriority() {
         return priority;
     }
 
-    public void setPriority(int priority) {
+    public void setPriority(Integer priority) {
         this.priority = priority;
     }
 

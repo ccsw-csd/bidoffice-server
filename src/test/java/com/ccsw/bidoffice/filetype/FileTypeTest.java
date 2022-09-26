@@ -43,8 +43,8 @@ public class FileTypeTest {
     public static final String EXISTS_FILETYPE_NAME = "user1";
     public static final String ANOTHER_EXISTS_FILETYPE_NAME = "user2";
     public static final String NOT_EXISTS_FILETYPE_NAME = "New User";
-    public static final Long EXISTS_FILETYPE_PRIORITY = 2L;
-    public static final Long NOT_EXISTS_FILETYPE_PRIORITY = 23L;
+    public static final Integer EXISTS_FILETYPE_PRIORITY = 2;
+    public static final Integer NOT_EXISTS_FILETYPE_PRIORITY = 23;
 
     @Test
     public void findAllFileTypes() {
@@ -88,7 +88,7 @@ public class FileTypeTest {
         FileTypeDto fileTypeDto = new FileTypeDto();
 
         fileTypeDto.setName(EXISTS_FILETYPE_NAME);
-        fileTypeDto.setPriority(4L);
+        fileTypeDto.setPriority(4);
 
         FileTypeEntity fileTypeEntity = mock(FileTypeEntity.class);
 
@@ -118,12 +118,12 @@ public class FileTypeTest {
         FileTypeDto fileTypeDto = new FileTypeDto();
 
         fileTypeDto.setName("NEW");
-        fileTypeDto.setPriority(15L);
+        fileTypeDto.setPriority(15);
 
         ArgumentCaptor<FileTypeEntity> fileTypeEntity = ArgumentCaptor.forClass(FileTypeEntity.class);
 
         when(this.fileTypeRepository.getByName("NEW")).thenReturn(null);
-        when(this.fileTypeRepository.getByPriority(15L)).thenReturn(null);
+        when(this.fileTypeRepository.getByPriority(15)).thenReturn(null);
 
         fileTypeService.save(fileTypeDto);
 

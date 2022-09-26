@@ -20,7 +20,7 @@ public class TechnologyEntity {
     private String name;
 
     @Column(name = "priority", nullable = false)
-    private int priority;
+    private Integer priority;
 
     public Long getId() {
         return id;
@@ -38,11 +38,11 @@ public class TechnologyEntity {
         this.name = name;
     }
 
-    public int getPriority() {
+    public Integer getPriority() {
         return priority;
     }
 
-    public void setPriority(int priority) {
+    public void setPriority(Integer priority) {
         this.priority = priority;
     }
 

@@ -22,7 +22,7 @@ public class SectorEntity {
     private String name;
 
     @Column(name = "priority", nullable = false)
-    private int priority;
+    private Integer priority;
 
     @Column(name = "start_date")
     private LocalDate startDate;
@@ -46,11 +46,11 @@ public class SectorEntity {
         this.name = name;
     }
 
-    public int getPriority() {
+    public Integer getPriority() {
         return priority;
     }
 
-    public void setPriority(int priority) {
+    public void setPriority(Integer priority) {
         this.priority = priority;
     }
 

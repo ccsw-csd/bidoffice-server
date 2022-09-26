@@ -3,7 +3,7 @@ package com.ccsw.bidoffice.hyperscaler.model;
 public class HyperscalerDto {
     private Long id;
     private String name;
-    private Long priority;
+    private Integer priority;
 
     public Long getId() {
         return id;
@@ -21,11 +21,11 @@ public class HyperscalerDto {
         this.name = name;
     }
 
-    public Long getPriority() {
+    public Integer getPriority() {
         return priority;
     }
 
-    public void setPriority(Long priority) {
+    public void setPriority(Integer priority) {
         this.priority = priority;
     }
 

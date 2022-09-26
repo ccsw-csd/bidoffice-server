@@ -8,7 +8,7 @@ public class SectorDto {
 
     private String name;
 
-    private int priority;
+    private Integer priority;
 
     private LocalDate startDate;
 
@@ -30,11 +30,11 @@ public class SectorDto {
         this.name = name;
     }
 
-    public int getPriority() {
+    public Integer getPriority() {
         return priority;
     }
 
-    public void setPriority(int priority) {
+    public void setPriority(Integer priority) {
         this.priority = priority;
     }
 
@@ -60,7 +60,7 @@ public class SectorDto {
      * 
      * @return boolean True si el elemento es activo.
      */
-    public boolean getActive() {
+    public Boolean getActive() {
 
         LocalDate toDay = LocalDate.now();
 
