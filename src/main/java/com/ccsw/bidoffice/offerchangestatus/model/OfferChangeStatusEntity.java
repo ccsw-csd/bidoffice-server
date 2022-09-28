@@ -1,6 +1,6 @@
 package com.ccsw.bidoffice.offerchangestatus.model;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -35,7 +35,7 @@ public class OfferChangeStatusEntity {
     private OpportunityStatusEntity opportunityStatus;
 
     @Column(name = "date", nullable = false)
-    private LocalDate date;
+    private LocalDateTime date;
 
     public Long getId() {
         return id;
@@ -69,11 +69,12 @@ public class OfferChangeStatusEntity {
         this.opportunityStatus = opportunityStatus;
     }
 
-    public LocalDate getDate() {
+    public LocalDateTime getDate() {
         return date;
     }
 
-    public void setDate(LocalDate date) {
+    public void setDate(LocalDateTime date) {
         this.date = date;
     }
+
 }
