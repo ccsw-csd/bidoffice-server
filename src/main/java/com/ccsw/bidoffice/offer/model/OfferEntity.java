@@ -86,6 +86,9 @@ public class OfferEntity {
     @Column(name = "observations")
     private String observations;
 
+    @Column(name = "last_modification")
+    private LocalDate lastModification;
+
     @OneToOne(mappedBy = "offer", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private OfferDataChapterEntity dataChapter;
 
@@ -231,6 +234,14 @@ public class OfferEntity {
         this.observations = observations;
     }
 
+    public LocalDate getLastModification() {
+        return lastModification;
+    }
+
+    public void setLastModification(LocalDate lastModification) {
+        this.lastModification = lastModification;
+    }
+
     public OfferDataChapterEntity getDataChapter() {
         return dataChapter;
     }
@@ -317,4 +328,5 @@ public class OfferEntity {
         this.changeStatus = changeStatus;
         this.changeStatus.stream().peek(item -> item.setOffer(this)).collect(Collectors.toSet());
     }
+
 }

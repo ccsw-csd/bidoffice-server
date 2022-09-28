@@ -53,6 +53,8 @@ public class OfferDto {
 
     private String observations;
 
+    private LocalDate lastModification;
+
     private OfferDataChapterDto dataChapter;
 
     private Set<OfferDataFileDto> dataFiles;
@@ -183,6 +185,22 @@ public class OfferDto {
 
     public void setObservations(String observations) {
         this.observations = observations;
+    }
+
+    public LocalDate getLastModification() {
+        return lastModification;
+    }
+
+    public void setLastModification(LocalDate lastModification) {
+        this.lastModification = lastModification;
+    }
+
+    public Set<OfferChangeStatusDto> getChangeStatus() {
+        return changeStatus;
+    }
+
+    public void setChangeStatus(Set<OfferChangeStatusDto> changeStatus) {
+        this.changeStatus = changeStatus;
     }
 
     public OfferDataChapterDto getDataChapter() {
