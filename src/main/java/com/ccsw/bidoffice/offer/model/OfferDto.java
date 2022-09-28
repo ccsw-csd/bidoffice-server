@@ -1,6 +1,7 @@
 package com.ccsw.bidoffice.offer.model;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 
@@ -52,6 +53,8 @@ public class OfferDto {
     private Boolean opportunityWin;
 
     private String observations;
+
+    private LocalDateTime lastModification;
 
     private OfferDataChapterDto dataChapter;
 
@@ -183,6 +186,22 @@ public class OfferDto {
 
     public void setObservations(String observations) {
         this.observations = observations;
+    }
+
+    public LocalDateTime getLastModification() {
+        return lastModification;
+    }
+
+    public void setLastModification(LocalDateTime lastModification) {
+        this.lastModification = lastModification;
+    }
+
+    public Set<OfferChangeStatusDto> getChangeStatus() {
+        return changeStatus;
+    }
+
+    public void setChangeStatus(Set<OfferChangeStatusDto> changeStatus) {
+        this.changeStatus = changeStatus;
     }
 
     public OfferDataChapterDto getDataChapter() {
