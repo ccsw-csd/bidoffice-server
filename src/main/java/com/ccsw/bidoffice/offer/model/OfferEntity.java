@@ -1,6 +1,7 @@
 package com.ccsw.bidoffice.offer.model;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -86,8 +87,8 @@ public class OfferEntity {
     @Column(name = "observations")
     private String observations;
 
-    @Column(name = "last_modification")
-    private LocalDate lastModification;
+    @Column(name = "last_modification", nullable = false)
+    private LocalDateTime lastModification;
 
     @OneToOne(mappedBy = "offer", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private OfferDataChapterEntity dataChapter;
@@ -234,11 +235,11 @@ public class OfferEntity {
         this.observations = observations;
     }
 
-    public LocalDate getLastModification() {
+    public LocalDateTime getLastModification() {
         return lastModification;
     }
 
-    public void setLastModification(LocalDate lastModification) {
+    public void setLastModification(LocalDateTime lastModification) {
         this.lastModification = lastModification;
     }
 
