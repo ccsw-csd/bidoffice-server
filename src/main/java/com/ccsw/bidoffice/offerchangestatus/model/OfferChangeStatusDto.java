@@ -1,6 +1,6 @@
 package com.ccsw.bidoffice.offerchangestatus.model;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import com.ccsw.bidoffice.common.converter.DateToLocalDateConverter;
 import com.ccsw.bidoffice.opportunitystatus.model.OpportunityStatusDto;
@@ -15,7 +15,7 @@ public class OfferChangeStatusDto {
     private OpportunityStatusDto opportunityStatus;
 
     @JsonDeserialize(converter = DateToLocalDateConverter.class)
-    private LocalDate date;
+    private LocalDateTime date;
 
     public Long getId() {
         return id;
@@ -41,11 +41,12 @@ public class OfferChangeStatusDto {
         this.opportunityStatus = opportunityStatus;
     }
 
-    public LocalDate getDate() {
+    public LocalDateTime getDate() {
         return date;
     }
 
-    public void setDate(LocalDate date) {
+    public void setDate(LocalDateTime date) {
         this.date = date;
     }
+
 }

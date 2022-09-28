@@ -1,6 +1,6 @@
 package com.ccsw.bidoffice.offertracing.model;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -35,7 +35,7 @@ public class OfferTracingEntity {
     private String comment;
 
     @Column(name = "date", nullable = false)
-    private LocalDate date;
+    private LocalDateTime date;
 
     public Long getId() {
         return id;
@@ -69,11 +69,12 @@ public class OfferTracingEntity {
         this.comment = comment;
     }
 
-    public LocalDate getDate() {
+    public LocalDateTime getDate() {
         return date;
     }
 
-    public void setDate(LocalDate date) {
+    public void setDate(LocalDateTime date) {
         this.date = date;
     }
+
 }
