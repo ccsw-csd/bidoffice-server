@@ -2,7 +2,7 @@ package com.ccsw.bidoffice.offerchangestatus.model;
 
 import java.time.LocalDateTime;
 
-import com.ccsw.bidoffice.common.converter.DateToLocalDateConverter;
+import com.ccsw.bidoffice.common.converter.DateToLocalDateTimeConverter;
 import com.ccsw.bidoffice.opportunitystatus.model.OpportunityStatusDto;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
@@ -14,7 +14,7 @@ public class OfferChangeStatusDto {
 
     private OpportunityStatusDto opportunityStatus;
 
-    @JsonDeserialize(converter = DateToLocalDateConverter.class)
+    @JsonDeserialize(converter = DateToLocalDateTimeConverter.class)
     private LocalDateTime date;
 
     public Long getId() {
