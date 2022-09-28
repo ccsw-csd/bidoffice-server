@@ -10,6 +10,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -89,7 +90,7 @@ public class OfferTest {
         opportunityStatusDto.setName("Entregada");
         OfferChangeStatusDto offerChangeStatusDto = new OfferChangeStatusDto();
         offerChangeStatusDto.setOpportunityStatus(opportunityStatusDto);
-        offerChangeStatusDto.setDate(LocalDate.of(2022, 8, 15));
+        offerChangeStatusDto.setDate(LocalDateTime.of(2022, 8, 15, 0, 0));
         offerChangeStatusDto.setUsername("aelmouss");
         modifyStatusDto = new ModifyStatusDto();
         modifyStatusDto.setChangeStatus(offerChangeStatusDto);

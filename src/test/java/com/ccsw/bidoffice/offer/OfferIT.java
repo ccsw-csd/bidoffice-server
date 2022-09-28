@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -93,7 +94,7 @@ public class OfferIT extends BaseITAbstract {
         modifyStatusDto = new ModifyStatusDto();
 
         offerChangeStatusDto.setUsername("aelmouss");
-        offerChangeStatusDto.setDate(LocalDate.of(2022, 8, 15));
+        offerChangeStatusDto.setDate(LocalDateTime.of(2022, 8, 15, 0, 0));
         modifyStatusDto.setChangeStatus(offerChangeStatusDto);
     }
 
