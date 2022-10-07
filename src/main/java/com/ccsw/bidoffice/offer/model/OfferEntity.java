@@ -38,6 +38,14 @@ import com.ccsw.bidoffice.technology.model.TechnologyEntity;
 @Table(name = "offer")
 public class OfferEntity {
 
+    public static final String ATT_SECTOR = "sector";
+    public static final String ATT_OPP_STATUS = "opportunityStatus";
+    public static final String ATT_OPP_TYPE = "opportunityType";
+    public static final String ATT_LAST_MODIFICATION = "lastModification";
+    public static final String ATT_REQUESTED_BY = "requestedBy";
+    public static final String ATT_MANAGED_BY = "managedBy";
+    public static final String ATT_TEAM_PERSON = "teamPerson";
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)

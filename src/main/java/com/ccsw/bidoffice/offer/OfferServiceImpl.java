@@ -10,8 +10,10 @@ import java.util.stream.Collectors;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import com.ccsw.bidoffice.common.criteria.BinarySearchCriteria;
 import com.ccsw.bidoffice.common.exception.EntityNotFoundException;
 import com.ccsw.bidoffice.common.exception.InvalidDataException;
 import com.ccsw.bidoffice.config.mapper.BeanMapper;
@@ -27,8 +29,11 @@ import com.ccsw.bidoffice.offerdatafile.model.OfferDataFileDto;
 import com.ccsw.bidoffice.offertracing.model.OfferTracingDto;
 import com.ccsw.bidoffice.offertracing.model.OfferTracingEntity;
 import com.ccsw.bidoffice.opportunitystatus.model.OpportunityStatusEntity;
+import com.ccsw.bidoffice.opportunitytype.model.OpportunityTypeEntity;
 import com.ccsw.bidoffice.person.PersonService;
+import com.ccsw.bidoffice.person.model.PersonEntity;
 import com.ccsw.bidoffice.sector.model.SectorDto;
+import com.ccsw.bidoffice.sector.model.SectorEntity;
 
 @Service
 public class OfferServiceImpl implements OfferService {
@@ -58,9 +63,39 @@ public class OfferServiceImpl implements OfferService {
     }
 
     @Override
-    public Page<OfferEntity> findPage(OfferSearchDto dto) {
+    public Page<OfferEntity> findPage(OfferSearchDto dto) throws EntityNotFoundException {
 
-        return this.offerRepository.findAll(dto.getPageable());
+        OfferSpecification status = new OfferSpecification(new BinarySearchCriteria(OfferEntity.ATT_OPP_STATUS, ":",
+                this.beanMapper.map(dto.getStatus(), OpportunityStatusEntity.class), null));
+
+        OfferSpecification type = new OfferSpecification(new BinarySearchCriteria(OfferEntity.ATT_OPP_TYPE, ":",
+                this.beanMapper.map(dto.getType(), OpportunityTypeEntity.class), null));
+
+        OfferSpecification sector = new OfferSpecification(new BinarySearchCriteria(OfferEntity.ATT_SECTOR, ":",
+                this.beanMapper.map(dto.getSector(), SectorEntity.class), null));
+
+        OfferSpecification date = new OfferSpecification(new BinarySearchCriteria(OfferEntity.ATT_LAST_MODIFICATION,
+                "between", dto.getStartDateModification(), dto.getEndDateModification()));
+
+        OfferSpecification requestdBy = new OfferSpecification(new BinarySearchCriteria(OfferEntity.ATT_REQUESTED_BY,
+                ":", this.beanMapper.map(dto.getRequestedBy(), PersonEntity.class), null));
+
+        OfferSpecification managedBy = new OfferSpecification(new BinarySearchCriteria(OfferEntity.ATT_MANAGED_BY, ":",
+                this.beanMapper.map(dto.getManagedBy(), PersonEntity.class), null));
+
+        OfferSpecification involvedRequestdBy = new OfferSpecification(new BinarySearchCriteria(
+                OfferEntity.ATT_REQUESTED_BY, ":", this.beanMapper.map(dto.getInvolved(), PersonEntity.class), null));
+
+        OfferSpecification involvedManagedBy = new OfferSpecification(new BinarySearchCriteria(
+                OfferEntity.ATT_MANAGED_BY, ":", this.beanMapper.map(dto.getInvolved(), PersonEntity.class), null));
+
+        OfferSpecification involvedTeamPerson = new OfferSpecification(new BinarySearchCriteria(
+                OfferEntity.ATT_TEAM_PERSON, ":", this.beanMapper.map(dto.getInvolved(), PersonEntity.class), null));
+
+        Specification<OfferEntity> specification = Specification.where(status).and(type).and(sector).and(date)
+                .and(managedBy).and(requestdBy).and(involvedRequestdBy.or(involvedManagedBy).or(involvedTeamPerson));
+
+        return this.offerRepository.findAll(specification, dto.getPageable());
     }
 
     @Override
@@ -239,5 +274,4 @@ public class OfferServiceImpl implements OfferService {
             offerEntity.setChangeStatus(changes);
         }
     }
-
 }

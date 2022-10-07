@@ -41,7 +41,7 @@ public class OfferController {
     }
 
     @RequestMapping(path = "/findPage", method = RequestMethod.POST)
-    public Page<OfferItemListDto> findPage(@RequestBody OfferSearchDto dto) {
+    public Page<OfferItemListDto> findPage(@RequestBody OfferSearchDto dto) throws EntityNotFoundException {
 
         return this.beanMapper.mapPage(this.offerService.findPage(dto), OfferItemListDto.class);
     }
