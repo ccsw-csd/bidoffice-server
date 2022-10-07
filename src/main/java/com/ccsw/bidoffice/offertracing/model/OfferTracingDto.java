@@ -1,8 +1,10 @@
 package com.ccsw.bidoffice.offertracing.model;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
+import com.ccsw.bidoffice.common.converter.DateToLocalDateTimeConverter;
 import com.ccsw.bidoffice.person.model.PersonDto;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 public class OfferTracingDto {
 
@@ -12,7 +14,8 @@ public class OfferTracingDto {
 
     private String comment;
 
-    private LocalDate date;
+    @JsonDeserialize(converter = DateToLocalDateTimeConverter.class)
+    private LocalDateTime date;
 
     public Long getId() {
         return id;
@@ -38,11 +41,12 @@ public class OfferTracingDto {
         this.comment = comment;
     }
 
-    public LocalDate getDate() {
+    public LocalDateTime getDate() {
         return date;
     }
 
-    public void setDate(LocalDate date) {
+    public void setDate(LocalDateTime date) {
         this.date = date;
     }
+
 }
