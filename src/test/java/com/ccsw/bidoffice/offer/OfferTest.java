@@ -3,7 +3,8 @@ package com.ccsw.bidoffice.offer;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.doReturn;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
@@ -75,6 +76,7 @@ public class OfferTest {
     public void setUp() {
 
         offerSearchDto = new OfferSearchDto();
+        offerSearchDto.setPageable(PageRequest.of(0, 5));
         opportunityStatusDto = new OpportunityStatusDto();
         opportunityStatusDto.setName("Desestimada");
 
@@ -99,20 +101,28 @@ public class OfferTest {
     }
 
     @Test
-    public void findPageShouldReturnUsersPage() {
-
-        offerSearchDto.setPageable(PageRequest.of(0, 5));
+    public void findPageShouldReturnOfferPage() throws InvalidDataException {
 
         List<OfferEntity> offers = new ArrayList<>();
         offers.add(mock(OfferEntity.class));
 
-        when(offerRepository.findAll(offerSearchDto.getPageable()))
+        when(offerRepository.findAll(any(), eq(offerSearchDto.getPageable())))
                 .thenReturn(new PageImpl<>(offers, offerSearchDto.getPageable(), offers.size()));
 
         Page<OfferEntity> page = offerServiceImpl.findPage(offerSearchDto);
 
         assertNotNull(page);
         assertEquals(offers.size(), page.getContent().size());
+
+    }
+
+    @Test
+    public void findPageWithInvalidDateShouldThrowException() {
+
+        offerSearchDto.setStartDateModification(LocalDateTime.now().plusDays(1));
+        offerSearchDto.setEndDateModification(LocalDateTime.now());
+
+        assertThrows(InvalidDataException.class, () -> offerServiceImpl.findPage(offerSearchDto));
 
     }
 
@@ -193,6 +203,7 @@ public class OfferTest {
         offerDto.setId(ID_OFFER_EXIST);
         OfferEntity offerEntity = mock(OfferEntity.class);
 
+        when(offerRepository.existsById(ID_OFFER_EXIST)).thenReturn(true);
         when(offerRepository.findById(ID_OFFER_EXIST)).thenReturn(Optional.of(offerEntity));
         when(this.beanMapper.map(offerDto, OfferEntity.class)).thenReturn(offerEntity);
         offerServiceImpl.save(offerDto);
@@ -204,7 +215,7 @@ public class OfferTest {
     public void modifyOfferWithNotExistIdShouldThrowException() {
 
         offerDto.setId(ID_OFFER_NOT_EXIST);
-        doReturn(Optional.empty()).when(this.offerRepository).findById(ID_OFFER_NOT_EXIST);
+        when(offerRepository.existsById(ID_OFFER_NOT_EXIST)).thenReturn(false);
 
         assertThrows(EntityNotFoundException.class, () -> offerServiceImpl.save(offerDto));
 

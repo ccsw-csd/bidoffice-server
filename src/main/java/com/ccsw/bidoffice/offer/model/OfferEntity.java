@@ -257,7 +257,8 @@ public class OfferEntity {
 
     public void setDataChapter(OfferDataChapterEntity dataChapter) {
         this.dataChapter = dataChapter;
-        this.dataChapter.setOffer(this);
+        if (this.dataChapter != null)
+            this.dataChapter.setOffer(this);
     }
 
     public Set<OfferDataFileEntity> getDataFiles() {
@@ -275,7 +276,8 @@ public class OfferEntity {
 
     public void setDataProject(OfferDataProjectEntity dataProject) {
         this.dataProject = dataProject;
-        this.dataProject.setOffer(this);
+        if (this.dataProject != null)
+            this.dataProject.setOffer(this);
     }
 
     public OfferDataTeamEntity getDataTeam() {
@@ -284,7 +286,8 @@ public class OfferEntity {
 
     public void setDataTeam(OfferDataTeamEntity dataTeam) {
         this.dataTeam = dataTeam;
-        this.dataTeam.setOffer(this);
+        if (this.dataTeam != null)
+            this.dataTeam.setOffer(this);
     }
 
     public OfferDataTechnologyEntity getDataTechnology() {
@@ -293,7 +296,8 @@ public class OfferEntity {
 
     public void setDataTechnology(OfferDataTechnologyEntity dataTechnology) {
         this.dataTechnology = dataTechnology;
-        this.dataTechnology.setOffer(this);
+        if (this.dataTechnology != null)
+            this.dataTechnology.setOffer(this);
     }
 
     public List<OfferingEntity> getOfferings() {
@@ -318,6 +322,7 @@ public class OfferEntity {
 
     public void setTechnologies(List<TechnologyEntity> technologies) {
         this.technologies = technologies;
+
     }
 
     public Set<OfferTracingEntity> getTracings() {

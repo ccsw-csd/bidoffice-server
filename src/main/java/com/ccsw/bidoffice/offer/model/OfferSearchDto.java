@@ -1,10 +1,10 @@
 package com.ccsw.bidoffice.offer.model;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import org.springframework.data.domain.Pageable;
 
-import com.ccsw.bidoffice.common.converter.DateToLocalDateConverter;
+import com.ccsw.bidoffice.common.converter.DateToLocalDateTimeConverter;
 import com.ccsw.bidoffice.opportunitystatus.model.OpportunityStatusDto;
 import com.ccsw.bidoffice.opportunitytype.model.OpportunityTypeDto;
 import com.ccsw.bidoffice.person.model.PersonDto;
@@ -25,11 +25,11 @@ public class OfferSearchDto {
 
     private PersonDto involved;
 
-    @JsonDeserialize(converter = DateToLocalDateConverter.class)
-    private LocalDate startDateModification;
+    @JsonDeserialize(converter = DateToLocalDateTimeConverter.class)
+    private LocalDateTime startDateModification;
 
-    @JsonDeserialize(converter = DateToLocalDateConverter.class)
-    private LocalDate endDateModification;
+    @JsonDeserialize(converter = DateToLocalDateTimeConverter.class)
+    private LocalDateTime endDateModification;
 
     private Pageable pageable;
 
@@ -81,19 +81,19 @@ public class OfferSearchDto {
         this.involved = involved;
     }
 
-    public LocalDate getStartDateModification() {
+    public LocalDateTime getStartDateModification() {
         return startDateModification;
     }
 
-    public void setStartDateModification(LocalDate startDateModification) {
+    public void setStartDateModification(LocalDateTime startDateModification) {
         this.startDateModification = startDateModification;
     }
 
-    public LocalDate getEndDateModification() {
+    public LocalDateTime getEndDateModification() {
         return endDateModification;
     }
 
-    public void setEndDateModification(LocalDate endDateModification) {
+    public void setEndDateModification(LocalDateTime endDateModification) {
         this.endDateModification = endDateModification;
     }
 

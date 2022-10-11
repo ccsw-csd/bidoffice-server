@@ -160,6 +160,7 @@ CREATE TABLE offer (
   opportunity_type_id int(11) NOT NULL,
   opportunity_win int(1) DEFAULT NULL,
   observations varchar(4000) DEFAULT NULL,
+  last_modification timestamp NOT NULL,
   PRIMARY KEY (id),
   CONSTRAINT offer_managed_by_fk FOREIGN KEY (managed_by) REFERENCES person (id),
   CONSTRAINT offer_opportunity_status_fk FOREIGN KEY (opportunity_status_id) REFERENCES opportunity_status (id),
@@ -169,11 +170,11 @@ CREATE TABLE offer (
 );
 
 
-INSERT INTO offer (client,name,requested_date,sector_id,opportunity_status_id,opportunity_type_id) VALUES ('user', 'user', '2022-06-30',2,1,1);
-INSERT INTO offer (client,name,requested_date,sector_id,opportunity_status_id,opportunity_type_id) VALUES ('user', 'user', '2022-06-30',2,1,1);
-INSERT INTO offer (client,name,requested_date,sector_id,opportunity_status_id,opportunity_type_id) VALUES ('user2', 'user', '2022-06-30',2,2,1);
-INSERT INTO offer (client,name,requested_date,sector_id,opportunity_status_id,opportunity_type_id) VALUES ('user3', 'user', '2022-06-30',2,1,1);
-INSERT INTO offer (client,name,requested_date,sector_id,opportunity_status_id,opportunity_type_id) VALUES ('user4', 'user', '2022-06-30',2,2,1);
+INSERT INTO offer (client,name,requested_date,sector_id,opportunity_status_id,opportunity_type_id,last_modification) VALUES ('user', 'user', '2022-06-30', 2, 1, 1, '2022-10-07 12:42:16');
+INSERT INTO offer (client,name,requested_date,sector_id,opportunity_status_id,opportunity_type_id,last_modification) VALUES ('user', 'user', '2022-06-30', 2, 1, 1, '2022-10-08 12:42:16');
+INSERT INTO offer (client,name,requested_date,sector_id,opportunity_status_id,opportunity_type_id,last_modification) VALUES ('user2', 'user', '2022-06-30', 2, 2, 1, '2022-10-09 12:42:16');
+INSERT INTO offer (client,name,requested_date,sector_id,opportunity_status_id,opportunity_type_id,last_modification) VALUES ('user3', 'user', '2022-06-30', 2, 1, 1, '2022-10-10 12:42:16');
+INSERT INTO offer (client,name,requested_date,sector_id,opportunity_status_id,opportunity_type_id,last_modification) VALUES ('user4', 'user', '2022-06-30', 2, 2, 1, '2022-10-10 12:42:16');
 
 
 

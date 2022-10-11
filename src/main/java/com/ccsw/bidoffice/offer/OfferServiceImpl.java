@@ -1,6 +1,7 @@
 package com.ccsw.bidoffice.offer;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -63,7 +64,13 @@ public class OfferServiceImpl implements OfferService {
     }
 
     @Override
-    public Page<OfferEntity> findPage(OfferSearchDto dto) throws EntityNotFoundException {
+    public Page<OfferEntity> findPage(OfferSearchDto dto) throws InvalidDataException {
+
+        if (dto.getStartDateModification() != null && dto.getEndDateModification() != null
+                && !dto.getStartDateModification().isEqual(dto.getEndDateModification())
+                && dto.getStartDateModification().isAfter(dto.getEndDateModification())) {
+            throw new InvalidDataException();
+        }
 
         OfferSpecification status = new OfferSpecification(new BinarySearchCriteria(OfferEntity.ATT_OPP_STATUS, ":",
                 this.beanMapper.map(dto.getStatus(), OpportunityStatusEntity.class), null));
@@ -89,8 +96,9 @@ public class OfferServiceImpl implements OfferService {
         OfferSpecification involvedManagedBy = new OfferSpecification(new BinarySearchCriteria(
                 OfferEntity.ATT_MANAGED_BY, ":", this.beanMapper.map(dto.getInvolved(), PersonEntity.class), null));
 
-        OfferSpecification involvedTeamPerson = new OfferSpecification(new BinarySearchCriteria(
-                OfferEntity.ATT_TEAM_PERSON, ":", this.beanMapper.map(dto.getInvolved(), PersonEntity.class), null));
+        OfferSpecification involvedTeamPerson = new OfferSpecification(
+                new BinarySearchCriteria(OfferEntity.ATT_TEAM_PERSON, "isMember",
+                        this.beanMapper.map(dto.getInvolved(), PersonEntity.class), null));
 
         Specification<OfferEntity> specification = Specification.where(status).and(type).and(sector).and(date)
                 .and(managedBy).and(requestdBy).and(involvedRequestdBy.or(involvedManagedBy).or(involvedTeamPerson));
@@ -195,6 +203,7 @@ public class OfferServiceImpl implements OfferService {
         offerEntity = new OfferEntity();
 
         offerEntity = this.beanMapper.map(dto, OfferEntity.class);
+        offerEntity.setLastModification(LocalDateTime.now());
 
         return this.offerRepository.save(offerEntity);
     }
@@ -206,6 +215,7 @@ public class OfferServiceImpl implements OfferService {
 
         OfferEntity offerEntity = this.beanMapper.map(dto, OfferEntity.class);
         offerEntity.setChangeStatus(this.getOffer(dto.getId()).getChangeStatus());
+        offerEntity.setLastModification(LocalDateTime.now());
 
         return this.offerRepository.save(offerEntity);
     }
@@ -221,6 +231,7 @@ public class OfferServiceImpl implements OfferService {
         }
 
         this.mappingStatusDtoToOfferEntity(dto);
+        offerEntity.setLastModification(LocalDateTime.now());
 
         return this.offerRepository.save(offerEntity);
     }
