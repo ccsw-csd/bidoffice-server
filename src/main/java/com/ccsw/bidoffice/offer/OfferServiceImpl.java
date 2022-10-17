@@ -73,32 +73,31 @@ public class OfferServiceImpl implements OfferService {
         }
 
         OfferSpecification status = new OfferSpecification(new BinarySearchCriteria(OfferEntity.ATT_OPP_STATUS, ":",
-                this.beanMapper.map(dto.getStatus(), OpportunityStatusEntity.class), null));
+                this.beanMapper.map(dto.getStatus(), OpportunityStatusEntity.class)));
 
         OfferSpecification type = new OfferSpecification(new BinarySearchCriteria(OfferEntity.ATT_OPP_TYPE, ":",
-                this.beanMapper.map(dto.getType(), OpportunityTypeEntity.class), null));
+                this.beanMapper.map(dto.getType(), OpportunityTypeEntity.class)));
 
         OfferSpecification sector = new OfferSpecification(new BinarySearchCriteria(OfferEntity.ATT_SECTOR, ":",
-                this.beanMapper.map(dto.getSector(), SectorEntity.class), null));
+                this.beanMapper.map(dto.getSector(), SectorEntity.class)));
 
         OfferSpecification date = new OfferSpecification(new BinarySearchCriteria(OfferEntity.ATT_LAST_MODIFICATION,
                 "between", dto.getStartDateModification(), dto.getEndDateModification()));
 
         OfferSpecification requestdBy = new OfferSpecification(new BinarySearchCriteria(OfferEntity.ATT_REQUESTED_BY,
-                ":", this.beanMapper.map(dto.getRequestedBy(), PersonEntity.class), null));
+                ":", this.beanMapper.map(dto.getRequestedBy(), PersonEntity.class)));
 
         OfferSpecification managedBy = new OfferSpecification(new BinarySearchCriteria(OfferEntity.ATT_MANAGED_BY, ":",
-                this.beanMapper.map(dto.getManagedBy(), PersonEntity.class), null));
+                this.beanMapper.map(dto.getManagedBy(), PersonEntity.class)));
 
         OfferSpecification involvedRequestdBy = new OfferSpecification(new BinarySearchCriteria(
-                OfferEntity.ATT_REQUESTED_BY, ":", this.beanMapper.map(dto.getInvolved(), PersonEntity.class), null));
+                OfferEntity.ATT_REQUESTED_BY, ":", this.beanMapper.map(dto.getInvolved(), PersonEntity.class)));
 
         OfferSpecification involvedManagedBy = new OfferSpecification(new BinarySearchCriteria(
-                OfferEntity.ATT_MANAGED_BY, ":", this.beanMapper.map(dto.getInvolved(), PersonEntity.class), null));
+                OfferEntity.ATT_MANAGED_BY, ":", this.beanMapper.map(dto.getInvolved(), PersonEntity.class)));
 
-        OfferSpecification involvedTeamPerson = new OfferSpecification(
-                new BinarySearchCriteria(OfferEntity.ATT_TEAM_PERSON, "isMember",
-                        this.beanMapper.map(dto.getInvolved(), PersonEntity.class), null));
+        OfferSpecification involvedTeamPerson = new OfferSpecification(new BinarySearchCriteria(
+                OfferEntity.ATT_TEAM_PERSON, "isMember", this.beanMapper.map(dto.getInvolved(), PersonEntity.class)));
 
         Specification<OfferEntity> specification = Specification.where(status).and(type).and(sector).and(date)
                 .and(managedBy).and(requestdBy).and(involvedRequestdBy.or(involvedManagedBy).or(involvedTeamPerson));

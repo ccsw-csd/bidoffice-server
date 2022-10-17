@@ -17,6 +17,12 @@ public class BinarySearchCriteria {
         this.value2 = value2;
     }
 
+    public BinarySearchCriteria(String key, String operation, Object value) {
+        this.key = key;
+        this.operation = operation;
+        this.value = value;
+    }
+
     public String getKey() {
         return key;
     }
