@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.Month;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -27,6 +28,7 @@ import com.ccsw.bidoffice.offer.model.OfferSearchDto;
 import com.ccsw.bidoffice.offerchangestatus.model.OfferChangeStatusDto;
 import com.ccsw.bidoffice.opportunitystatus.model.OpportunityStatusDto;
 import com.ccsw.bidoffice.opportunitytype.model.OpportunityTypeDto;
+import com.ccsw.bidoffice.person.model.PersonDto;
 import com.ccsw.bidoffice.sector.model.SectorDto;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -74,6 +76,7 @@ public class OfferIT extends BaseITAbstract {
     public void setUp() {
 
         offerSearchDto = new OfferSearchDto();
+        offerSearchDto.setPageable(PageRequest.of(0, 10));
 
         offerDto = new OfferDto();
         sectorDto = new SectorDto();
@@ -99,7 +102,7 @@ public class OfferIT extends BaseITAbstract {
     }
 
     @Test
-    public void findPageShouldReturnPageUser() {
+    public void findPageShouldReturnPageOffer() {
 
         offerSearchDto.setPageable(PageRequest.of(0, 10));
 
@@ -110,6 +113,90 @@ public class OfferIT extends BaseITAbstract {
 
         assertNotNull(response);
         assertEquals(TOTAL_OFFER, response.getBody().getContent().size());
+    }
+
+    @Test
+    public void findPageFilterWithNotExistDateShouldEmptyPage() {
+
+        offerSearchDto.setPageable(PageRequest.of(0, 10));
+        offerSearchDto.setStartDateModification(LocalDateTime.now());
+        offerSearchDto.setEndDateModification(LocalDateTime.now());
+
+        HttpEntity<?> httpEntity = new HttpEntity<>(offerSearchDto, getHeaders());
+
+        ResponseEntity<Page<OfferItemListDto>> response = restTemplate
+                .exchange(LOCALHOST + port + SERVICE_PATH + "findPage", HttpMethod.POST, httpEntity, responseTypePage);
+
+        assertEquals(EMPTY_DATA, response.getBody().getContent().size());
+    }
+
+    @Test
+    public void findPageFilterWithExistDateShouldPageOffer() {
+
+        offerSearchDto.setStartDateModification(LocalDateTime.of(2022, Month.OCTOBER, 07, 00, 00, 00));
+        offerSearchDto.setEndDateModification(LocalDateTime.of(2022, Month.OCTOBER, 10, 00, 00, 00));
+
+        HttpEntity<?> httpEntity = new HttpEntity<>(offerSearchDto, getHeaders());
+
+        ResponseEntity<Page<OfferItemListDto>> response = restTemplate
+                .exchange(LOCALHOST + port + SERVICE_PATH + "findPage", HttpMethod.POST, httpEntity, responseTypePage);
+
+        assertEquals(3, response.getBody().getContent().size());
+    }
+
+    @Test
+    public void findPageFilterWithExistInvolvedPersonShouldPage() {
+
+        offerSearchDto.setInvolved(new PersonDto());
+        offerSearchDto.getInvolved().setId(ID_EXIST);
+
+        HttpEntity<?> httpEntity = new HttpEntity<>(offerSearchDto, getHeaders());
+
+        ResponseEntity<Page<OfferItemListDto>> response = restTemplate
+                .exchange(LOCALHOST + port + SERVICE_PATH + "findPage", HttpMethod.POST, httpEntity, responseTypePage);
+
+        assertEquals(1, response.getBody().getContent().size());
+    }
+
+    @Test
+    public void findPageFilterWithNotExistInvolvedPersonShouldEmptyPage() {
+
+        offerSearchDto.setInvolved(new PersonDto());
+        offerSearchDto.getInvolved().setId(ID_NOT_EXIST);
+
+        HttpEntity<?> httpEntity = new HttpEntity<>(offerSearchDto, getHeaders());
+
+        ResponseEntity<Page<OfferItemListDto>> response = restTemplate
+                .exchange(LOCALHOST + port + SERVICE_PATH + "findPage", HttpMethod.POST, httpEntity, responseTypePage);
+
+        assertEquals(EMPTY_DATA, response.getBody().getContent().size());
+
+    }
+
+    @Test
+    public void findPageAllFilterShouldShouldEmtpyPage() {
+
+        offerSearchDto.setInvolved(new PersonDto());
+        offerSearchDto.setManagedBy(new PersonDto());
+        offerSearchDto.setRequestedBy(new PersonDto());
+        offerSearchDto.setSector(new SectorDto());
+        offerSearchDto.setStatus(new OpportunityStatusDto());
+        offerSearchDto.setType(new OpportunityTypeDto());
+        offerSearchDto.setStartDateModification(LocalDateTime.of(2022, Month.OCTOBER, 07, 00, 00, 00));
+        offerSearchDto.setEndDateModification(LocalDateTime.of(2022, Month.OCTOBER, 10, 00, 00, 00));
+        offerSearchDto.getInvolved().setId(ID_EXIST);
+        offerSearchDto.getManagedBy().setId(ID_EXIST);
+        offerSearchDto.getRequestedBy().setId(ID_EXIST);
+        offerSearchDto.getSector().setId(ID_EXIST);
+        offerSearchDto.getStatus().setId(ID_EXIST);
+        offerSearchDto.getType().setId(ID_EXIST);
+
+        HttpEntity<?> httpEntity = new HttpEntity<>(offerSearchDto, getHeaders());
+
+        ResponseEntity<Page<OfferItemListDto>> response = restTemplate
+                .exchange(LOCALHOST + port + SERVICE_PATH + "findPage", HttpMethod.POST, httpEntity, responseTypePage);
+
+        assertEquals(EMPTY_DATA, response.getBody().getContent().size());
     }
 
     @Test

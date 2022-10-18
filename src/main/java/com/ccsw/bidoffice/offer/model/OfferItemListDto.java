@@ -1,9 +1,11 @@
 package com.ccsw.bidoffice.offer.model;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import com.ccsw.bidoffice.opportunitystatus.model.OpportunityStatusDto;
 import com.ccsw.bidoffice.opportunitytype.model.OpportunityTypeDto;
+import com.ccsw.bidoffice.person.model.PersonDto;
 import com.ccsw.bidoffice.sector.model.SectorDto;
 
 public class OfferItemListDto {
@@ -21,6 +23,10 @@ public class OfferItemListDto {
     private OpportunityTypeDto opportunityType;
 
     private OpportunityStatusDto opportunityStatus;
+
+    private LocalDateTime lastModification;
+
+    private PersonDto managedBy;
 
     public Long getId() {
         return id;
@@ -76,5 +82,21 @@ public class OfferItemListDto {
 
     public void setOpportunityStatus(OpportunityStatusDto opportunityStatus) {
         this.opportunityStatus = opportunityStatus;
+    }
+
+    public LocalDateTime getLastModification() {
+        return lastModification;
+    }
+
+    public void setLastModification(LocalDateTime lastModification) {
+        this.lastModification = lastModification;
+    }
+
+    public PersonDto getManagedBy() {
+        return managedBy;
+    }
+
+    public void setManagedBy(PersonDto managedBy) {
+        this.managedBy = managedBy;
     }
 }
