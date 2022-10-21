@@ -2,16 +2,20 @@ package com.ccsw.bidoffice.offer.model;
 
 import java.time.LocalDate;
 
+import com.ccsw.bidoffice.common.converter.DateToLocalDateConverter;
 import com.ccsw.bidoffice.offerchangestatus.model.OfferChangeStatusDto;
 import com.ccsw.bidoffice.offertracing.model.OfferTracingDto;
 import com.ccsw.bidoffice.opportunitystatus.model.OpportunityStatusDto;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 public class ModifyStatusDto {
 
     private Long id;
 
+    @JsonDeserialize(converter = DateToLocalDateConverter.class)
     private LocalDate goNogoDate;
 
+    @JsonDeserialize(converter = DateToLocalDateConverter.class)
     private LocalDate deliveryDate;
 
     private OfferChangeStatusDto changeStatus;
