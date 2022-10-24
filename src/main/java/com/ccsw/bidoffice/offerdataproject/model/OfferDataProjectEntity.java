@@ -39,6 +39,9 @@ public class OfferDataProjectEntity {
     @Column(name = "months")
     private Double months;
 
+    @Column(name = "contribution_margin")
+    private Double contributionMargin;
+
     public Long getId() {
         return id;
     }
@@ -85,5 +88,13 @@ public class OfferDataProjectEntity {
 
     public void setMonths(Double months) {
         this.months = months;
+    }
+
+    public Double getContributionMargin() {
+        return contributionMargin;
+    }
+
+    public void setContributionMargin(Double contributionMargin) {
+        this.contributionMargin = contributionMargin;
     }
 }

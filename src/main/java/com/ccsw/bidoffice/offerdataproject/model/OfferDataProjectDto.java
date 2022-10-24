@@ -14,6 +14,8 @@ public class OfferDataProjectDto {
 
     private Double months;
 
+    private Double contributionMargin;
+
     public Long getId() {
         return id;
     }
@@ -52,5 +54,13 @@ public class OfferDataProjectDto {
 
     public void setMonths(Double months) {
         this.months = months;
+    }
+
+    public Double getContributionMargin() {
+        return contributionMargin;
+    }
+
+    public void setContributionMargin(Double contributionMargin) {
+        this.contributionMargin = contributionMargin;
     }
 }
