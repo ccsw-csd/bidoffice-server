@@ -10,6 +10,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.ccsw.bidoffice.filetype.model.FileTypeEntity;
+import com.ccsw.bidoffice.formatdocument.model.FormatDocumentEntity;
 import com.ccsw.bidoffice.offer.model.OfferEntity;
 
 @Entity
@@ -31,6 +32,10 @@ public class OfferDataFileEntity {
     @ManyToOne
     @JoinColumn(name = "file_type_id", nullable = false)
     private FileTypeEntity fileType;
+
+    @ManyToOne
+    @JoinColumn(name = "format_document_id", nullable = false)
+    private FormatDocumentEntity formatDocument;
 
     @Column(name = "link", nullable = false)
     private String link;
@@ -68,6 +73,14 @@ public class OfferDataFileEntity {
 
     public void setFileType(FileTypeEntity fileType) {
         this.fileType = fileType;
+    }
+
+    public FormatDocumentEntity getFormatDocument() {
+        return formatDocument;
+    }
+
+    public void setFormatDocument(FormatDocumentEntity formatDocument) {
+        this.formatDocument = formatDocument;
     }
 
     public String getLink() {
