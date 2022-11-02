@@ -222,6 +222,17 @@ CREATE TABLE offer_data_chapter (
 
 INSERT INTO offer_data_chapter (offer_id, presentation, capabilities, approach) VALUES (1,0,0,1);
 
+CREATE TABLE format_document (
+  id int(11) NOT NULL AUTO_INCREMENT,
+  name varchar(20) NOT NULL,
+  priority int(11) NOT NULL,
+  PRIMARY KEY (id),
+  UNIQUE KEY name_format (name)
+);
+
+INSERT INTO format_document (name,priority) VALUES ('pdf', 1);
+INSERT INTO format_document (name,priority) VALUES ('docx', 2);
+
 CREATE TABLE offer_data_files (
  	id int(11) NOT NULL AUTO_INCREMENT,
 	offer_id int(11) NOT NULL,
@@ -229,13 +240,15 @@ CREATE TABLE offer_data_files (
 	file_type_id int(11) NOT NULL,
  	link varchar(4000) NOT NULL,
  	observations varchar(4000) DEFAULT NULL,
+ 	format_document_id int(11) NOT NULL,
 	PRIMARY KEY (id),
 	CONSTRAINT offer_file_fk FOREIGN KEY (file_type_id) REFERENCES file_type (id) ON DELETE CASCADE ON UPDATE CASCADE,
-	CONSTRAINT offer_offer_fk5 FOREIGN KEY (offer_id) REFERENCES offer (id) ON DELETE CASCADE ON UPDATE CASCADE
+	CONSTRAINT offer_offer_fk5 FOREIGN KEY (offer_id) REFERENCES offer (id) ON DELETE CASCADE ON UPDATE CASCADE,
+	CONSTRAINT format_document_fk FOREIGN KEY (format_document_id) REFERENCES format_document (id) ON DELETE CASCADE ON UPDATE CASCADE
 ); 
 
-INSERT INTO offer_data_files (offer_id,name,file_type_id,link) VALUES (1,'admin',1,'admin.com');
-INSERT INTO offer_data_files (offer_id,name,file_type_id,link) VALUES (1,'jopepe',3,'jopepe.com');
+INSERT INTO offer_data_files (offer_id,name,file_type_id,link,format_document_id) VALUES (1,'admin',1,'admin.com',1);
+INSERT INTO offer_data_files (offer_id,name,file_type_id,link,format_document_id) VALUES (1,'jopepe',3,'jopepe.com',1);
 
 CREATE TABLE offer_data_project (
 	id int(11) NOT NULL AUTO_INCREMENT,

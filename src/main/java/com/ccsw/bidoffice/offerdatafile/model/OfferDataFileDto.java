@@ -1,6 +1,7 @@
 package com.ccsw.bidoffice.offerdatafile.model;
 
 import com.ccsw.bidoffice.filetype.model.FileTypeDto;
+import com.ccsw.bidoffice.formatdocument.model.FormatDocumentDto;
 
 public class OfferDataFileDto {
 
@@ -9,6 +10,8 @@ public class OfferDataFileDto {
     private String name;
 
     private FileTypeDto fileType;
+
+    private FormatDocumentDto formatDocument;
 
     private String link;
 
@@ -34,6 +37,14 @@ public class OfferDataFileDto {
 
     public void setFileType(FileTypeDto fileType) {
         this.fileType = fileType;
+    }
+
+    public FormatDocumentDto getFormatDocument() {
+        return formatDocument;
+    }
+
+    public void setFormatDocument(FormatDocumentDto formatDocument) {
+        this.formatDocument = formatDocument;
     }
 
     public String getLink() {

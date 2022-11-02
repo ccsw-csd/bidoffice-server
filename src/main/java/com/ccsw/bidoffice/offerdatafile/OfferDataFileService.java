@@ -2,5 +2,7 @@ package com.ccsw.bidoffice.offerdatafile;
 
 public interface OfferDataFileService {
 
-    boolean checkExistsByFileTypeId(Long id);
+    Boolean checkExistsByFileTypeId(Long id);
+
+    Boolean checkExistsByFormatDocumentId(Long id);
 }
