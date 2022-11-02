@@ -14,6 +14,7 @@ import com.ccsw.bidoffice.offerdatateam.model.OfferDataTeamDto;
 import com.ccsw.bidoffice.offerdatatechnology.model.OfferDataTechnologyDto;
 import com.ccsw.bidoffice.offering.model.OfferingDto;
 import com.ccsw.bidoffice.offertracing.model.OfferTracingDto;
+import com.ccsw.bidoffice.offertradetracking.model.OfferTradeTrackingDto;
 import com.ccsw.bidoffice.opportunitystatus.model.OpportunityStatusDto;
 import com.ccsw.bidoffice.opportunitytype.model.OpportunityTypeDto;
 import com.ccsw.bidoffice.person.model.PersonDto;
@@ -77,6 +78,8 @@ public class OfferDto {
     private Set<OfferTracingDto> tracings;
 
     private Set<OfferChangeStatusDto> changeStatus;
+
+    private Set<OfferTradeTrackingDto> tradeTrackings;
 
     public Long getId() {
         return id;
@@ -284,5 +287,13 @@ public class OfferDto {
 
     public void setTracings(Set<OfferTracingDto> tracings) {
         this.tracings = tracings;
+    }
+
+    public Set<OfferTradeTrackingDto> getTradeTrackings() {
+        return tradeTrackings;
+    }
+
+    public void setTradeTrackings(Set<OfferTradeTrackingDto> tradeTrackings) {
+        this.tradeTrackings = tradeTrackings;
     }
 }

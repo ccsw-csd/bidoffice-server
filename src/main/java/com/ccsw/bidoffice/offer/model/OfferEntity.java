@@ -28,6 +28,7 @@ import com.ccsw.bidoffice.offerdatateam.model.OfferDataTeamEntity;
 import com.ccsw.bidoffice.offerdatatechnology.model.OfferDataTechnologyEntity;
 import com.ccsw.bidoffice.offering.model.OfferingEntity;
 import com.ccsw.bidoffice.offertracing.model.OfferTracingEntity;
+import com.ccsw.bidoffice.offertradetracking.model.OfferTradeTrackingEntity;
 import com.ccsw.bidoffice.opportunitystatus.model.OpportunityStatusEntity;
 import com.ccsw.bidoffice.opportunitytype.model.OpportunityTypeEntity;
 import com.ccsw.bidoffice.person.model.PersonEntity;
@@ -133,6 +134,9 @@ public class OfferEntity {
 
     @OneToMany(mappedBy = "offer", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private Set<OfferChangeStatusEntity> changeStatus;
+
+    @OneToMany(mappedBy = "offer", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    private Set<OfferTradeTrackingEntity> tradeTrackings;
 
     public Long getId() {
         return id;
@@ -354,4 +358,12 @@ public class OfferEntity {
         this.changeStatus.stream().peek(item -> item.setOffer(this)).collect(Collectors.toSet());
     }
 
+    public Set<OfferTradeTrackingEntity> getTradeTrackings() {
+        return tradeTrackings;
+    }
+
+    public void setTradeTrackings(Set<OfferTradeTrackingEntity> tradeTrackings) {
+        this.tradeTrackings = tradeTrackings;
+        this.tradeTrackings.stream().peek(item -> item.setOffer(this)).collect(Collectors.toSet());
+    }
 }
