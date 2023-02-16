@@ -36,6 +36,5 @@ public interface OfferRepository
 
     int countBySectorId(Long id);
 
-    int countByRequestedDateBetween(LocalDate startDate, LocalDate endDate);      
-
+    int countByRequestedDateBetween(LocalDate startDate, LocalDate endDate);
 }
