@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.repository.PagingAndSortingRepository;
@@ -18,7 +19,7 @@ public interface OfferRepository
     @Override
     @EntityGraph(attributePaths = { "requestedBy", "managedBy", "sector", "opportunityStatus", "opportunityType",
             "dataChapter", "dataProject", "dataTeam", "dataTechnology", })
-    Page<OfferEntity> findAll(Pageable pageable);
+    Page<OfferEntity> findAll(Specification spec, Pageable pageable);
 
     List<Clients> findFirst15DistinctByClientIgnoreCaseContaining(String client);
 
@@ -36,5 +37,4 @@ public interface OfferRepository
     int countBySectorId(Long id);
 
     int countByRequestedDateBetween(LocalDate startDate, LocalDate endDate);
-
 }
