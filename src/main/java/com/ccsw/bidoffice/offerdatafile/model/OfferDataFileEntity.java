@@ -26,7 +26,7 @@ public class OfferDataFileEntity {
     @JoinColumn(name = "offer_id", nullable = false)
     private OfferEntity offer;
 
-    @Column(name = "name", nullable = false)
+    @Column(name = "name")
     private String name;
 
     @ManyToOne
