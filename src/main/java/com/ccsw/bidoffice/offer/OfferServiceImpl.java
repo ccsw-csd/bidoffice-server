@@ -203,7 +203,7 @@ public class OfferServiceImpl implements OfferService {
 
         offerEntity = this.beanMapper.map(dto, OfferEntity.class);
         offerEntity.setLastModification(LocalDateTime.now());
-        offerEntity.setCreationDate(LocalDate.now());
+        offerEntity.setUserLastUpdate(LocalDate.now());
 
         return this.offerRepository.save(offerEntity);
     }

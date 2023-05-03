@@ -57,7 +57,7 @@ public class OfferDto {
 
     private LocalDateTime lastModification;
 
-    private LocalDate creationDate;
+    private LocalDate userLastUpdate;
 
     private OfferDataChapterDto dataChapter;
 
@@ -201,12 +201,12 @@ public class OfferDto {
         this.lastModification = lastModification;
     }
 
-    public LocalDate getCreationDate() {
-        return creationDate;
+    public LocalDate getUserLastUpdate() {
+        return userLastUpdate;
     }
 
-    public void setCreationDate(LocalDate creationDate) {
-        this.creationDate = creationDate;
+    public void setUserLastUpdate(LocalDate userLastUpdate) {
+        this.userLastUpdate = userLastUpdate;
     }
 
     public Set<OfferChangeStatusDto> getChangeStatus() {
