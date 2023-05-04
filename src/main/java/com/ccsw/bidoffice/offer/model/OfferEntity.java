@@ -99,8 +99,11 @@ public class OfferEntity {
     @Column(name = "last_modification", nullable = false)
     private LocalDateTime lastModification;
 
+    @Column(name = "creation_date", nullable = false)
+    private LocalDate creationDate;
+
     @Column(name = "user_last_update", nullable = false)
-    private LocalDate userLastUpdate;
+    private PersonEntity userLastUpdate;
 
     @OneToOne(mappedBy = "offer", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private OfferDataChapterEntity dataChapter;
@@ -254,11 +257,19 @@ public class OfferEntity {
         return lastModification;
     }
 
-    public LocalDate getUserLastUpdate() {
+    public LocalDate getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(LocalDate creationDate) {
+        this.creationDate = creationDate;
+    }
+
+    public PersonEntity getUserLastUpdate() {
         return userLastUpdate;
     }
 
-    public void setUserLastUpdate(LocalDate userLastUpdate) {
+    public void setUserLastUpdate(PersonEntity userLastUpdate) {
         this.userLastUpdate = userLastUpdate;
     }
 

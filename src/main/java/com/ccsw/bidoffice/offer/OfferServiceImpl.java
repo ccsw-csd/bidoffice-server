@@ -18,6 +18,7 @@ import com.ccsw.bidoffice.common.criteria.BinarySearchCriteria;
 import com.ccsw.bidoffice.common.exception.EntityNotFoundException;
 import com.ccsw.bidoffice.common.exception.InvalidDataException;
 import com.ccsw.bidoffice.config.mapper.BeanMapper;
+import com.ccsw.bidoffice.config.security.UserUtils;
 import com.ccsw.bidoffice.offer.model.Clients;
 import com.ccsw.bidoffice.offer.model.ModifyStatusDto;
 import com.ccsw.bidoffice.offer.model.OfferDto;
@@ -197,13 +198,15 @@ public class OfferServiceImpl implements OfferService {
         return isNullOrEmpty(tracingDto.getComment()) || tracingDto.getDate() == null || tracingDto.getPerson() == null;
     }
 
-    private OfferEntity saveNewOffer(OfferDto dto) {
+    private OfferEntity saveNewOffer(OfferDto dto) throws EntityNotFoundException {
 
         offerEntity = new OfferEntity();
 
         offerEntity = this.beanMapper.map(dto, OfferEntity.class);
         offerEntity.setLastModification(LocalDateTime.now());
-        offerEntity.setUserLastUpdate(LocalDate.now());
+        offerEntity.setCreationDate(LocalDate.now());
+        offerEntity.setUserLastUpdate(this.personService.findPersonByUsername
+                (UserUtils.getUserDetails().getUsername()));
 
         return this.offerRepository.save(offerEntity);
     }
@@ -216,6 +219,8 @@ public class OfferServiceImpl implements OfferService {
         OfferEntity offerEntity = this.beanMapper.map(dto, OfferEntity.class);
         offerEntity.setChangeStatus(this.getOffer(dto.getId()).getChangeStatus());
         offerEntity.setLastModification(LocalDateTime.now());
+        offerEntity.setUserLastUpdate(this.personService.findPersonByUsername
+                (UserUtils.getUserDetails().getUsername()));
 
         return this.offerRepository.save(offerEntity);
     }
