@@ -46,6 +46,7 @@ public class OfferEntity {
     public static final String ATT_REQUESTED_BY = "requestedBy";
     public static final String ATT_MANAGED_BY = "managedBy";
     public static final String ATT_TEAM_PERSON = "teamPerson";
+    public static final String ATT_USER_LAST_UPDATE = "userLastUpdate";
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -102,7 +103,8 @@ public class OfferEntity {
     @Column(name = "creation_date", nullable = false)
     private LocalDate creationDate;
 
-    @Column(name = "user_last_update", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_last_update")
     private PersonEntity userLastUpdate;
 
     @OneToOne(mappedBy = "offer", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
@@ -257,6 +259,10 @@ public class OfferEntity {
         return lastModification;
     }
 
+    public void setLastModification(LocalDateTime lastModification) {
+        this.lastModification = lastModification;
+    }
+
     public LocalDate getCreationDate() {
         return creationDate;
     }
@@ -271,10 +277,6 @@ public class OfferEntity {
 
     public void setUserLastUpdate(PersonEntity userLastUpdate) {
         this.userLastUpdate = userLastUpdate;
-    }
-
-    public void setLastModification(LocalDateTime lastModification) {
-        this.lastModification = lastModification;
     }
 
     public OfferDataChapterEntity getDataChapter() {
