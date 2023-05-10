@@ -47,6 +47,7 @@ public class OfferEntity {
     public static final String ATT_MANAGED_BY = "managedBy";
     public static final String ATT_TEAM_PERSON = "teamPerson";
     public static final String ATT_USER_LAST_UPDATE = "userLastUpdate";
+    public static final String ATT_CLIENT = "client";
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

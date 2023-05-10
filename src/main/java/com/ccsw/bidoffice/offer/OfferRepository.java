@@ -18,7 +18,7 @@ public interface OfferRepository
 
     @Override
     @EntityGraph(attributePaths = { "requestedBy", "managedBy", "sector", "opportunityStatus", "opportunityType",
-            "dataChapter", "dataProject", "dataTeam", "dataTechnology", })
+            "dataChapter", "dataProject", "dataTeam", "dataTechnology" })
     Page<OfferEntity> findAll(Specification spec, Pageable pageable);
 
     List<Clients> findFirst15DistinctByClientIgnoreCaseContaining(String client);

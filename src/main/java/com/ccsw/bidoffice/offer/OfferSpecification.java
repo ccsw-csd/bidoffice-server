@@ -38,6 +38,9 @@ public class OfferSpecification implements Specification<OfferEntity> {
         } else if (criteria.getOperation().equalsIgnoreCase("isMember") && criteria.getValue() != null
                 && criteria.getValue2() == null) {
             return criteriaBuilder.isMember(criteria.getValue(), root.get(criteria.getKey()));
+
+        } else if (criteria.getOperation().equalsIgnoreCase("clientEquals") && criteria.getValue() != null) {
+            return criteriaBuilder.like(root.get(criteria.getKey()), "%" + criteria.getValue() + "%");
         }
 
         return null;

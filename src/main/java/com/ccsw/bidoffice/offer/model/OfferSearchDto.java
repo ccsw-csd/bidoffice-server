@@ -25,6 +25,8 @@ public class OfferSearchDto {
 
     private PersonDto involved;
 
+    private String client;
+
     @JsonDeserialize(converter = DateToLocalDateTimeConverter.class)
     private LocalDateTime startDateModification;
 
@@ -79,6 +81,14 @@ public class OfferSearchDto {
 
     public void setInvolved(PersonDto involved) {
         this.involved = involved;
+    }
+
+    public String getClient() {
+        return client;
+    }
+
+    public void setClient(String client) {
+        this.client = client;
     }
 
     public LocalDateTime getStartDateModification() {
