@@ -1,6 +1,7 @@
 package com.ccsw.bidoffice.offer;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -36,10 +37,10 @@ public class OfferSpecification implements Specification<OfferEntity> {
                     ObjectToLocalDate(criteria.getValue2()));
 
         } else if (criteria.getOperation().equalsIgnoreCase("isMember") && criteria.getValue() != null
-                && criteria.getValue2() == null) {
+                && ((List) criteria.getValue()).size() > 0 && criteria.getValue2() == null) {
             return criteriaBuilder.isMember(criteria.getValue(), root.get(criteria.getKey()));
 
-        } else if (criteria.getOperation().equalsIgnoreCase("clientEquals") && criteria.getValue() != null) {
+        } else if (criteria.getOperation().equalsIgnoreCase("like") && criteria.getValue() != null) {
             return criteriaBuilder.like(root.get(criteria.getKey()), "%" + criteria.getValue() + "%");
         }
 

@@ -73,8 +73,8 @@ public class OfferServiceImpl implements OfferService {
             throw new InvalidDataException();
         }
 
-        OfferSpecification status = new OfferSpecification(new BinarySearchCriteria(OfferEntity.ATT_OPP_STATUS, ":",
-                this.beanMapper.map(dto.getStatus(), OpportunityStatusEntity.class)));
+        OfferSpecification status = new OfferSpecification(new BinarySearchCriteria(OfferEntity.ATT_OPP_STATUS,
+                "isMember", this.beanMapper.mapList(dto.getStatus(), OpportunityStatusEntity.class)));
 
         OfferSpecification type = new OfferSpecification(new BinarySearchCriteria(OfferEntity.ATT_OPP_TYPE, ":",
                 this.beanMapper.map(dto.getType(), OpportunityTypeEntity.class)));
@@ -101,7 +101,7 @@ public class OfferServiceImpl implements OfferService {
                 OfferEntity.ATT_MANAGED_BY, ":", this.beanMapper.map(dto.getInvolved(), PersonEntity.class)));
 
         OfferSpecification involvedTeamPerson = new OfferSpecification(new BinarySearchCriteria(
-                OfferEntity.ATT_TEAM_PERSON, "isMember", this.beanMapper.map(dto.getInvolved(), PersonEntity.class)));
+                OfferEntity.ATT_TEAM_PERSON, ":", this.beanMapper.map(dto.getInvolved(), PersonEntity.class)));
 
         Specification<OfferEntity> specification = Specification.where(client).and(type).and(sector).and(date)
                 .and(managedBy).and(requestdBy).and(status)

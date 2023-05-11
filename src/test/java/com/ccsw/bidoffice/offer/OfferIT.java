@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -180,7 +181,7 @@ public class OfferIT extends BaseITAbstract {
         offerSearchDto.setManagedBy(new PersonDto());
         offerSearchDto.setRequestedBy(new PersonDto());
         offerSearchDto.setSector(new SectorDto());
-        offerSearchDto.setStatus(new OpportunityStatusDto());
+        offerSearchDto.setStatus(new ArrayList<>());
         offerSearchDto.setType(new OpportunityTypeDto());
         offerSearchDto.setStartDateModification(LocalDateTime.of(2022, Month.OCTOBER, 07, 00, 00, 00));
         offerSearchDto.setEndDateModification(LocalDateTime.of(2022, Month.OCTOBER, 10, 00, 00, 00));
@@ -188,7 +189,7 @@ public class OfferIT extends BaseITAbstract {
         offerSearchDto.getManagedBy().setId(ID_EXIST);
         offerSearchDto.getRequestedBy().setId(ID_EXIST);
         offerSearchDto.getSector().setId(ID_EXIST);
-        offerSearchDto.getStatus().setId(ID_EXIST);
+        offerSearchDto.getStatus().get(0).setId(ID_EXIST);
         offerSearchDto.getType().setId(ID_EXIST);
 
         HttpEntity<?> httpEntity = new HttpEntity<>(offerSearchDto, getHeaders());

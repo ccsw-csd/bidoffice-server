@@ -1,6 +1,7 @@
 package com.ccsw.bidoffice.offer.model;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import org.springframework.data.domain.Pageable;
 
@@ -13,7 +14,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 public class OfferSearchDto {
 
-    private OpportunityStatusDto status;
+    private List<OpportunityStatusDto> status;
 
     private OpportunityTypeDto type;
 
@@ -35,14 +36,6 @@ public class OfferSearchDto {
 
     private Pageable pageable;
 
-    public OpportunityStatusDto getStatus() {
-        return status;
-    }
-
-    public void setStatus(OpportunityStatusDto status) {
-        this.status = status;
-    }
-
     public OpportunityTypeDto getType() {
         return type;
     }
@@ -53,6 +46,14 @@ public class OfferSearchDto {
 
     public SectorDto getSector() {
         return sector;
+    }
+
+    public List<OpportunityStatusDto> getStatus() {
+        return status;
+    }
+
+    public void setStatus(List<OpportunityStatusDto> status) {
+        this.status = status;
     }
 
     public void setSector(SectorDto sector) {
