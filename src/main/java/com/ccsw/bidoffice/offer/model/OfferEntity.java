@@ -48,6 +48,7 @@ public class OfferEntity {
     public static final String ATT_TEAM_PERSON = "teamPerson";
     public static final String ATT_USER_LAST_UPDATE = "userLastUpdate";
     public static final String ATT_CLIENT = "client";
+    public static final String ATT_DELIVERY_DATE = "deliveryDate";
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

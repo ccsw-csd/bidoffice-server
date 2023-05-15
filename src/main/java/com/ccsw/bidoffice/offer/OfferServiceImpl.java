@@ -67,12 +67,6 @@ public class OfferServiceImpl implements OfferService {
     @Override
     public Page<OfferEntity> findPage(OfferSearchDto dto) throws InvalidDataException {
 
-        if (dto.getStartDateModification() != null && dto.getEndDateModification() != null
-                && !dto.getStartDateModification().isEqual(dto.getEndDateModification())
-                && dto.getStartDateModification().isAfter(dto.getEndDateModification())) {
-            throw new InvalidDataException();
-        }
-
         OfferSpecification status = new OfferSpecification(new BinarySearchCriteria(OfferEntity.ATT_OPP_STATUS,
                 "isMember", this.beanMapper.mapList(dto.getStatus(), OpportunityStatusEntity.class)));
 
@@ -82,8 +76,8 @@ public class OfferServiceImpl implements OfferService {
         OfferSpecification sector = new OfferSpecification(new BinarySearchCriteria(OfferEntity.ATT_SECTOR, ":",
                 this.beanMapper.map(dto.getSector(), SectorEntity.class)));
 
-        OfferSpecification date = new OfferSpecification(new BinarySearchCriteria(OfferEntity.ATT_LAST_MODIFICATION,
-                "between", dto.getStartDateModification(), dto.getEndDateModification()));
+        OfferSpecification deliveryDate = new OfferSpecification(new BinarySearchCriteria(OfferEntity.ATT_DELIVERY_DATE,
+                "between", dto.getDeliveryDateStart(), dto.getDeliveryDateEnd()));
 
         OfferSpecification requestdBy = new OfferSpecification(new BinarySearchCriteria(OfferEntity.ATT_REQUESTED_BY,
                 ":", this.beanMapper.map(dto.getRequestedBy(), PersonEntity.class)));
@@ -103,7 +97,7 @@ public class OfferServiceImpl implements OfferService {
         OfferSpecification involvedTeamPerson = new OfferSpecification(new BinarySearchCriteria(
                 OfferEntity.ATT_TEAM_PERSON, ":", this.beanMapper.map(dto.getInvolved(), PersonEntity.class)));
 
-        Specification<OfferEntity> specification = Specification.where(client).and(type).and(sector).and(date)
+        Specification<OfferEntity> specification = Specification.where(client).and(type).and(sector).and(deliveryDate)
                 .and(managedBy).and(requestdBy).and(status)
                 .and(involvedRequestdBy.or(involvedManagedBy).or(involvedTeamPerson));
 

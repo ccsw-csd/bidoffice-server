@@ -1,11 +1,11 @@
 package com.ccsw.bidoffice.offer.model;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.data.domain.Pageable;
 
-import com.ccsw.bidoffice.common.converter.DateToLocalDateTimeConverter;
+import com.ccsw.bidoffice.common.converter.DateToLocalDateConverter;
 import com.ccsw.bidoffice.opportunitystatus.model.OpportunityStatusDto;
 import com.ccsw.bidoffice.opportunitytype.model.OpportunityTypeDto;
 import com.ccsw.bidoffice.person.model.PersonDto;
@@ -28,11 +28,11 @@ public class OfferSearchDto {
 
     private String client;
 
-    @JsonDeserialize(converter = DateToLocalDateTimeConverter.class)
-    private LocalDateTime startDateModification;
+    @JsonDeserialize(converter = DateToLocalDateConverter.class)
+    private LocalDate deliveryDateStart;
 
-    @JsonDeserialize(converter = DateToLocalDateTimeConverter.class)
-    private LocalDateTime endDateModification;
+    @JsonDeserialize(converter = DateToLocalDateConverter.class)
+    private LocalDate deliveryDateEnd;
 
     private Pageable pageable;
 
@@ -92,20 +92,20 @@ public class OfferSearchDto {
         this.client = client;
     }
 
-    public LocalDateTime getStartDateModification() {
-        return startDateModification;
+    public LocalDate getDeliveryDateStart() {
+        return deliveryDateStart;
     }
 
-    public void setStartDateModification(LocalDateTime startDateModification) {
-        this.startDateModification = startDateModification;
+    public LocalDate getDeliveryDateEnd() {
+        return deliveryDateEnd;
     }
 
-    public LocalDateTime getEndDateModification() {
-        return endDateModification;
+    public void setDeliveryDateStart(LocalDate deliveryDateStart) {
+        this.deliveryDateStart = deliveryDateStart;
     }
 
-    public void setEndDateModification(LocalDateTime endDateModification) {
-        this.endDateModification = endDateModification;
+    public void setDeliveryDateEnd(LocalDate deliveryDateEnd) {
+        this.deliveryDateEnd = deliveryDateEnd;
     }
 
     public Pageable getPageable() {

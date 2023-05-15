@@ -120,8 +120,8 @@ public class OfferIT extends BaseITAbstract {
     public void findPageFilterWithNotExistDateShouldEmptyPage() {
 
         offerSearchDto.setPageable(PageRequest.of(0, 10));
-        offerSearchDto.setStartDateModification(LocalDateTime.now());
-        offerSearchDto.setEndDateModification(LocalDateTime.now());
+        offerSearchDto.setDeliveryDateStart(LocalDate.now());
+        offerSearchDto.setDeliveryDateEnd(LocalDate.now());
 
         HttpEntity<?> httpEntity = new HttpEntity<>(offerSearchDto, getHeaders());
 
@@ -134,8 +134,8 @@ public class OfferIT extends BaseITAbstract {
     @Test
     public void findPageFilterWithExistDateShouldPageOffer() {
 
-        offerSearchDto.setStartDateModification(LocalDateTime.of(2022, Month.OCTOBER, 07, 00, 00, 00));
-        offerSearchDto.setEndDateModification(LocalDateTime.of(2022, Month.OCTOBER, 10, 00, 00, 00));
+        offerSearchDto.setDeliveryDateStart(LocalDate.of(2022, Month.OCTOBER, 07));
+        offerSearchDto.setDeliveryDateEnd(LocalDate.of(2022, Month.OCTOBER, 10));
 
         HttpEntity<?> httpEntity = new HttpEntity<>(offerSearchDto, getHeaders());
 
@@ -183,8 +183,8 @@ public class OfferIT extends BaseITAbstract {
         offerSearchDto.setSector(new SectorDto());
         offerSearchDto.setStatus(new ArrayList<>());
         offerSearchDto.setType(new OpportunityTypeDto());
-        offerSearchDto.setStartDateModification(LocalDateTime.of(2022, Month.OCTOBER, 07, 00, 00, 00));
-        offerSearchDto.setEndDateModification(LocalDateTime.of(2022, Month.OCTOBER, 10, 00, 00, 00));
+        offerSearchDto.setDeliveryDateStart(LocalDate.of(2022, Month.OCTOBER, 07));
+        offerSearchDto.setDeliveryDateEnd(LocalDate.of(2022, Month.OCTOBER, 10));
         offerSearchDto.getInvolved().setId(ID_EXIST);
         offerSearchDto.getManagedBy().setId(ID_EXIST);
         offerSearchDto.getRequestedBy().setId(ID_EXIST);

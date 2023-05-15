@@ -119,8 +119,8 @@ public class OfferTest {
     @Test
     public void findPageWithInvalidDateShouldThrowException() {
 
-        offerSearchDto.setStartDateModification(LocalDateTime.now().plusDays(1));
-        offerSearchDto.setEndDateModification(LocalDateTime.now());
+        offerSearchDto.setDeliveryDateStart(LocalDate.now().plusDays(1));
+        offerSearchDto.setDeliveryDateEnd(LocalDate.now());
 
         assertThrows(InvalidDataException.class, () -> offerServiceImpl.findPage(offerSearchDto));
 
