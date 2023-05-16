@@ -1,6 +1,6 @@
 package com.ccsw.bidoffice.offer;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.criteria.CriteriaBuilder;
@@ -47,9 +47,9 @@ public class OfferSpecification implements Specification<OfferEntity> {
         return null;
     }
 
-    private LocalDateTime ObjectToLocalDate(Object dateLocal) {
-        if (dateLocal instanceof LocalDateTime) {
-            return (LocalDateTime) dateLocal;
+    private LocalDate ObjectToLocalDate(Object dateLocal) {
+        if (dateLocal instanceof LocalDate) {
+            return (LocalDate) dateLocal;
         }
         return null;
     }
