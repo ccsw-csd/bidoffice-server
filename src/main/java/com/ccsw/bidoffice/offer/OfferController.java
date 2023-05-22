@@ -57,5 +57,5 @@ public class OfferController {
             throws InvalidDataException, EntityNotFoundException {
 
         return this.beanMapper.map(this.offerService.modifyStatus(dto), OfferItemListDto.class);
-    }  
+    }
 }
