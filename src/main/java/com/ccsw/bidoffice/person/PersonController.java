@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ccsw.bidoffice.common.exception.EntityNotFoundException;
 import com.ccsw.bidoffice.config.mapper.BeanMapper;
 import com.ccsw.bidoffice.person.model.PersonDto;
 
@@ -25,5 +26,15 @@ public class PersonController {
     public List<PersonDto> findFirst15Filter(@PathVariable String filter) {
 
         return this.beanMapper.mapList(this.personService.findFirst15Filter(filter), PersonDto.class);
+    }
+
+    @RequestMapping(path = "/username/{username}", method = RequestMethod.GET)
+    public PersonDto findByUsername(@PathVariable String username) {
+
+        try {
+            return this.beanMapper.map(this.personService.findPersonByUsername(username), PersonDto.class);
+        } catch (EntityNotFoundException e) {
+            return null;
+        }
     }
 }
