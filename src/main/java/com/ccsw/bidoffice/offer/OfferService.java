@@ -18,7 +18,7 @@ public interface OfferService {
 
     List<String> findFirst15DistinctClientLikeFilter(String filter);
 
-    Page<OfferEntity> findPage(OfferSearchDto dto) throws InvalidDataException;
+    Page<OfferEntity> findPage(OfferSearchDto dto) throws Exception;
 
     OfferEntity save(OfferDto dto) throws InvalidDataException, EntityNotFoundException;
 

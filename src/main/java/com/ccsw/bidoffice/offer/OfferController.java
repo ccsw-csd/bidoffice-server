@@ -41,7 +41,7 @@ public class OfferController {
     }
 
     @RequestMapping(path = "/findPage", method = RequestMethod.POST)
-    public Page<OfferItemListDto> findPage(@RequestBody OfferSearchDto dto) throws InvalidDataException {
+    public Page<OfferItemListDto> findPage(@RequestBody OfferSearchDto dto) throws Exception {
 
         return this.beanMapper.mapPage(this.offerService.findPage(dto), OfferItemListDto.class);
     }
@@ -53,8 +53,7 @@ public class OfferController {
     }
 
     @RequestMapping(path = "/status", method = RequestMethod.PUT)
-    public OfferItemListDto modifyStatus(@RequestBody ModifyStatusDto dto)
-            throws InvalidDataException, EntityNotFoundException {
+    public OfferItemListDto modifyStatus(@RequestBody ModifyStatusDto dto) throws InvalidDataException, EntityNotFoundException {
 
         return this.beanMapper.map(this.offerService.modifyStatus(dto), OfferItemListDto.class);
     }

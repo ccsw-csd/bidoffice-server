@@ -16,4 +16,12 @@ public class UserUtils {
         return (UserInfoDto) SecurityContextHolder.getContext().getAuthentication().getDetails();
     }
 
+    public static boolean hasRole(String role) {
+
+        JsonWebTokenAuthentication authentication = (JsonWebTokenAuthentication) SecurityContextHolder.getContext().getAuthentication();
+
+        return authentication.getAuthorities().stream().filter(item -> item.getAuthority().equals(role)).findAny().isPresent();
+
+    }
+
 }

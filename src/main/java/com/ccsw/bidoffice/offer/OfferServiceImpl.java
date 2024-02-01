@@ -60,45 +60,41 @@ public class OfferServiceImpl implements OfferService {
     @Override
     public List<String> findFirst15DistinctClientLikeFilter(String filter) {
 
-        return this.offerRepository.findFirst15DistinctByClientIgnoreCaseContaining(filter).stream()
-                .map(Clients::getClient).collect(Collectors.toList());
+        return this.offerRepository.findFirst15DistinctByClientIgnoreCaseContaining(filter).stream().map(Clients::getClient).collect(Collectors.toList());
     }
 
     @Override
-    public Page<OfferEntity> findPage(OfferSearchDto dto) throws InvalidDataException {
+    public Page<OfferEntity> findPage(OfferSearchDto dto) throws Exception {
 
-        OfferSpecification status = new OfferSpecification(new BinarySearchCriteria(OfferEntity.ATT_OPP_STATUS,
-                "isMember", this.beanMapper.mapList(dto.getStatus(), OpportunityStatusEntity.class)));
+        boolean isAdmin = UserUtils.hasRole("ADMIN");
 
-        OfferSpecification type = new OfferSpecification(new BinarySearchCriteria(OfferEntity.ATT_OPP_TYPE, ":",
-                this.beanMapper.map(dto.getType(), OpportunityTypeEntity.class)));
+        OfferSpecification status = new OfferSpecification(new BinarySearchCriteria(OfferEntity.ATT_OPP_STATUS, "isMember", this.beanMapper.mapList(dto.getStatus(), OpportunityStatusEntity.class)));
 
-        OfferSpecification sector = new OfferSpecification(new BinarySearchCriteria(OfferEntity.ATT_SECTOR, ":",
-                this.beanMapper.map(dto.getSector(), SectorEntity.class)));
+        OfferSpecification type = new OfferSpecification(new BinarySearchCriteria(OfferEntity.ATT_OPP_TYPE, ":", this.beanMapper.map(dto.getType(), OpportunityTypeEntity.class)));
 
-        OfferSpecification deliveryDate = new OfferSpecification(new BinarySearchCriteria(OfferEntity.ATT_DELIVERY_DATE,
-                "between", dto.getDeliveryDateStart(), dto.getDeliveryDateEnd()));
+        OfferSpecification sector = new OfferSpecification(new BinarySearchCriteria(OfferEntity.ATT_SECTOR, ":", this.beanMapper.map(dto.getSector(), SectorEntity.class)));
 
-        OfferSpecification requestdBy = new OfferSpecification(new BinarySearchCriteria(OfferEntity.ATT_REQUESTED_BY,
-                ":", this.beanMapper.map(dto.getRequestedBy(), PersonEntity.class)));
+        OfferSpecification deliveryDate = new OfferSpecification(new BinarySearchCriteria(OfferEntity.ATT_DELIVERY_DATE, "between", dto.getDeliveryDateStart(), dto.getDeliveryDateEnd()));
 
-        OfferSpecification managedBy = new OfferSpecification(new BinarySearchCriteria(OfferEntity.ATT_MANAGED_BY, ":",
-                this.beanMapper.map(dto.getManagedBy(), PersonEntity.class)));
+        OfferSpecification requestdBy = new OfferSpecification(new BinarySearchCriteria(OfferEntity.ATT_REQUESTED_BY, ":", this.beanMapper.map(dto.getRequestedBy(), PersonEntity.class)));
 
-        OfferSpecification client = new OfferSpecification(new BinarySearchCriteria(OfferEntity.ATT_CLIENT, "like",
-                this.beanMapper.map(dto.getClient(), String.class)));
+        OfferSpecification managedBy = new OfferSpecification(new BinarySearchCriteria(OfferEntity.ATT_MANAGED_BY, ":", this.beanMapper.map(dto.getManagedBy(), PersonEntity.class)));
 
-        OfferSpecification involvedRequestdBy = new OfferSpecification(new BinarySearchCriteria(
-                OfferEntity.ATT_REQUESTED_BY, ":", this.beanMapper.map(dto.getInvolved(), PersonEntity.class)));
+        OfferSpecification client = new OfferSpecification(new BinarySearchCriteria(OfferEntity.ATT_CLIENT, "like", this.beanMapper.map(dto.getClient(), String.class)));
 
-        OfferSpecification involvedManagedBy = new OfferSpecification(new BinarySearchCriteria(
-                OfferEntity.ATT_MANAGED_BY, ":", this.beanMapper.map(dto.getInvolved(), PersonEntity.class)));
+        OfferSpecification involvedRequestdBy = new OfferSpecification(new BinarySearchCriteria(OfferEntity.ATT_REQUESTED_BY, ":", this.beanMapper.map(dto.getInvolved(), PersonEntity.class)));
 
-        OfferSpecification involvedTeamPerson = new OfferSpecification(new BinarySearchCriteria(
-                OfferEntity.ATT_TEAM_PERSON, ":", this.beanMapper.map(dto.getInvolved(), PersonEntity.class)));
+        OfferSpecification involvedManagedBy = new OfferSpecification(new BinarySearchCriteria(OfferEntity.ATT_MANAGED_BY, ":", this.beanMapper.map(dto.getInvolved(), PersonEntity.class)));
 
-        Specification<OfferEntity> specification = Specification.where(client).and(type).and(sector).and(deliveryDate)
-                .and(managedBy).and(requestdBy).and(status)
+        OfferSpecification isNotAdmin = new OfferSpecification(new BinarySearchCriteria(OfferEntity.ATT_MANAGED_BY, ":", null));
+
+        if (isAdmin == false) {
+            isNotAdmin = new OfferSpecification(new BinarySearchCriteria(OfferEntity.ATT_MANAGED_BY, ":", this.personService.findPersonByUsername(UserUtils.getUserDetails().getUsername())));
+        }
+
+        OfferSpecification involvedTeamPerson = new OfferSpecification(new BinarySearchCriteria(OfferEntity.ATT_TEAM_PERSON, ":", this.beanMapper.map(dto.getInvolved(), PersonEntity.class)));
+
+        Specification<OfferEntity> specification = Specification.where(isNotAdmin).and(client).and(type).and(sector).and(deliveryDate).and(managedBy).and(requestdBy).and(status)
                 .and(involvedRequestdBy.or(involvedManagedBy).or(involvedTeamPerson));
 
         return this.offerRepository.findAll(specification, dto.getPageable());
@@ -187,8 +183,7 @@ public class OfferServiceImpl implements OfferService {
 
     private Boolean validateDataFiles(OfferDataFileDto dataFileDto) {
 
-        return dataFileDto.getFileType() == null || isNullOrEmpty(dataFileDto.getName())
-                || isNullOrEmpty(dataFileDto.getLink());
+        return dataFileDto.getFileType() == null || isNullOrEmpty(dataFileDto.getName()) || isNullOrEmpty(dataFileDto.getLink());
     }
 
     private Boolean validateTracing(OfferTracingDto tracingDto) {
@@ -203,8 +198,7 @@ public class OfferServiceImpl implements OfferService {
         offerEntity = this.beanMapper.map(dto, OfferEntity.class);
         offerEntity.setLastModification(LocalDateTime.now());
         offerEntity.setCreationDate(LocalDate.now());
-        offerEntity
-                .setUserLastUpdate(this.personService.findPersonByUsername(UserUtils.getUserDetails().getUsername()));
+        offerEntity.setUserLastUpdate(this.personService.findPersonByUsername(UserUtils.getUserDetails().getUsername()));
 
         return this.offerRepository.save(offerEntity);
     }
@@ -217,8 +211,7 @@ public class OfferServiceImpl implements OfferService {
         OfferEntity offerEntity = this.beanMapper.map(dto, OfferEntity.class);
         offerEntity.setChangeStatus(this.getOffer(dto.getId()).getChangeStatus());
         offerEntity.setLastModification(LocalDateTime.now());
-        offerEntity
-                .setUserLastUpdate(this.personService.findPersonByUsername(UserUtils.getUserDetails().getUsername()));
+        offerEntity.setUserLastUpdate(this.personService.findPersonByUsername(UserUtils.getUserDetails().getUsername()));
 
         return this.offerRepository.save(offerEntity);
     }
@@ -228,8 +221,7 @@ public class OfferServiceImpl implements OfferService {
 
         offerEntity = this.getOffer(dto.getId());
 
-        if (!StatusEnum.isValidChangeStatus(offerEntity.getOpportunityStatus().getName(),
-                dto.getOpportunityStatus().getName())) {
+        if (!StatusEnum.isValidChangeStatus(offerEntity.getOpportunityStatus().getName(), dto.getOpportunityStatus().getName())) {
             throw new InvalidDataException();
         }
 
