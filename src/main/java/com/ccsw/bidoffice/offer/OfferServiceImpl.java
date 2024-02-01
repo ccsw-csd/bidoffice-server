@@ -86,16 +86,9 @@ public class OfferServiceImpl implements OfferService {
 
         OfferSpecification involvedManagedBy = new OfferSpecification(new BinarySearchCriteria(OfferEntity.ATT_MANAGED_BY, ":", this.beanMapper.map(dto.getInvolved(), PersonEntity.class)));
 
-        OfferSpecification isNotAdmin = new OfferSpecification(new BinarySearchCriteria(OfferEntity.ATT_MANAGED_BY, ":", null));
-
-        if (isAdmin == false) {
-            isNotAdmin = new OfferSpecification(new BinarySearchCriteria(OfferEntity.ATT_MANAGED_BY, ":", this.personService.findPersonByUsername(UserUtils.getUserDetails().getUsername())));
-        }
-
         OfferSpecification involvedTeamPerson = new OfferSpecification(new BinarySearchCriteria(OfferEntity.ATT_TEAM_PERSON, ":", this.beanMapper.map(dto.getInvolved(), PersonEntity.class)));
 
-        Specification<OfferEntity> specification = Specification.where(isNotAdmin).and(client).and(type).and(sector).and(deliveryDate).and(managedBy).and(requestdBy).and(status)
-                .and(involvedRequestdBy.or(involvedManagedBy).or(involvedTeamPerson));
+        Specification<OfferEntity> specification = Specification.where(client).and(type).and(sector).and(deliveryDate).and(managedBy).and(requestdBy).and(status).and(involvedRequestdBy.or(involvedManagedBy).or(involvedTeamPerson));
 
         return this.offerRepository.findAll(specification, dto.getPageable());
     }
