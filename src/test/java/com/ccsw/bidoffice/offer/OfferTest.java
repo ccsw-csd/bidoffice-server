@@ -101,13 +101,12 @@ public class OfferTest {
     }
 
     @Test
-    public void findPageShouldReturnOfferPage() throws InvalidDataException {
+    public void findPageShouldReturnOfferPage() throws Exception {
 
         List<OfferEntity> offers = new ArrayList<>();
         offers.add(mock(OfferEntity.class));
 
-        when(offerRepository.findAll(any(), eq(offerSearchDto.getPageable())))
-                .thenReturn(new PageImpl<>(offers, offerSearchDto.getPageable(), offers.size()));
+        when(offerRepository.findAll(any(), eq(offerSearchDto.getPageable()))).thenReturn(new PageImpl<>(offers, offerSearchDto.getPageable(), offers.size()));
 
         Page<OfferEntity> page = offerServiceImpl.findPage(offerSearchDto);
 
@@ -145,8 +144,7 @@ public class OfferTest {
 
         List<Clients> list = new ArrayList<>();
 
-        when(this.offerRepository.findFirst15DistinctByClientIgnoreCaseContaining(CLIENT_NOT_CONTAINING))
-                .thenReturn(list);
+        when(this.offerRepository.findFirst15DistinctByClientIgnoreCaseContaining(CLIENT_NOT_CONTAINING)).thenReturn(list);
 
         List<String> clients = this.offerServiceImpl.findFirst15DistinctClientLikeFilter(CLIENT_NOT_CONTAINING);
 
