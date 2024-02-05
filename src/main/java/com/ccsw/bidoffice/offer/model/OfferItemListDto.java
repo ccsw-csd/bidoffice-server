@@ -1,7 +1,6 @@
 package com.ccsw.bidoffice.offer.model;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 import com.ccsw.bidoffice.opportunitystatus.model.OpportunityStatusDto;
 import com.ccsw.bidoffice.opportunitytype.model.OpportunityTypeDto;
@@ -20,11 +19,11 @@ public class OfferItemListDto {
 
     private LocalDate requestedDate;
 
+    private LocalDate deliveryDate;
+
     private OpportunityTypeDto opportunityType;
 
     private OpportunityStatusDto opportunityStatus;
-
-    private LocalDateTime lastModification;
 
     private PersonDto managedBy;
 
@@ -84,12 +83,12 @@ public class OfferItemListDto {
         this.opportunityStatus = opportunityStatus;
     }
 
-    public LocalDateTime getLastModification() {
-        return lastModification;
+    public LocalDate getDeliveryDate() {
+        return deliveryDate;
     }
 
-    public void setLastModification(LocalDateTime lastModification) {
-        this.lastModification = lastModification;
+    public void setDeliveryDate(LocalDate deliveryDate) {
+        this.deliveryDate = deliveryDate;
     }
 
     public PersonDto getManagedBy() {
