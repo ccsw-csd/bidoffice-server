@@ -55,6 +55,8 @@ public class OfferDto {
 
     private String observations;
 
+    private Boolean genAi;
+
     private LocalDateTime lastModification;
 
     private LocalDate creationDate;
@@ -193,6 +195,14 @@ public class OfferDto {
 
     public void setObservations(String observations) {
         this.observations = observations;
+    }
+
+    public Boolean getGenAi() {
+        return genAi;
+    }
+
+    public void setGenAi(Boolean genAi) {
+        this.genAi = genAi;
     }
 
     public LocalDateTime getLastModification() {

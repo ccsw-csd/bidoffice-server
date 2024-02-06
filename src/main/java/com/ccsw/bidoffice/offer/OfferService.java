@@ -20,7 +20,9 @@ public interface OfferService {
 
     Page<OfferEntity> findPage(OfferSearchDto dto) throws Exception;
 
-    OfferEntity save(OfferDto dto) throws InvalidDataException, EntityNotFoundException;
+	List<OfferEntity> findListToExport(OfferSearchDto dto) throws Exception;
+
+	OfferEntity save(OfferDto dto) throws InvalidDataException, EntityNotFoundException;
 
     boolean checkIfExistsOffer(Long id);
 

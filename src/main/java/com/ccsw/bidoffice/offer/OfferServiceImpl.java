@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -91,6 +92,14 @@ public class OfferServiceImpl implements OfferService {
         Specification<OfferEntity> specification = Specification.where(client).and(type).and(sector).and(deliveryDate).and(managedBy).and(requestdBy).and(status).and(involvedRequestdBy.or(involvedManagedBy).or(involvedTeamPerson));
 
         return this.offerRepository.findAll(specification, dto.getPageable());
+    }
+
+    @Override
+    public List<OfferEntity> findListToExport(OfferSearchDto dto) throws Exception {
+
+        dto.setPageable(PageRequest.of(0, Integer.MAX_VALUE, dto.getPageable().getSort()));
+
+        return this.findPage(dto).getContent();
     }
 
     @Override

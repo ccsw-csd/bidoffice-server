@@ -27,6 +27,8 @@ public class OfferItemListDto {
 
     private PersonDto managedBy;
 
+    private Boolean genAi;
+
     public Long getId() {
         return id;
     }
@@ -97,5 +99,13 @@ public class OfferItemListDto {
 
     public void setManagedBy(PersonDto managedBy) {
         this.managedBy = managedBy;
+    }
+
+    public Boolean getGenAi() {
+        return genAi;
+    }
+
+    public void setGenAi(Boolean genAi) {
+        this.genAi = genAi;
     }
 }

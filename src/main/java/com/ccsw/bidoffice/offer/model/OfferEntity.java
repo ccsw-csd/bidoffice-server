@@ -99,6 +99,9 @@ public class OfferEntity {
     @Column(name = "observations")
     private String observations;
 
+    @Column(name = "gen_ai")
+    private Boolean genAi;
+
     @Column(name = "last_modification", nullable = false)
     private LocalDateTime lastModification;
 
@@ -255,6 +258,14 @@ public class OfferEntity {
 
     public void setObservations(String observations) {
         this.observations = observations;
+    }
+
+    public Boolean getGenAi() {
+        return genAi;
+    }
+
+    public void setGenAi(Boolean genAi) {
+        this.genAi = genAi;
     }
 
     public LocalDateTime getLastModification() {
