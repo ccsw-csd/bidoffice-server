@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import com.ccsw.bidoffice.offer.model.*;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -20,11 +21,6 @@ import com.ccsw.bidoffice.common.exception.EntityNotFoundException;
 import com.ccsw.bidoffice.common.exception.InvalidDataException;
 import com.ccsw.bidoffice.config.mapper.BeanMapper;
 import com.ccsw.bidoffice.config.security.UserUtils;
-import com.ccsw.bidoffice.offer.model.Clients;
-import com.ccsw.bidoffice.offer.model.ModifyStatusDto;
-import com.ccsw.bidoffice.offer.model.OfferDto;
-import com.ccsw.bidoffice.offer.model.OfferEntity;
-import com.ccsw.bidoffice.offer.model.OfferSearchDto;
 import com.ccsw.bidoffice.offerchangestatus.enums.StatusEnum;
 import com.ccsw.bidoffice.offerchangestatus.model.OfferChangeStatusDto;
 import com.ccsw.bidoffice.offerchangestatus.model.OfferChangeStatusEntity;
@@ -43,6 +39,9 @@ public class OfferServiceImpl implements OfferService {
 
     @Autowired
     private OfferRepository offerRepository;
+
+    @Autowired
+    private OfferDataExportRepository offerDataExportRepository;
 
     @Autowired
     private BeanMapper beanMapper;
@@ -77,19 +76,15 @@ public class OfferServiceImpl implements OfferService {
 
         OfferSpecification deliveryDate = new OfferSpecification(new BinarySearchCriteria(OfferEntity.ATT_DELIVERY_DATE, "between", dto.getDeliveryDateStart(), dto.getDeliveryDateEnd()));
 
-        OfferSpecification requestdBy = new OfferSpecification(new BinarySearchCriteria(OfferEntity.ATT_REQUESTED_BY, ":", this.beanMapper.map(dto.getRequestedBy(), PersonEntity.class)));
+        OfferSpecification requestedBy = new OfferSpecification(new BinarySearchCriteria(OfferEntity.ATT_REQUESTED_BY, ":", this.beanMapper.map(dto.getRequestedBy(), PersonEntity.class)));
 
         OfferSpecification managedBy = new OfferSpecification(new BinarySearchCriteria(OfferEntity.ATT_MANAGED_BY, ":", this.beanMapper.map(dto.getManagedBy(), PersonEntity.class)));
 
         OfferSpecification client = new OfferSpecification(new BinarySearchCriteria(OfferEntity.ATT_CLIENT, "like", this.beanMapper.map(dto.getClient(), String.class)));
 
-        OfferSpecification involvedRequestdBy = new OfferSpecification(new BinarySearchCriteria(OfferEntity.ATT_REQUESTED_BY, ":", this.beanMapper.map(dto.getInvolved(), PersonEntity.class)));
+        OfferSpecification involvedTeamPerson = new OfferSpecification(new BinarySearchCriteria(OfferEntity.ATT_TEAM_PERSON, "inIdList", dto.getInvolved() != null ? dto.getInvolved().getId() : null));
 
-        OfferSpecification involvedManagedBy = new OfferSpecification(new BinarySearchCriteria(OfferEntity.ATT_MANAGED_BY, ":", this.beanMapper.map(dto.getInvolved(), PersonEntity.class)));
-
-        OfferSpecification involvedTeamPerson = new OfferSpecification(new BinarySearchCriteria(OfferEntity.ATT_TEAM_PERSON, ":", this.beanMapper.map(dto.getInvolved(), PersonEntity.class)));
-
-        Specification<OfferEntity> specification = Specification.where(client).and(type).and(sector).and(deliveryDate).and(managedBy).and(requestdBy).and(status).and(involvedRequestdBy.or(involvedManagedBy).or(involvedTeamPerson));
+        Specification<OfferEntity> specification = Specification.where(client).and(type).and(sector).and(deliveryDate).and(managedBy).and(requestedBy).and(status).and(involvedTeamPerson);
 
         return this.offerRepository.findAll(specification, dto.getPageable());
     }
@@ -100,6 +95,12 @@ public class OfferServiceImpl implements OfferService {
         dto.setPageable(PageRequest.of(0, Integer.MAX_VALUE, dto.getPageable().getSort()));
 
         return this.findPage(dto).getContent();
+    }
+
+    @Override
+    public List<OfferDataExportEntity> findDataToExport() {
+
+        return this.offerDataExportRepository.findAll();
     }
 
     @Override
@@ -159,6 +160,15 @@ public class OfferServiceImpl implements OfferService {
 
         return result;
 
+    }
+
+    @Override
+    public void changePriority(Long id) throws EntityNotFoundException {
+        OfferEntity offer = getOffer(id);
+
+        offer.setPriority(!offer.getPriority());
+
+        this.offerRepository.save(offer);
     }
 
     private Boolean isValidOffer(OfferDto dto) {

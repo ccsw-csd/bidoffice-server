@@ -42,11 +42,9 @@ public class OfferEntity {
     public static final String ATT_SECTOR = "sector";
     public static final String ATT_OPP_STATUS = "opportunityStatus";
     public static final String ATT_OPP_TYPE = "opportunityType";
-    public static final String ATT_LAST_MODIFICATION = "lastModification";
     public static final String ATT_REQUESTED_BY = "requestedBy";
     public static final String ATT_MANAGED_BY = "managedBy";
     public static final String ATT_TEAM_PERSON = "teamPerson";
-    public static final String ATT_USER_LAST_UPDATE = "userLastUpdate";
     public static final String ATT_CLIENT = "client";
     public static final String ATT_DELIVERY_DATE = "deliveryDate";
 
@@ -101,6 +99,9 @@ public class OfferEntity {
 
     @Column(name = "gen_ai")
     private Boolean genAi;
+
+    @Column(name = "priority")
+    private Boolean priority;
 
     @Column(name = "last_modification", nullable = false)
     private LocalDateTime lastModification;
@@ -268,6 +269,14 @@ public class OfferEntity {
         this.genAi = genAi;
     }
 
+    public Boolean getPriority() {
+        return priority;
+    }
+
+    public void setPriority(Boolean priority) {
+        this.priority = priority;
+    }
+
     public LocalDateTime getLastModification() {
         return lastModification;
     }
@@ -363,7 +372,6 @@ public class OfferEntity {
 
     public void setTechnologies(List<TechnologyEntity> technologies) {
         this.technologies = technologies;
-
     }
 
     public Set<OfferTracingEntity> getTracings() {

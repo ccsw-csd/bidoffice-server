@@ -57,6 +57,8 @@ public class OfferDto {
 
     private Boolean genAi;
 
+    private Boolean priority;
+
     private LocalDateTime lastModification;
 
     private LocalDate creationDate;
@@ -203,6 +205,14 @@ public class OfferDto {
 
     public void setGenAi(Boolean genAi) {
         this.genAi = genAi;
+    }
+
+    public Boolean getPriority() {
+        return priority;
+    }
+
+    public void setPriority(Boolean priority) {
+        this.priority = priority;
     }
 
     public LocalDateTime getLastModification() {

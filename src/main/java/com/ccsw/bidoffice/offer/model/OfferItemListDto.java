@@ -29,6 +29,8 @@ public class OfferItemListDto {
 
     private Boolean genAi;
 
+    private Boolean priority;
+
     public Long getId() {
         return id;
     }
@@ -107,5 +109,13 @@ public class OfferItemListDto {
 
     public void setGenAi(Boolean genAi) {
         this.genAi = genAi;
+    }
+
+    public Boolean getPriority() {
+        return priority;
+    }
+
+    public void setPriority(Boolean priority) {
+        this.priority = priority;
     }
 }

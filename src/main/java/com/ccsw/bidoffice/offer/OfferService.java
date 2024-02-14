@@ -2,14 +2,11 @@ package com.ccsw.bidoffice.offer;
 
 import java.util.List;
 
+import com.ccsw.bidoffice.offer.model.*;
 import org.springframework.data.domain.Page;
 
 import com.ccsw.bidoffice.common.exception.EntityNotFoundException;
 import com.ccsw.bidoffice.common.exception.InvalidDataException;
-import com.ccsw.bidoffice.offer.model.ModifyStatusDto;
-import com.ccsw.bidoffice.offer.model.OfferDto;
-import com.ccsw.bidoffice.offer.model.OfferEntity;
-import com.ccsw.bidoffice.offer.model.OfferSearchDto;
 import com.ccsw.bidoffice.sector.model.SectorDto;
 
 public interface OfferService {
@@ -22,9 +19,13 @@ public interface OfferService {
 
 	List<OfferEntity> findListToExport(OfferSearchDto dto) throws Exception;
 
-	OfferEntity save(OfferDto dto) throws InvalidDataException, EntityNotFoundException;
+    List<OfferDataExportEntity> findDataToExport();
+
+    OfferEntity save(OfferDto dto) throws InvalidDataException, EntityNotFoundException;
 
     boolean checkIfExistsOffer(Long id);
+
+    void changePriority(Long id) throws EntityNotFoundException;
 
     OfferEntity modifyStatus(ModifyStatusDto dto) throws InvalidDataException, EntityNotFoundException;
 
