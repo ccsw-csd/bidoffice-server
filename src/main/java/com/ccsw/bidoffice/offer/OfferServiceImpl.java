@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import com.ccsw.bidoffice.offer.model.*;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -21,6 +20,12 @@ import com.ccsw.bidoffice.common.exception.EntityNotFoundException;
 import com.ccsw.bidoffice.common.exception.InvalidDataException;
 import com.ccsw.bidoffice.config.mapper.BeanMapper;
 import com.ccsw.bidoffice.config.security.UserUtils;
+import com.ccsw.bidoffice.offer.model.Clients;
+import com.ccsw.bidoffice.offer.model.ModifyStatusDto;
+import com.ccsw.bidoffice.offer.model.OfferDataExportEntity;
+import com.ccsw.bidoffice.offer.model.OfferDto;
+import com.ccsw.bidoffice.offer.model.OfferEntity;
+import com.ccsw.bidoffice.offer.model.OfferSearchDto;
 import com.ccsw.bidoffice.offerchangestatus.enums.StatusEnum;
 import com.ccsw.bidoffice.offerchangestatus.model.OfferChangeStatusDto;
 import com.ccsw.bidoffice.offerchangestatus.model.OfferChangeStatusEntity;
@@ -210,6 +215,7 @@ public class OfferServiceImpl implements OfferService {
         offerEntity = this.beanMapper.map(dto, OfferEntity.class);
         offerEntity.setLastModification(LocalDateTime.now());
         offerEntity.setCreationDate(LocalDate.now());
+        offerEntity.setPriority(false);
         offerEntity.setUserLastUpdate(this.personService.findPersonByUsername(UserUtils.getUserDetails().getUsername()));
 
         return this.offerRepository.save(offerEntity);
@@ -222,6 +228,7 @@ public class OfferServiceImpl implements OfferService {
 
         OfferEntity offerEntity = this.beanMapper.map(dto, OfferEntity.class);
         offerEntity.setChangeStatus(this.getOffer(dto.getId()).getChangeStatus());
+        offerEntity.setPriority(this.getOffer(dto.getId()).getPriority());
         offerEntity.setLastModification(LocalDateTime.now());
         offerEntity.setUserLastUpdate(this.personService.findPersonByUsername(UserUtils.getUserDetails().getUsername()));
 
