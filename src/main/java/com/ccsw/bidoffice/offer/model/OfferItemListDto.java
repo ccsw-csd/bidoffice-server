@@ -25,6 +25,8 @@ public class OfferItemListDto {
 
     private OpportunityStatusDto opportunityStatus;
 
+    private Boolean opportunityWin;
+
     private PersonDto managedBy;
 
     private Boolean genAi;
@@ -117,5 +119,13 @@ public class OfferItemListDto {
 
     public void setPriority(Boolean priority) {
         this.priority = priority;
+    }
+
+    public Boolean getOpportunityWin() {
+        return opportunityWin;
+    }
+
+    public void setOpportunityWin(Boolean opportunityWin) {
+        this.opportunityWin = opportunityWin;
     }
 }

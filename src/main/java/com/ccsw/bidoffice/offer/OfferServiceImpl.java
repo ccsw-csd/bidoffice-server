@@ -89,7 +89,11 @@ public class OfferServiceImpl implements OfferService {
 
         OfferSpecification involvedTeamPerson = new OfferSpecification(new BinarySearchCriteria(OfferEntity.ATT_TEAM_PERSON, "inIdList", dto.getInvolved() != null ? dto.getInvolved().getId() : null));
 
-        Specification<OfferEntity> specification = Specification.where(client).and(type).and(sector).and(deliveryDate).and(managedBy).and(requestedBy).and(status).and(involvedTeamPerson);
+        OfferSpecification genAi = new OfferSpecification(new BinarySearchCriteria(OfferEntity.ATT_OPP_GEN_AI, ":", this.beanMapper.map(dto.getGenAi(), Boolean.class)));
+
+        OfferSpecification opportunityWin = new OfferSpecification(new BinarySearchCriteria(OfferEntity.ATT_OPP_WIN, ":", this.beanMapper.map(dto.getOpportunityWin(), Boolean.class)));
+
+        Specification<OfferEntity> specification = Specification.where(client).and(type).and(sector).and(deliveryDate).and(managedBy).and(requestedBy).and(status).and(involvedTeamPerson).and(genAi).and(opportunityWin);
 
         return this.offerRepository.findAll(specification, dto.getPageable());
     }

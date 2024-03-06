@@ -7,11 +7,12 @@ import java.util.stream.Stream;
 
 public enum StatusEnum {
 
-    GONOGO("Pendiente Go/NoGo", new String[] { "En curso", "Desestimada" }),
-    REJECT("Desestimada", new String[] { "Pendiente Go/NoGo", "En curso" }),
-    INPROGRESS("En curso", new String[] { "Desestimada", "Stand by", "Entregada" }),
-    STANDBY("Stand by", new String[] { "En curso", "Desestimada" }),
-    DELIVERED("Entregada", new String[] { "Finalizada" }), FINISH("Finalizada", new String[] {});
+    GONOGO("Pendiente Go/NoGo", new String[] { "En curso", "Desestimada" }), //
+    REJECT("Desestimada", new String[] { "Pendiente Go/NoGo", "En curso" }), //
+    INPROGRESS("En curso", new String[] { "Desestimada", "Stand by", "Entregada" }), //
+    STANDBY("Stand by", new String[] { "En curso", "Desestimada" }), //
+    DELIVERED("Entregada", new String[] { "Finalizada", "En curso" }), //
+    FINISH("Finalizada", new String[] {});
 
     private String labelStatus;
     private String[] possibleChanges;

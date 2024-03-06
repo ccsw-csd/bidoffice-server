@@ -34,6 +34,10 @@ public class OfferSearchDto {
     @JsonDeserialize(converter = DateToLocalDateConverter.class)
     private LocalDate deliveryDateEnd;
 
+    private Boolean genAi;
+
+    private Boolean opportunityWin;
+
     private Pageable pageable;
 
     public OpportunityTypeDto getType() {
@@ -114,5 +118,21 @@ public class OfferSearchDto {
 
     public void setPageable(Pageable pageable) {
         this.pageable = pageable;
+    }
+
+    public Boolean getGenAi() {
+        return genAi;
+    }
+
+    public void setGenAi(Boolean genAi) {
+        this.genAi = genAi;
+    }
+
+    public Boolean getOpportunityWin() {
+        return opportunityWin;
+    }
+
+    public void setOpportunityWin(Boolean opportunityWin) {
+        this.opportunityWin = opportunityWin;
     }
 }
