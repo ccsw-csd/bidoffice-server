@@ -85,6 +85,9 @@ public class OfferEntity {
     @Column(name = "delivery_date")
     private LocalDate deliveryDate;
 
+    @Column(name = "release_date")
+    private LocalDate releaseDate;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "opportunity_status_id", nullable = false)
     private OpportunityStatusEntity opportunityStatus;
@@ -402,4 +405,13 @@ public class OfferEntity {
         this.tradeTrackings = tradeTrackings;
         this.tradeTrackings.stream().peek(item -> item.setOffer(this)).collect(Collectors.toSet());
     }
+
+    public LocalDate getReleaseDate() {
+        return releaseDate;
+    }
+
+    public void setReleaseDate(LocalDate releaseDate) {
+        this.releaseDate = releaseDate;
+    }
+
 }

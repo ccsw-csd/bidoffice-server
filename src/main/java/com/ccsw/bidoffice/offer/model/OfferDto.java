@@ -37,6 +37,9 @@ public class OfferDto {
 
     private PersonDto managedBy;
 
+    @JsonDeserialize(converter = DateToLocalDateConverter.class)
+    private LocalDate releaseDate;
+
     private String bdcCode;
 
     private SectorDto sector;
@@ -326,4 +329,13 @@ public class OfferDto {
     public void setTradeTrackings(Set<OfferTradeTrackingDto> tradeTrackings) {
         this.tradeTrackings = tradeTrackings;
     }
+
+    public LocalDate getReleaseDate() {
+        return releaseDate;
+    }
+
+    public void setReleaseDate(LocalDate releaseDate) {
+        this.releaseDate = releaseDate;
+    }
+
 }
